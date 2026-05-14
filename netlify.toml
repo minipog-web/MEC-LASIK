@@ -1,0 +1,6 @@
+[build]
+  command = "node fix_index.js && node inject_contact_form.js"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "20"

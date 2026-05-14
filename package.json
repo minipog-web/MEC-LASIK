@@ -1,0 +1,32 @@
+{
+  "name": "lasik-journey",
+  "version": "1.0.0",
+  "description": "LASIK Journey App - Marano Eye Care",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.marano.lasik",
+    "productName": "LASIK Journey",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "shortcutName": "LASIK Journey"
+    },
+    "files": [
+      "main.js",
+      "index.html"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  }
+}
