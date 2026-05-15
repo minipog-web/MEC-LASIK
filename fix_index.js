@@ -296,8 +296,10 @@ const heritageCSS = `
 
       /* ── Global Mobile Optimizations ───────────────────────────── */
       @media (max-width: 768px) {
-        /* Force single-column flow on standard app containers */
-        .flex-row, .grid, [style*="display: grid"], [style*="display: flex"] {
+        /* Force single-column flow on standard app containers
+           EXCEPT: step nav row (parent of [aria-label^="Go to step"]) */
+        .flex-row, .grid, [style*="display: grid"],
+        [style*="display: flex"]:not(:has(> button[aria-label^="Go to step"])) {
           flex-direction: column !important;
           grid-template-columns: 1fr !important;
         }
@@ -320,8 +322,9 @@ const heritageCSS = `
           object-fit: contain;
         }
 
-        /* Increase touch targets and fix button wrapping */
-        button, .btn {
+        /* Increase touch targets and fix button wrapping
+           EXCEPT: step nav circles */
+        button:not([aria-label^="Go to step"]), .btn {
           min-height: 48px !important;
           width: 100% !important;
           justify-content: center !important;

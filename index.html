@@ -130,6 +130,43 @@ Error generating stack: `+e.message+`
     
   
     \n  
+    
+  
+    \n  
+    \n  
+    
+  
+    \n  
+    
+  
+    
+  
+    \n  
+    \n  
+    
+  
+    \n  
+    \n  
+    
+  
+    
+  
+    
+  
+    \n  
+    \n  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
     <style id="her-styles">
       /* ── Heritage / Pioneering Excellence section ─────────────────────── */
 
@@ -408,8 +445,10 @@ Error generating stack: `+e.message+`
 
       /* ── Global Mobile Optimizations ───────────────────────────── */
       @media (max-width: 768px) {
-        /* Force single-column flow on standard app containers */
-        .flex-row, .grid, [style*="display: grid"], [style*="display: flex"] {
+        /* Force single-column flow on standard app containers
+           EXCEPT: step nav row (parent of [aria-label^="Go to step"]) */
+        .flex-row, .grid, [style*="display: grid"],
+        [style*="display: flex"]:not(:has(> button[aria-label^="Go to step"])) {
           flex-direction: column !important;
           grid-template-columns: 1fr !important;
         }
@@ -432,8 +471,9 @@ Error generating stack: `+e.message+`
           object-fit: contain;
         }
 
-        /* Increase touch targets and fix button wrapping */
-        button, .btn {
+        /* Increase touch targets and fix button wrapping
+           EXCEPT: step nav circles */
+        button:not([aria-label^="Go to step"]), .btn {
           min-height: 48px !important;
           width: 100% !important;
           justify-content: center !important;
@@ -485,7 +525,77 @@ Error generating stack: `+e.message+`
 
     </style>
   
-    \n  
+    <style id="edu-styles">
+      #education-section {
+        padding: 96px 24px;
+        background-color: transparent;
+        position: relative;
+        z-index: 1;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin: 48px 0;
+      }
+
+      .edu-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .edu-header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .edu-title {
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 300;
+        color: #f8fafc;
+        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+      }
+
+      .edu-title-accent {
+        background: linear-gradient(135deg, #6e9a78 0%, #7fa1d6 100%);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-weight: 600;
+      }
+
+      .edu-card {
+        background: rgba(20, 28, 39, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 48px;
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .edu-text {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #e2e8f0;
+        margin-bottom: 24px;
+        text-align: justify;
+      }
+
+      .edu-text:last-child {
+        margin-bottom: 0;
+      }
+      
+      @media (max-width: 768px) {
+        .edu-card {
+          padding: 32px 24px;
+        }
+        .edu-text {
+          font-size: 16px;
+        }
+      }
+    </style>\n  
     <style id="marano-styles">
       #marano-section {
         padding: 0 24px;
@@ -726,9 +836,6 @@ Error generating stack: `+e.message+`
       }
     </style>
   
-    \n  
-    
-  
     <style id="laser-animation-styles">
       .laser-container {
         position: absolute;
@@ -804,78 +911,95 @@ Error generating stack: `+e.message+`
       }
     </style>
   
-    \n  
-    <style id="edu-styles">
-      #education-section {
-        padding: 96px 24px;
-        background-color: transparent;
-        position: relative;
-        z-index: 1;
-        font-family: "Inter", system-ui, -apple-system, sans-serif;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        margin: 48px 0;
+    <style id="journey-mobile-styles">
+      /* ── LASIK Journey Section – Mobile Optimizations ─────────────────────── */
+
+      /* Step nav: keep it horizontal (override global display:flex -> column) */
+      .journey-step-nav,
+      .journey-step-nav.journey-step-nav {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        grid-template-columns: unset !important;
       }
 
-      .edu-inner {
-        max-width: 1000px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
+      /* Step nav circles: undo width:100%, min-height:48px from global override */
+      button[aria-label^="Go to step"] {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        max-width: 36px !important;
+        max-height: 36px !important;
+        margin-bottom: 0 !important;
+        flex: 0 0 36px !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        align-self: center !important;
       }
 
-      .edu-header {
-        text-align: center;
-        margin-bottom: 24px;
-      }
-
-      .edu-title {
-        font-size: clamp(28px, 4vw, 42px);
-        font-weight: 300;
-        color: #f8fafc;
-        letter-spacing: -0.02em;
-        margin-bottom: 16px;
-      }
-
-      .edu-title-accent {
-        background: linear-gradient(135deg, #6e9a78 0%, #7fa1d6 100%);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        background-clip: text;
-        font-weight: 600;
-      }
-
-      .edu-card {
-        background: rgba(20, 28, 39, 0.6);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
-        padding: 48px;
-        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      }
-
-      .edu-text {
-        font-size: 18px;
-        line-height: 1.8;
-        color: #e2e8f0;
-        margin-bottom: 24px;
-        text-align: justify;
-      }
-
-      .edu-text:last-child {
-        margin-bottom: 0;
-      }
-      
       @media (max-width: 768px) {
-        .edu-card {
-          padding: 32px 24px;
+
+        /* Single-column step content grid */
+        .responsive-grid {
+          grid-template-columns: 1fr !important;
+          gap: 20px !important;
         }
-        .edu-text {
-          font-size: 16px;
+
+        /* Text FIRST, image SECOND */
+        .responsive-grid > .animate-fade-in:first-child {
+          order: 2 !important;
+        }
+        .responsive-grid > .animate-fade-in:last-child {
+          order: 1 !important;
+        }
+
+        /* Cap step image height — must see it in one viewport */
+        .step-image-container {
+          max-height: 220px !important;
+          overflow: hidden !important;
+          border-radius: 14px !important;
+        }
+        .step-image-container img {
+          width: 100% !important;
+          height: 220px !important;
+          object-fit: cover !important;
+          object-position: center top !important;
+        }
+
+        /* Tighten glass-panel */
+        .glass-panel {
+          padding: 20px 14px !important;
+          gap: 24px !important;
+        }
+
+        /* Prev/Next navigation — keep auto width */
+        .glass-panel button:not([aria-label^="Go to step"]) {
+          width: auto !important;
+          min-width: 44px !important;
+          min-height: 44px !important;
         }
       }
-    </style>\n  </head>
+
+      @media (max-width: 400px) {
+        .step-image-container,
+        .step-image-container img {
+          max-height: 180px !important;
+          height: 180px !important;
+        }
+        button[aria-label^="Go to step"] {
+          width: 30px !important;
+          height: 30px !important;
+          min-width: 30px !important;
+          max-width: 30px !important;
+          flex: 0 0 30px !important;
+        }
+      }
+    </style>
+  </head>
   <body>
     <div id="root"></div>
 
@@ -991,7 +1115,81 @@ Error generating stack: `+e.message+`
       })();
     </script>
   \n
-    \n  \n
+    <script id="edu-logic">
+      (function() {
+        function injectEducation() {
+          if (document.getElementById('education-section')) return;
+
+          let targetSection = null;
+          // Find "The LASIK Journey" heading
+          const journeyHeading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).find(el =>
+            el.textContent.includes('The LASIK Journey')
+          );
+          
+          if (journeyHeading) {
+            targetSection = journeyHeading.closest('section') || journeyHeading.closest('div[class*="section"]');
+            if (!targetSection) {
+              let el = journeyHeading.parentElement;
+              while (el) {
+                const parent = el.parentElement;
+                if (!parent || parent === document.body || parent.id === 'root' || parent.tagName === 'MAIN') {
+                  targetSection = el;
+                  break;
+                }
+                el = parent;
+              }
+            }
+          } else {
+             // Fallback if not found
+             targetSection = document.getElementById('heritage-section') || document.getElementById('hero');
+          }
+
+          if (targetSection) {
+            const section = document.createElement('section');
+            section.id = 'education-section';
+            section.innerHTML = `
+  <div class="edu-inner">
+    <div class="edu-header">
+      <h2 class="edu-title">Understanding <span class="edu-title-accent">the Science of LASIK</span></h2>
+    </div>
+    <div class="edu-card">
+      <p class="edu-text">
+        LASIK (Laser Assisted In Situ Keratomileusis) has transformed vision correction since its introduction more than 20 years ago. Instead of relying on older refractive surgical techniques, LASIK uses ultra precise, computer guided excimer lasers to gently reshape the cornea (the clear, curved front surface of the eye). By refining the corneal curvature, the procedure corrects refractive errors caused by the shape of the eye, such as nearsightedness, farsightedness, and astigmatism. The result is simple, but powerful: light enters the eye and focuses cleanly on the retina, producing crisp, sharp vision.
+      </p>
+      <p class="edu-text">
+        Most patients achieve 20/20 vision or better, often within a day, giving them a remarkable sense of visual freedom. For people with active or demanding lifestyles—athletes, frequent travelers, swimmers, outdoor enthusiasts—being free from glasses and daily contact lenses can be life changing. LASIK allows you to move through the world without visual limitations or the constant maintenance of corrective eyewear.
+      </p>
+      <p class="edu-text">
+        As with all parts of the body, natural aging still occurs. Around age 40–45, the internal lens gradually stiffens, leading to presbyopia or the need to use reading glasses for close-up tasks. This is a normal part of aging and happens whether you’ve had LASIK or not. Importantly, your LASIK enhanced distance vision remains clear and stable for years to come.
+      </p>
+      <p class="edu-text">
+        If you’re ready to experience sharper vision, greater freedom, and a lifestyle without visual limitations, LASIK may be the step that transforms how you see the world.
+      </p>
+    </div>
+  </div>
+`;
+            targetSection.insertAdjacentElement('afterend', section);
+          }
+        }
+
+        // MutationObserver for React re-renders
+        const observer = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            if (m.type === 'childList' && m.addedNodes.length > 0) {
+              if (!document.getElementById('education-section')) {
+                injectEducation();
+              }
+              break;
+            }
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        // Immediate + periodic fallback
+        injectEducation();
+        setInterval(injectEducation, 2000);
+      })();
+    </script>\n  \n
     <script id="marano-logic">
       (function() {
         function injectMarano() {
@@ -1185,11 +1383,7 @@ Error generating stack: `+e.message+`
         setInterval(injectContact, 2000);
       })();
     </script>
-\n
-    \n  
 
-    
-  
 
     <script id="laser-animation-logic">
       (function() {
@@ -1248,80 +1442,22 @@ Error generating stack: `+e.message+`
         setInterval(injectLaser, 1500);
       })();
     </script>
-  \n
-    \n  \n
-    <script id="edu-logic">
+  
+
+    <script id="journey-nav-class">
       (function() {
-        function injectEducation() {
-          if (document.getElementById('education-section')) return;
-
-          let targetSection = null;
-          // Find "The LASIK Journey" heading
-          const journeyHeading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).find(el =>
-            el.textContent.includes('The LASIK Journey')
-          );
-          
-          if (journeyHeading) {
-            targetSection = journeyHeading.closest('section') || journeyHeading.closest('div[class*="section"]');
-            if (!targetSection) {
-              let el = journeyHeading.parentElement;
-              while (el) {
-                const parent = el.parentElement;
-                if (!parent || parent === document.body || parent.id === 'root' || parent.tagName === 'MAIN') {
-                  targetSection = el;
-                  break;
-                }
-                el = parent;
-              }
-            }
-          } else {
-             // Fallback if not found
-             targetSection = document.getElementById('heritage-section') || document.getElementById('hero');
-          }
-
-          if (targetSection) {
-            const section = document.createElement('section');
-            section.id = 'education-section';
-            section.innerHTML = `
-  <div class="edu-inner">
-    <div class="edu-header">
-      <h2 class="edu-title">Understanding <span class="edu-title-accent">the Science of LASIK</span></h2>
-    </div>
-    <div class="edu-card">
-      <p class="edu-text">
-        LASIK (Laser Assisted In Situ Keratomileusis) has transformed vision correction since its introduction more than 20 years ago. Instead of relying on older refractive surgical techniques, LASIK uses ultra precise, computer guided excimer lasers to gently reshape the cornea (the clear, curved front surface of the eye). By refining the corneal curvature, the procedure corrects refractive errors caused by the shape of the eye, such as nearsightedness, farsightedness, and astigmatism. The result is simple, but powerful: light enters the eye and focuses cleanly on the retina, producing crisp, sharp vision.
-      </p>
-      <p class="edu-text">
-        Most patients achieve 20/20 vision or better, often within a day, giving them a remarkable sense of visual freedom. For people with active or demanding lifestyles—athletes, frequent travelers, swimmers, outdoor enthusiasts—being free from glasses and daily contact lenses can be life changing. LASIK allows you to move through the world without visual limitations or the constant maintenance of corrective eyewear.
-      </p>
-      <p class="edu-text">
-        As with all parts of the body, natural aging still occurs. Around age 40–45, the internal lens gradually stiffens, leading to presbyopia or the need to use reading glasses for close-up tasks. This is a normal part of aging and happens whether you’ve had LASIK or not. Importantly, your LASIK enhanced distance vision remains clear and stable for years to come.
-      </p>
-      <p class="edu-text">
-        If you’re ready to experience sharper vision, greater freedom, and a lifestyle without visual limitations, LASIK may be the step that transforms how you see the world.
-      </p>
-    </div>
-  </div>
-`;
-            targetSection.insertAdjacentElement('afterend', section);
+        function fixStepNav() {
+          // Find the step nav container: parent of the "Go to step 1" button
+          const btn = document.querySelector('button[aria-label="Go to step 1"]');
+          if (btn && btn.parentElement && !btn.parentElement.classList.contains('journey-step-nav')) {
+            btn.parentElement.classList.add('journey-step-nav');
           }
         }
-
-        // MutationObserver for React re-renders
-        const observer = new MutationObserver((mutations) => {
-          for (const m of mutations) {
-            if (m.type === 'childList' && m.addedNodes.length > 0) {
-              if (!document.getElementById('education-section')) {
-                injectEducation();
-              }
-              break;
-            }
-          }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-
-        // Immediate + periodic fallback
-        injectEducation();
-        setInterval(injectEducation, 2000);
+        // Run now and on each React re-render
+        fixStepNav();
+        setInterval(fixStepNav, 1000);
+        const obs = new MutationObserver(fixStepNav);
+        obs.observe(document.body, { childList: true, subtree: true });
       })();
-    </script>\n  </body></html>
+    </script>
+  </body></html>
