@@ -1,5 +1,5 @@
 [build]
-  command = "node fix_index.js && node inject_contact_form.js"
+  command = "node fix_index.js && node inject_hero_animation.js && node inject_education.js && node inject_marano.js && node inject_contact_form.js"
   publish = "."
 
 [build.environment]
