@@ -335,6 +335,42 @@ const heritageCSS = `
         .glass-panel { padding: 24px !important; }
       }
 
+      /* ── Premium Aesthetic Overrides ────────────────────────────── */
+      /* Typography Refinements */
+      h1, h2, h3, .h1, .h2, .h3 {
+        font-weight: 300 !important;
+        letter-spacing: -0.02em !important;
+        color: #f8fafc !important;
+      }
+      p, li, span {
+        color: #e2e8f0; /* Softer text color for better contrast against dark */
+      }
+      
+      /* Generous Whitespace & Section Flow */
+      section:not(#heritage-section):not(#contact-section) {
+        padding-top: 96px !important;
+        padding-bottom: 96px !important;
+      }
+
+      /* Glassmorphic Hierarchy & Depth */
+      .card, [class*="card"], .glass-panel {
+        border: 1px solid rgba(255, 255, 255, 0.04) !important;
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+        background: rgba(10, 15, 22, 0.6) !important;
+        backdrop-filter: blur(24px) !important;
+        -webkit-backdrop-filter: blur(24px) !important;
+        border-radius: 24px !important;
+        padding: 32px !important;
+      }
+
+      /* Elevate the bright cyan elements */
+      .btn-primary, button[class*="primary"] {
+        box-shadow: 0 0 24px rgba(14, 165, 233, 0.4) !important;
+        border: 1px solid rgba(14, 165, 233, 0.5) !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.01em !important;
+      }
+
     </style>`;
 
 // ─── 2. HTML ──────────────────────────────────────────────────────────────────

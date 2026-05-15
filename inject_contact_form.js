@@ -8,7 +8,7 @@ const contactCSS = `
       /* ── Contact Form Section ────────────────────────────────────────── */
 
       #contact-section {
-        padding: 56px 24px 72px;
+        padding: 0 24px 72px;
         opacity: 0;
         transform: translateY(28px);
         transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
@@ -28,6 +28,8 @@ const contactCSS = `
         max-width: 800px;
         margin: 0 auto;
         z-index: 1;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 60px;
       }
 
       .contact-card {
@@ -313,9 +315,19 @@ if (rootIndex === -1) {
 }
 
 // Ensure we insert script before the closing body
+const hiddenForm = `
+    <!-- A little help for Netlify bots -->
+    <form name="consultation" data-netlify="true" hidden>
+      <input type="text" name="name" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+`;
+
 const bodyEnd = content.lastIndexOf('</body>');
 if (bodyEnd !== -1) {
-    content = content.substring(0, bodyEnd) + injectScript + '\n' + content.substring(bodyEnd);
+    content = content.substring(0, bodyEnd) + hiddenForm + injectScript + '\n' + content.substring(bodyEnd);
 }
 
 fs.writeFileSync(filePath, content);

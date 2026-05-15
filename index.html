@@ -46,6 +46,18 @@ Error generating stack: `+e.message+`
   
     
   
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
     <style id="her-styles">
       /* ── Heritage / Pioneering Excellence section ─────────────────────── */
 
@@ -363,13 +375,206 @@ Error generating stack: `+e.message+`
         .glass-panel { padding: 24px !important; }
       }
 
+      /* ── Premium Aesthetic Overrides ────────────────────────────── */
+      /* Typography Refinements */
+      h1, h2, h3, .h1, .h2, .h3 {
+        font-weight: 300 !important;
+        letter-spacing: -0.02em !important;
+        color: #f8fafc !important;
+      }
+      p, li, span {
+        color: #e2e8f0; /* Softer text color for better contrast against dark */
+      }
+      
+      /* Generous Whitespace & Section Flow */
+      section:not(#heritage-section):not(#contact-section) {
+        padding-top: 96px !important;
+        padding-bottom: 96px !important;
+      }
+
+      /* Glassmorphic Hierarchy & Depth */
+      .card, [class*="card"], .glass-panel {
+        border: 1px solid rgba(255, 255, 255, 0.04) !important;
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+        background: rgba(10, 15, 22, 0.6) !important;
+        backdrop-filter: blur(24px) !important;
+        -webkit-backdrop-filter: blur(24px) !important;
+        border-radius: 24px !important;
+        padding: 32px !important;
+      }
+
+      /* Elevate the bright cyan elements */
+      .btn-primary, button[class*="primary"] {
+        box-shadow: 0 0 24px rgba(14, 165, 233, 0.4) !important;
+        border: 1px solid rgba(14, 165, 233, 0.5) !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.01em !important;
+      }
+
     </style>
   
+    
+  
+    \n  
+    \n  
+    \n  
+    \n  
+    \n  
+    \n  
+    <style id="edu-styles">
+      #education-section {
+        padding: 96px 24px;
+        background-color: transparent;
+        position: relative;
+        z-index: 1;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin: 48px 0;
+      }
+
+      .edu-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .edu-header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .edu-title {
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 300;
+        color: #f8fafc;
+        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+      }
+
+      .edu-title-accent {
+        background: linear-gradient(135deg, #6e9a78 0%, #7fa1d6 100%);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-weight: 600;
+      }
+
+      .edu-card {
+        background: rgba(20, 28, 39, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 48px;
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .edu-text {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #e2e8f0;
+        margin-bottom: 24px;
+        text-align: justify;
+      }
+
+      .edu-text:last-child {
+        margin-bottom: 0;
+      }
+      
+      @media (max-width: 768px) {
+        .edu-card {
+          padding: 32px 24px;
+        }
+        .edu-text {
+          font-size: 16px;
+        }
+      }
+    </style>\n  
+    
+  
+    
+  
+    
+  
+    <style id="marano-styles">
+      #marano-section {
+        padding: 0 24px;
+        background-color: transparent;
+        position: relative;
+        z-index: 1;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+      }
+
+      .marano-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 60px;
+        padding-bottom: 60px;
+      }
+
+      .marano-header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .marano-title {
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 300;
+        color: #f8fafc;
+        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+      }
+
+      .marano-title-accent {
+        background: linear-gradient(135deg, #6e9a78 0%, #7fa1d6 100%);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-weight: 600;
+      }
+
+      .marano-card {
+        background: rgba(20, 28, 39, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 48px;
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .marano-text {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #e2e8f0;
+        margin-bottom: 24px;
+        text-align: justify;
+      }
+
+      .marano-text:last-child {
+        margin-bottom: 0;
+      }
+      
+      @media (max-width: 768px) {
+        .marano-card {
+          padding: 32px 24px;
+        }
+        .marano-text {
+          font-size: 16px;
+        }
+      }
+    </style>\n  
     <style id="contact-styles">
       /* ── Contact Form Section ────────────────────────────────────────── */
 
       #contact-section {
-        padding: 56px 24px 72px;
+        padding: 0 24px 72px;
         opacity: 0;
         transform: translateY(28px);
         transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
@@ -389,6 +594,8 @@ Error generating stack: `+e.message+`
         max-width: 800px;
         margin: 0 auto;
         z-index: 1;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 60px;
       }
 
       .contact-card {
@@ -646,6 +853,178 @@ Error generating stack: `+e.message+`
       })();
     </script>
   
+    
+\n
+    \n  \n
+    \n  \n
+    \n  \n
+    \n  \n
+    \n  \n
+    \n  \n
+    <script id="edu-logic">
+      (function() {
+        function injectEducation() {
+          if (document.getElementById('education-section')) return;
+
+          let targetSection = null;
+          // Find "The LASIK Journey" heading
+          const journeyHeading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).find(el =>
+            el.textContent.includes('The LASIK Journey')
+          );
+          
+          if (journeyHeading) {
+            targetSection = journeyHeading.closest('section') || journeyHeading.closest('div[class*="section"]');
+            if (!targetSection) {
+              let el = journeyHeading.parentElement;
+              while (el) {
+                const parent = el.parentElement;
+                if (!parent || parent === document.body || parent.id === 'root' || parent.tagName === 'MAIN') {
+                  targetSection = el;
+                  break;
+                }
+                el = parent;
+              }
+            }
+          } else {
+             // Fallback if not found
+             targetSection = document.getElementById('heritage-section') || document.getElementById('hero');
+          }
+
+          if (targetSection) {
+            const section = document.createElement('section');
+            section.id = 'education-section';
+            section.innerHTML = `
+  <div class="edu-inner">
+    <div class="edu-header">
+      <h2 class="edu-title">Understanding <span class="edu-title-accent">The Science of LASIK</span></h2>
+    </div>
+    <div class="edu-card">
+      <p class="edu-text">
+        LASIK (Laser Assisted In Situ Keratomileusis) has transformed vision correction since its introduction more than 20 years ago. Instead of relying on older refractive surgical techniques, LASIK uses ultra precise, computer guided excimer lasers to gently reshape the cornea (the clear, curved front surface of the eye). By refining the corneal curvature, the procedure corrects refractive errors caused by the shape of the eye, such as nearsightedness, farsightedness, and astigmatism. The result is simple, but powerful: light enters the eye and focuses cleanly on the retina, producing crisp, sharp vision.
+      </p>
+      <p class="edu-text">
+        Most patients achieve 20/20 vision or better, often within a day, giving them a remarkable sense of visual freedom. For people with active or demanding lifestyles—athletes, frequent travelers, swimmers, outdoor enthusiasts—being free from glasses and daily contact lenses can be life changing. LASIK allows you to move through the world without visual limitations or the constant maintenance of corrective eyewear.
+      </p>
+      <p class="edu-text">
+        As with all parts of the body, natural aging still occurs. Around age 40–45, the internal lens gradually stiffens, leading to presbyopia or the need to use reading glasses for close-up tasks. This is a normal part of aging and happens whether you’ve had LASIK or not. Importantly, your LASIK enhanced distance vision remains clear and stable for years to come.
+      </p>
+      <p class="edu-text">
+        If you’re ready to experience sharper vision, greater freedom, and a lifestyle without visual limitations, LASIK may be the step that transforms how you see the world.
+      </p>
+    </div>
+  </div>
+`;
+            targetSection.insertAdjacentElement('afterend', section);
+          }
+        }
+
+        // MutationObserver for React re-renders
+        const observer = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            if (m.type === 'childList' && m.addedNodes.length > 0) {
+              if (!document.getElementById('education-section')) {
+                injectEducation();
+              }
+              break;
+            }
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        // Immediate + periodic fallback
+        injectEducation();
+        setInterval(injectEducation, 2000);
+      })();
+    </script>\n  
+    
+
+    
+
+    
+\n
+    <script id="marano-logic">
+      (function() {
+        function injectMarano() {
+          if (document.getElementById('marano-section')) return;
+
+          // Find the quiz section
+          let targetSection = document.getElementById('quiz');
+          
+          if (targetSection) {
+            const section = document.createElement('section');
+            section.id = 'marano-section';
+            section.innerHTML = `
+  <div class="marano-inner">
+    <div class="marano-header">
+      <h2 class="marano-title">Trust Your Vision to <span class="marano-title-accent">Marano Eye Care</span></h2>
+    </div>
+    <div class="marano-card">
+      <p class="marano-text">
+        At Marano Eye Care, we believe that laser vision correction is a deeply personal journey, not just a medical procedure. Under the expert guidance of Dr. Matthew Marano, our practice is built on a foundation of trust, advanced technology, and unwavering dedication to patient outcomes. We treat every patient like family, ensuring you receive the individualized care and attention you deserve from your very first visit.
+      </p>
+      <p class="marano-text">
+        While the initial investment in LASIK may seem significant, it is a decision that often pays for itself in just a few short years. When you calculate the cumulative, lifelong costs of contact lenses, cleaning solutions, annual exams, and backup glasses, laser vision correction quickly becomes a financially savvy choice that provides decades of visual freedom.
+      </p>
+      <p class="marano-text">
+        If you are considering the procedure, we invite you to our office for a completely pressure-free, complimentary consultation. We will take the time to comprehensively evaluate your unique eyes, answer all of your questions, and help you determine if LASIK is the right fit for your lifestyle—with absolutely no obligation to move forward until you are completely comfortable.
+      </p>
+    </div>
+  </div>
+`;
+            targetSection.insertAdjacentElement('afterend', section);
+          } else {
+            // Fallback: look for contact section and insert before it
+            let contactSection = document.getElementById('contact-section');
+            if (contactSection) {
+              const section = document.createElement('section');
+              section.id = 'marano-section';
+              section.innerHTML = `
+  <div class="marano-inner">
+    <div class="marano-header">
+      <h2 class="marano-title">Trust Your Vision to <span class="marano-title-accent">Marano Eye Care</span></h2>
+    </div>
+    <div class="marano-card">
+      <p class="marano-text">
+        At Marano Eye Care, we believe that laser vision correction is a deeply personal journey, not just a medical procedure. Under the expert guidance of Dr. Matthew Marano, our practice is built on a foundation of trust, advanced technology, and unwavering dedication to patient outcomes. We treat every patient like family, ensuring you receive the individualized care and attention you deserve from your very first visit.
+      </p>
+      <p class="marano-text">
+        While the initial investment in LASIK may seem significant, it is a decision that often pays for itself in just a few short years. When you calculate the cumulative, lifelong costs of contact lenses, cleaning solutions, annual exams, and backup glasses, laser vision correction quickly becomes a financially savvy choice that provides decades of visual freedom.
+      </p>
+      <p class="marano-text">
+        If you are considering the procedure, we invite you to our office for a completely pressure-free, complimentary consultation. We will take the time to comprehensively evaluate your unique eyes, answer all of your questions, and help you determine if LASIK is the right fit for your lifestyle—with absolutely no obligation to move forward until you are completely comfortable.
+      </p>
+    </div>
+  </div>
+`;
+              contactSection.insertAdjacentElement('beforebegin', section);
+            }
+          }
+        }
+
+        const observer = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            if (m.type === 'childList' && m.addedNodes.length > 0) {
+              if (!document.getElementById('marano-section')) {
+                injectMarano();
+              }
+              break;
+            }
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        injectMarano();
+        setInterval(injectMarano, 2000);
+      })();
+    </script>\n  
+    <!-- A little help for Netlify bots -->
+    <form name="consultation" data-netlify="true" hidden>
+      <input type="text" name="name" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+
     <script id="contact-logic">
       (function() {
         function injectContact() {
