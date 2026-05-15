@@ -78,7 +78,7 @@ const eduCSS = `
 const eduHTML = `
   <div class="edu-inner">
     <div class="edu-header">
-      <h2 class="edu-title">Understanding <span class="edu-title-accent">The Science of LASIK</span></h2>
+      <h2 class="edu-title">Understanding <span class="edu-title-accent">the Science of LASIK</span></h2>
     </div>
     <div class="edu-card">
       <p class="edu-text">
@@ -154,23 +154,15 @@ const injectionScript = `
       })();
     </script>`;
 
-// Clean previous injections of this script if any
-const oldStyleId = '<style id="edu-styles">';
-const oldStyleEnd = content.indexOf('</style>', content.indexOf(oldStyleId));
-if (content.includes(oldStyleId) && oldStyleEnd !== -1) {
-  content = content.substring(0, content.indexOf(oldStyleId)) + content.substring(oldStyleEnd + 8);
-}
+// Remove old versions
+content = content.replace(/<style id="edu-styles">[\s\S]*?<\/style>/g, '');
+content = content.replace(/<script id="edu-logic">[\s\S]*?<\/script>/g, '');
 
 const headEnd = content.indexOf('</head>');
 if (headEnd !== -1) {
   content = content.substring(0, headEnd) + eduCSS + '\\n  ' + content.substring(headEnd);
 }
 
-const oldLogicId = '<script id="edu-logic">';
-const oldLogicEnd = content.indexOf('</script>', content.indexOf(oldLogicId));
-if (content.includes(oldLogicId) && oldLogicEnd !== -1) {
-  content = content.substring(0, content.indexOf(oldLogicId)) + content.substring(oldLogicEnd + 9);
-}
 
 const bodyEnd = content.lastIndexOf('</body>');
 if (bodyEnd !== -1) {
