@@ -4,8 +4,11 @@
   "description": "LASIK Journey App - Marano Eye Care",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "build": "electron-builder --win --x64"
+    "dev": "vite",
+    "prebuild": "node fix_index.js && node inject_education.js && node inject_marano.js && node inject_contact_form.js && node inject_laser_animation.js && node inject_journey_mobile.js",
+    "build": "npm run prebuild && vite build",
+    "start": "npm run build && electron .",
+    "package": "electron-builder --win --x64"
   },
   "build": {
     "appId": "com.marano.lasik",
@@ -22,11 +25,18 @@
     },
     "files": [
       "main.js",
-      "index.html"
+      "dist/**/*"
     ]
   },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "lucide-react": "^0.475.0"
+  },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
     "electron": "^33.4.11",
-    "electron-builder": "^25.1.8"
+    "electron-builder": "^25.1.8",
+    "vite": "^6.1.0"
   }
 }

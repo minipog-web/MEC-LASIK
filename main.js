@@ -31,7 +31,7 @@ function createWindow() {
     show: false
   })
 
-  mainWindow.loadFile(path.join(__dirname, 'index.html'))
+  mainWindow.loadFile(path.join(__dirname, 'dist', 'index.html'))
   mainWindow.once('ready-to-show', () => mainWindow.show())
   mainWindow.setMenuBarVisibility(false)
   mainWindow.on('closed', () => { mainWindow = null })

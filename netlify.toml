@@ -1,6 +1,6 @@
 [build]
-  command = "node fix_index.js && node inject_education.js && node inject_marano.js && node inject_contact_form.js && node inject_laser_animation.js && node inject_journey_mobile.js"
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
