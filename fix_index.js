@@ -85,8 +85,8 @@ const heritageCSS = `
       /* Glass card — matches the app's .glass-panel style exactly */
       .her-card {
         background: rgba(20, 28, 39, 0.6);
-        backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 24px;
         padding: 52px 56px;
@@ -360,8 +360,8 @@ const heritageCSS = `
         border: 1px solid rgba(255, 255, 255, 0.04) !important;
         box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         background: rgba(10, 15, 22, 0.6) !important;
-        backdrop-filter: blur(24px) !important;
         -webkit-backdrop-filter: blur(24px) !important;
+        backdrop-filter: blur(24px) !important;
         border-radius: 24px !important;
         padding: 32px !important;
       }
