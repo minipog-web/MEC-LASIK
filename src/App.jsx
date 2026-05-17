@@ -111,7 +111,7 @@ function App() {
 
           {/* Right Column (Hero Image) */}
           <div className="hero-image-wrapper">
-            <div className="hero-image-card pulse-animation">
+            <div className="hero-image-card hero-float">
               <img 
                 src={heroImg} 
                 alt="LASIK Eye Surgery Technology" 
