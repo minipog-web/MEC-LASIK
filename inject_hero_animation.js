@@ -142,7 +142,7 @@ if (content.includes(oldStyleId) && oldStyleEnd !== -1) {
 // 2. Add new CSS
 const headEnd = content.indexOf('</head>');
 if (headEnd !== -1) {
-  content = content.substring(0, headEnd) + heroAnimationCSS + '\\n  ' + content.substring(headEnd);
+  content = content.substring(0, headEnd) + heroAnimationCSS + '\n  ' + content.substring(headEnd);
 }
 
 // 3. Remove old Logic
@@ -159,7 +159,7 @@ content = content.replace(/<div class="hero-animation-container">.*?<\/div>\s*<\
 // 5. Add new Logic
 const bodyEnd = content.lastIndexOf('</body>');
 if (bodyEnd !== -1) {
-  content = content.substring(0, bodyEnd) + '\\n' + injectionScript + '\\n  ' + content.substring(bodyEnd);
+  content = content.substring(0, bodyEnd) + '\n' + injectionScript + '\n  ' + content.substring(bodyEnd);
 }
 
 fs.writeFileSync(filePath, content);

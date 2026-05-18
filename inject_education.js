@@ -160,13 +160,13 @@ content = content.replace(/<script id="edu-logic">[\s\S]*?<\/script>/g, '');
 
 const headEnd = content.indexOf('</head>');
 if (headEnd !== -1) {
-  content = content.substring(0, headEnd) + eduCSS + '\\n  ' + content.substring(headEnd);
+  content = content.substring(0, headEnd) + eduCSS + '\n  ' + content.substring(headEnd);
 }
 
 
 const bodyEnd = content.lastIndexOf('</body>');
 if (bodyEnd !== -1) {
-  content = content.substring(0, bodyEnd) + '\\n' + injectionScript + '\\n  ' + content.substring(bodyEnd);
+  content = content.substring(0, bodyEnd) + '\n' + injectionScript + '\n  ' + content.substring(bodyEnd);
 }
 
 // Remove previously injected education-section from the actual HTML payload if it's there

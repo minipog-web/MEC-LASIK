@@ -141,7 +141,7 @@ const heritageCSS = `
         gap: 20px;
       }
 
-      /* Pill badge — matches the hero's "State-of-the-art Laser Technology" badge */
+      /* Pill badge — matches the hero's "State-of-the-Art Laser Technology" badge */
       .her-badge {
         display: inline-flex;
         align-items: center;
@@ -399,7 +399,7 @@ const heritageSectionHTML = `
           <p class="her-body">
             Marano Eye Care stands as the benchmark for vision correction in the region.
             <span class="her-em">Dr. Marano was one of the first LASIK surgeons in New Jersey</span>,
-            helping introduce the procedure when it first reached the state. With over two decades of
+            helping introduce the procedure when it first reached the state. With over three decades of
             specialized expertise, he offers a level of precision and experience that is unmatched —
             ensuring your journey to clear vision is in the most capable hands.
           </p>
@@ -408,8 +408,8 @@ const heritageSectionHTML = `
         <!-- Right: stats -->
         <div class="her-stats">
           <div class="her-stat">
-            <span class="her-stat-val">25+</span>
-            <span class="her-stat-lbl">Years of LASIK</span>
+            <span class="her-stat-val">30+</span>
+            <span class="her-stat-lbl">Years of Experience</span>
           </div>
           <div class="her-divider" aria-hidden="true"></div>
           <div class="her-stat">

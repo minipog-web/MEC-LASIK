@@ -13,34 +13,71 @@ function App() {
   return (
     <>
       {/* Navigation */}
-      <nav style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        padding: '20px 40px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        background: 'rgba(10, 15, 22, 0.8)',
-        backdropFilter: 'blur(12px)',
-        zIndex: 100,
-        borderBottom: '1px solid var(--border-light)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 'bold', fontSize: '1.2rem' }}>
-          <img src={logo} alt="Marano Eye Care" height="40" style={{ objectFit: 'contain' }} />
+      <nav 
+        id="main-navigation"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          padding: '24px 40px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          zIndex: 100,
+        }}
+      >
+        {/* Floating Logo - Fixed to top left, scrolls down with user */}
+        <div 
+          id="floating-logo-container"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          style={{
+            position: 'fixed',
+            top: '20px',
+            left: '40px',
+            zIndex: 110,
+            background: 'rgba(10, 15, 22, 0.65)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            padding: '10px 20px',
+            borderRadius: 'var(--border-radius-full)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            cursor: 'pointer',
+            boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+            transition: 'all 0.3s ease'
+          }}
+          className="glass-panel"
+        >
+          <img src={logo} alt="Marano Eye Care" height="36" style={{ objectFit: 'contain' }} />
         </div>
-        <div style={{ display: 'flex', gap: '20px' }}>
+        
+        {/* Menu Buttons - Absolute at the top, scroll away with the page */}
+        <div style={{ display: 'flex', gap: '24px', marginLeft: 'auto', alignItems: 'center' }}>
           <button 
+            id="nav-candidate-btn"
             onClick={() => scrollToSection('quiz')}
-            style={{ background: 'transparent', color: 'var(--text-secondary)', fontSize: '1rem' }}
+            style={{ 
+              background: 'transparent', 
+              color: 'var(--text-secondary)', 
+              fontSize: '1rem',
+              border: 'none',
+              cursor: 'pointer',
+              fontWeight: '500',
+              transition: 'color 0.2s ease'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+            onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
           >
             Am I a Candidate?
           </button>
           <button 
+            id="nav-procedure-btn"
             onClick={() => scrollToSection('education')}
             className="btn btn-primary"
-            style={{ padding: '8px 20px', fontSize: '0.9rem' }}
+            style={{ padding: '10px 24px', fontSize: '0.95rem' }}
           >
             The Procedure
           </button>
@@ -86,8 +123,34 @@ function App() {
         <div className="container hero-container">
           {/* Left Column (Text & CTAs) */}
           <div className="hero-left">
-            <div className="glass-panel" style={{ padding: '10px 20px', borderRadius: 'var(--border-radius-full)', marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-secondary)' }}>
-              <Activity size={18} /> State-of-the-art Laser Technology
+            <div className="glass-panel" style={{ 
+              padding: '6px 16px 6px 6px', 
+              borderRadius: 'var(--border-radius-full)', 
+              marginBottom: '32px', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '12px', 
+              color: 'var(--accent-secondary)',
+              border: '1px solid rgba(110, 154, 120, 0.2)',
+              width: 'fit-content'
+            }}>
+              <div className="icon-box" style={{ 
+                width: '32px', 
+                height: '32px', 
+                borderRadius: '50%', 
+                background: 'rgba(110, 154, 120, 0.15)', 
+                border: '1px solid rgba(110, 154, 120, 0.3)', 
+                color: 'var(--accent-secondary)',
+                boxShadow: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <Activity size={16} />
+              </div>
+              <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                State-of-the-Art Laser Technology
+              </span>
             </div>
 
             <h1 style={{ fontSize: '4rem', marginBottom: '24px', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
@@ -142,23 +205,29 @@ function App() {
       <section className="trust-metrics-section">
         <div className="container trust-metrics-grid">
           <div className="glass-panel trust-metric-card">
-            <Award className="trust-icon" size={28} />
+            <div className="icon-box">
+              <Award className="trust-icon" size={24} />
+            </div>
             <div>
-              <div className="trust-value">20+ Years</div>
+              <div className="trust-value">30+ Years</div>
               <div className="trust-label">Clinical Experience</div>
             </div>
           </div>
           
           <div className="glass-panel trust-metric-card">
-            <MapPin className="trust-icon" size={28} />
+            <div className="icon-box">
+              <MapPin className="trust-icon" size={24} />
+            </div>
             <div>
-              <div className="trust-value">4 NJ Locations</div>
+              <div className="trust-value">3 NJ Locations</div>
               <div className="trust-label">Convenient Care</div>
             </div>
           </div>
           
           <div className="glass-panel trust-metric-card">
-            <ShieldCheck className="trust-icon" size={28} />
+            <div className="icon-box">
+              <ShieldCheck className="trust-icon" size={24} />
+            </div>
             <div>
               <div className="trust-value">FDA-Approved</div>
               <div className="trust-label">Safe & Proven Tech</div>
@@ -166,10 +235,12 @@ function App() {
           </div>
           
           <div className="glass-panel trust-metric-card">
-            <Calendar className="trust-icon" size={28} />
+            <div className="icon-box">
+              <Calendar className="trust-icon" size={24} />
+            </div>
             <div>
-              <div className="trust-value">100% Free</div>
-              <div className="trust-label">Initial Consultation</div>
+              <div className="trust-value">Pressure Free</div>
+              <div className="trust-label">Consultation</div>
             </div>
           </div>
         </div>

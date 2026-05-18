@@ -19,7 +19,7 @@ const steps = [
     id: 2,
     title: 'Creating the Corneal Flap',
     purpose: 'To access the underlying corneal tissue (stroma) where the vision correction will take place.',
-    experience: 'You may feel a slight pressure, and your vision will momentarily dim. A state-of-the-art femtosecond laser creates microscopic bubbles to form a highly precise, ultra-thin flap in less than 30 seconds.',
+    experience: 'You may feel a slight pressure, and your vision will momentarily dim. A state-of-the-Art femtosecond laser creates microscopic bubbles to form a highly precise, ultra-thin flap in less than 30 seconds.',
     image: flapImg,
     animationClass: ''
   },

@@ -147,7 +147,7 @@ if (content.includes(oldStyleId) && oldStyleEnd !== -1) {
 
 const headEnd = content.indexOf('</head>');
 if (headEnd !== -1) {
-  content = content.substring(0, headEnd) + maranoCSS + '\\n  ' + content.substring(headEnd);
+  content = content.substring(0, headEnd) + maranoCSS + '\n  ' + content.substring(headEnd);
 }
 
 const oldLogicId = '<script id="marano-logic">';
@@ -158,7 +158,7 @@ if (content.includes(oldLogicId) && oldLogicEnd !== -1) {
 
 const bodyEnd = content.lastIndexOf('</body>');
 if (bodyEnd !== -1) {
-  content = content.substring(0, bodyEnd) + '\\n' + injectScript + '\\n  ' + content.substring(bodyEnd);
+  content = content.substring(0, bodyEnd) + '\n' + injectScript + '\n  ' + content.substring(bodyEnd);
 }
 
 content = content.replace(/<section id="marano-section">[\s\S]*?<\/section>/g, '');
