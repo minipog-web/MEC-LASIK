@@ -65,32 +65,35 @@ export default function CandidateQuiz() {
     const isGoodCandidate = totalScore === questions.length;
 
     return (
-      <div className="glass-panel animate-fade-in" style={{ padding: '40px', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+      <div className="glass-panel animate-fade-in" style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', padding: '48px 36px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
           {isGoodCandidate ? (
-            <div className="pulse-animation" style={{ color: 'var(--success)', background: 'rgba(16, 185, 129, 0.1)', padding: '20px', borderRadius: '50%' }}>
+            <div className="pulse-animation" style={{ color: 'var(--success)', background: 'rgba(16, 185, 129, 0.1)', padding: '24px', borderRadius: '50%' }}>
               <CheckCircle size={64} />
             </div>
           ) : (
-            <div style={{ color: 'var(--warning)', background: 'rgba(245, 158, 11, 0.1)', padding: '20px', borderRadius: '50%' }}>
+            <div style={{ color: 'var(--warning)', background: 'rgba(245, 158, 11, 0.1)', padding: '24px', borderRadius: '50%' }}>
               <AlertCircle size={64} />
             </div>
           )}
         </div>
         
-        <h3 style={{ fontSize: '2rem', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '16px', letterSpacing: '-0.01em' }}>
           {isGoodCandidate ? 'You appear to be a great candidate!' : 'A consultation is recommended.'}
         </h3>
         
-        <p className="text-secondary" style={{ fontSize: '1.1rem', marginBottom: '32px' }}>
+        <p className="text-secondary" style={{ fontSize: '1.15rem', marginBottom: '40px', lineHeight: '1.7' }}>
           {isGoodCandidate 
             ? 'Based on your answers, you meet the initial criteria for LASIK. The next step is a comprehensive dilated eye exam to measure your corneal thickness and pupil size.' 
             : 'Based on your answers, there are a few factors we need to evaluate further. LASIK might not be the best fit right now, but alternative procedures like PRK or ICL might be an option.'}
         </p>
 
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <button className="btn btn-primary" onClick={() => window.open('https://mec1.net/contact', '_blank')}>
-            Schedule Free Consultation <ArrowRight size={18} />
+            Schedule Free Consultation 
+            <span className="btn-icon-wrapper">
+              <ArrowRight size={14} />
+            </span>
           </button>
           <button className="btn btn-secondary" onClick={restartQuiz}>
             <RotateCcw size={18} /> Retake Quiz
@@ -101,40 +104,41 @@ export default function CandidateQuiz() {
   };
 
   return (
-    <div className="section" id="quiz" style={{ padding: '60px 0' }}>
-      <div className="text-center" style={{ marginBottom: '40px' }}>
-        <h2 className="text-gradient" style={{ fontSize: '2.5rem', marginBottom: '16px' }}>Candidacy Self-Test</h2>
-        <p className="text-secondary" style={{ maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>
+    <div className="section" id="quiz" style={{ padding: '100px 0 60px 0' }}>
+      <div className="text-center" style={{ marginBottom: '60px' }}>
+        <h2 className="text-gradient" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontWeight: '700', marginBottom: '20px', letterSpacing: '-0.02em' }}>Candidacy Self-Test</h2>
+        <p className="text-secondary" style={{ maxWidth: '600px', margin: '0 auto', fontSize: '1.25rem', lineHeight: '1.7' }}>
           Take our 60-second quiz to see if you meet the preliminary requirements for laser vision correction.
         </p>
       </div>
 
       <div className="container">
         {!isFinished ? (
-          <div className="glass-panel animate-fade-in" key={currentQuestion} style={{ maxWidth: '700px', margin: '0 auto', padding: '40px' }}>
-            <div style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span className="text-muted" style={{ fontWeight: 600, fontSize: '0.9rem', letterSpacing: '1px', textTransform: 'uppercase' }}>
+          <div className="glass-panel animate-fade-in" key={currentQuestion} style={{ maxWidth: '700px', margin: '0 auto', padding: '48px 40px' }}>
+            <div style={{ marginBottom: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span className="text-muted" style={{ fontWeight: 700, fontSize: '0.8rem', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
                 Question {currentQuestion + 1} of {questions.length}
               </span>
-              <div style={{ display: 'flex', gap: '4px' }}>
+              <div style={{ display: 'flex', gap: '6px' }}>
                 {questions.map((_, i) => (
                   <div key={i} style={{ 
-                    width: '32px', 
+                    width: '36px', 
                     height: '4px', 
                     borderRadius: '2px', 
-                    background: i <= currentQuestion ? 'var(--accent-primary)' : 'var(--glass-border)' 
+                    background: i <= currentQuestion ? 'var(--accent-primary)' : 'rgba(255, 255, 255, 0.08)',
+                    transition: 'background 0.3s ease'
                   }} />
                 ))}
               </div>
             </div>
 
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '16px', lineHeight: '1.4' }}>
+            <h3 style={{ fontSize: '1.7rem', fontWeight: '600', marginBottom: '20px', lineHeight: '1.4', letterSpacing: '-0.01em' }}>
               {questions[currentQuestion].question}
             </h3>
 
             {questions[currentQuestion].hint && (
-              <p className="text-secondary" style={{ fontSize: '0.95rem', marginBottom: '24px', fontStyle: 'italic', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <AlertCircle size={16} /> {questions[currentQuestion].hint}
+              <p className="text-secondary" style={{ fontSize: '1rem', marginBottom: '32px', fontStyle: 'italic', display: 'flex', alignItems: 'center', gap: '8px', lineHeight: '1.6' }}>
+                <AlertCircle size={18} color="var(--accent-primary)" style={{ flexShrink: 0 }} /> {questions[currentQuestion].hint}
               </p>
             )}
 

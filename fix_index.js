@@ -29,8 +29,9 @@ const heritageCSS = `
         transform: translateY(28px);
         transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
                     transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-        /* Match app font */
-        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        font-family: "Outfit", system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.03em;
+        word-spacing: 0.06em;
         /* Subtle top separator that fades from the hero's glow */
         border-top: 1px solid rgba(255, 255, 255, 0.06);
         /* Stunning parallax background with dark fade blend */
@@ -82,37 +83,42 @@ const heritageCSS = `
         z-index: 1;
       }
 
-      /* Glass card — matches the app's .glass-panel style exactly */
       .her-card {
-        background: rgba(20, 28, 39, 0.6);
-        -webkit-backdrop-filter: blur(16px);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
+        background: rgba(13, 20, 30, 0.55);
+        border-radius: 28px;
         padding: 52px 56px;
+        box-shadow: 
+          0 24px 64px -16px rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(32px) saturate(140%);
+        -webkit-backdrop-filter: blur(32px) saturate(140%);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         position: relative;
         overflow: hidden;
-        box-shadow:
-          0 4px 6px -1px rgba(0,0,0,0.1),
-          0 2px 4px -1px rgba(0,0,0,0.06),
-          0 0 0 1px rgba(14, 165, 233, 0.06) inset;
       }
 
-      /* Subtle top-left accent line — matches app's shimmer-border effect */
       .her-card::before {
-        content: '';
+        content: "";
         position: absolute;
-        top: 0;
-        left: 56px;
-        right: 56px;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent 0%,
-          rgba(14, 165, 233, 0.35) 40%,
-          rgba(110, 154, 120, 0.25) 60%,
-          transparent 100%
-        );
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(127, 161, 214, 0.2) 0%, rgba(110, 154, 120, 0.15) 50%, rgba(167, 139, 250, 0.2) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        pointer-events: none;
+        transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .her-card:hover {
+        background: rgba(13, 20, 30, 0.6);
+        box-shadow: 
+          0 32px 80px -20px rgba(0, 0, 0, 0.8);
+      }
+
+      .her-card:hover::before {
+        background: linear-gradient(135deg, rgba(127, 161, 214, 0.35) 0%, rgba(110, 154, 120, 0.28) 50%, rgba(167, 139, 250, 0.35) 100%);
       }
 
       .her-corner-glow {
@@ -123,6 +129,7 @@ const heritageCSS = `
         height: 280px;
         background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
         pointer-events: none;
+        z-index: 2;
       }
 
       /* Two-column layout: copy | stats */
@@ -179,7 +186,7 @@ const heritageCSS = `
         font-weight: 600;
         color: #f8fafc;
         line-height: 1.15;
-        letter-spacing: -0.02em;
+        letter-spacing: 0.015em;
         margin: 0;
       }
 
@@ -234,7 +241,7 @@ const heritageCSS = `
         font-weight: 700;
         color: #f8fafc;
         line-height: 1;
-        letter-spacing: -0.02em;
+        letter-spacing: 0.015em;
       }
 
       .her-stat-lbl {
@@ -250,7 +257,10 @@ const heritageCSS = `
       @media (max-width: 860px) {
         #heritage-section { padding: 48px 20px 60px; }
 
-        .her-card { padding: 40px 28px; }
+        .her-card {
+          padding: 40px 28px;
+          border-radius: 20px;
+        }
 
         .her-layout {
           grid-template-columns: 1fr;
@@ -275,6 +285,39 @@ const heritageCSS = `
         }
       }
 
+      /* ── Navigation Enhancements ────────────────────────────────── */
+      #main-navigation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 24px 40px;
+        background: transparent;
+        border-bottom: 1px solid transparent;
+      }
+      #main-navigation.scrolled {
+        padding: 12px 40px;
+        background: rgba(10, 15, 22, 0.75) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      }
+      @media (max-width: 768px) {
+        #main-navigation {
+          padding: 16px 20px !important;
+          flex-direction: row !important;
+          gap: 16px !important;
+        }
+        #main-navigation.scrolled {
+          padding: 8px 20px !important;
+        }
+      }
+
       /* ── Logo Enhancements ─────────────────────────────────────── */
       img[alt="Marano Eye Care"],
       img[alt="Marano Eye Care Logo"] {
@@ -285,6 +328,23 @@ const heritageCSS = `
         filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15)) brightness(1.05);
         transition: all 0.3s ease;
         cursor: pointer !important;
+      }
+      #main-navigation.scrolled img[alt="Marano Eye Care"],
+      #main-navigation.scrolled img[alt="Marano Eye Care Logo"] {
+        height: 38px !important;
+        transform: scale(1.0) !important;
+      }
+      @media (max-width: 768px) {
+        #main-navigation img[alt="Marano Eye Care"],
+        #main-navigation img[alt="Marano Eye Care Logo"] {
+          height: 42px !important;
+          transform: scale(1.0) !important;
+        }
+        #main-navigation.scrolled img[alt="Marano Eye Care"],
+        #main-navigation.scrolled img[alt="Marano Eye Care Logo"] {
+          height: 32px !important;
+          transform: scale(1.0) !important;
+        }
       }
 
       /* ── Missing Utility Classes ───────────────────────────────── */
@@ -297,9 +357,9 @@ const heritageCSS = `
       /* ── Global Mobile Optimizations ───────────────────────────── */
       @media (max-width: 768px) {
         /* Force single-column flow on standard app containers
-           EXCEPT: step nav row (parent of [aria-label^="Go to step"]) */
+           EXCEPT: step nav row (parent of [aria-label^="Go to step"]) and main navigation */
         .flex-row, .grid, [style*="display: grid"],
-        [style*="display: flex"]:not(:has(> button[aria-label^="Go to step"])) {
+        [style*="display: flex"]:not(#main-navigation):not(#main-navigation *):not(:has(> button[aria-label^="Go to step"])) {
           flex-direction: column !important;
           grid-template-columns: 1fr !important;
         }
@@ -323,8 +383,8 @@ const heritageCSS = `
         }
 
         /* Increase touch targets and fix button wrapping
-           EXCEPT: step nav circles */
-        button:not([aria-label^="Go to step"]), .btn {
+           EXCEPT: step nav circles and main navigation buttons */
+        button:not([aria-label^="Go to step"]):not(#main-navigation button), .btn:not(#main-navigation .btn) {
           min-height: 48px !important;
           width: 100% !important;
           justify-content: center !important;
@@ -342,7 +402,7 @@ const heritageCSS = `
       /* Typography Refinements */
       h1, h2, h3, .h1, .h2, .h3 {
         font-weight: 300 !important;
-        letter-spacing: -0.02em !important;
+        letter-spacing: 0.015em !important;
         color: #f8fafc !important;
       }
       p, li, span {
@@ -356,7 +416,7 @@ const heritageCSS = `
       }
 
       /* Glassmorphic Hierarchy & Depth */
-      .card, [class*="card"], .glass-panel {
+      .card {
         border: 1px solid rgba(255, 255, 255, 0.04) !important;
         box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         background: rgba(10, 15, 22, 0.6) !important;
@@ -371,7 +431,7 @@ const heritageCSS = `
         box-shadow: 0 0 24px rgba(14, 165, 233, 0.4) !important;
         border: 1px solid rgba(14, 165, 233, 0.5) !important;
         font-weight: 500 !important;
-        letter-spacing: 0.01em !important;
+        letter-spacing: 0.03em !important;
       }
 
     </style>`;
@@ -383,46 +443,46 @@ const heritageSectionHTML = `
     <div class="her-glow-right" aria-hidden="true"></div>
 
     <div class="her-card">
-      <div class="her-corner-glow" aria-hidden="true"></div>
+        <div class="her-corner-glow" aria-hidden="true"></div>
 
-      <div class="her-layout">
-        <!-- Left: copy -->
-        <div class="her-copy">
-          <div class="her-badge">
-            <span class="her-badge-dot" aria-hidden="true"></span>
-            Pioneering Excellence
+        <div class="her-layout">
+          <!-- Left: copy -->
+          <div class="her-copy">
+            <div class="her-badge">
+              <span class="her-badge-dot" aria-hidden="true"></span>
+              Pioneering Excellence
+            </div>
+            <h2 class="her-title">
+              New Jersey's Premier<br/>
+              <span class="her-title-accent">LASIK Destination</span>
+            </h2>
+            <p class="her-body">
+              Marano Eye Care stands as the benchmark for vision correction in the region.
+              <span class="her-em">Dr. Marano was one of the first LASIK surgeons in New Jersey</span>,
+              helping introduce the procedure when it first reached the state. With over three decades of
+              specialized expertise, he offers a level of precision and experience that is unmatched —
+              ensuring your journey to clear vision is in the most capable hands.
+            </p>
           </div>
-          <h2 class="her-title">
-            New Jersey's Premier<br/>
-            <span class="her-title-accent">LASIK Destination</span>
-          </h2>
-          <p class="her-body">
-            Marano Eye Care stands as the benchmark for vision correction in the region.
-            <span class="her-em">Dr. Marano was one of the first LASIK surgeons in New Jersey</span>,
-            helping introduce the procedure when it first reached the state. With over three decades of
-            specialized expertise, he offers a level of precision and experience that is unmatched —
-            ensuring your journey to clear vision is in the most capable hands.
-          </p>
-        </div>
 
-        <!-- Right: stats -->
-        <div class="her-stats">
-          <div class="her-stat">
-            <span class="her-stat-val">30+</span>
-            <span class="her-stat-lbl">Years of Experience</span>
-          </div>
-          <div class="her-divider" aria-hidden="true"></div>
-          <div class="her-stat">
-            <span class="her-stat-val">Pioneer</span>
-            <span class="her-stat-lbl">In New Jersey</span>
-          </div>
-          <div class="her-divider" aria-hidden="true"></div>
-          <div class="her-stat">
-            <span class="her-stat-val">15×</span>
-            <span class="her-stat-lbl">Top Doctor Award</span>
+          <!-- Right: stats -->
+          <div class="her-stats">
+            <div class="her-stat">
+              <span class="her-stat-val">30+</span>
+              <span class="her-stat-lbl">Years of Experience</span>
+            </div>
+            <div class="her-divider" aria-hidden="true"></div>
+            <div class="her-stat">
+              <span class="her-stat-val">Pioneer</span>
+              <span class="her-stat-lbl">In New Jersey</span>
+            </div>
+            <div class="her-divider" aria-hidden="true"></div>
+            <div class="her-stat">
+              <span class="her-stat-val">15×</span>
+              <span class="her-stat-lbl">Top Doctor Award</span>
+            </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 `;

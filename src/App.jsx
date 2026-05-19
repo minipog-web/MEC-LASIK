@@ -6,56 +6,57 @@ import logo from './assets/marano-logo.png';
 import heroImg from './assets/hero.png';
 
 function App() {
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <>
+      {/* Dynamic Background Mesh Orbs */}
+      <div className="bg-glow-1" />
+      <div className="bg-glow-2" />
+
       {/* Navigation */}
       <nav 
         id="main-navigation"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          padding: '24px 40px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          zIndex: 100,
-        }}
+        className={isScrolled ? 'scrolled' : ''}
       >
-        {/* Floating Logo - Fixed to top left, scrolls down with user */}
+        {/* Integrated Logo inside header bar */}
         <div 
-          id="floating-logo-container"
+          id="logo-container"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           style={{
-            position: 'fixed',
-            top: '20px',
-            left: '40px',
-            zIndex: 110,
-            background: 'rgba(10, 15, 22, 0.65)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            padding: '10px 20px',
-            borderRadius: 'var(--border-radius-full)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
             cursor: 'pointer',
-            boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
-            transition: 'all 0.3s ease'
           }}
-          className="glass-panel"
         >
           <img src={logo} alt="Marano Eye Care" height="36" style={{ objectFit: 'contain' }} />
         </div>
         
-        {/* Menu Buttons - Absolute at the top, scroll away with the page */}
-        <div style={{ display: 'flex', gap: '24px', marginLeft: 'auto', alignItems: 'center' }}>
+        {/* Menu Buttons - Fades out completely when scrolled */}
+        <div 
+          style={{ 
+            display: 'flex', 
+            gap: '24px', 
+            marginLeft: 'auto', 
+            alignItems: 'center',
+            opacity: isScrolled ? 0 : 1,
+            transform: isScrolled ? 'translateY(-10px)' : 'translateY(0)',
+            pointerEvents: isScrolled ? 'none' : 'auto',
+            transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
+        >
           <button 
             id="nav-candidate-btn"
             onClick={() => scrollToSection('quiz')}
@@ -65,8 +66,8 @@ function App() {
               fontSize: '1rem',
               border: 'none',
               cursor: 'pointer',
-              fontWeight: '500',
-              transition: 'color 0.2s ease'
+              fontWeight: '600',
+              transition: 'color 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
             onMouseOver={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
             onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
@@ -86,40 +87,14 @@ function App() {
 
       {/* Hero Section */}
       <header style={{
-        minHeight: '100vh',
+        minHeight: '100dvh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '120px 24px 80px 24px',
+        padding: '140px 24px 100px 24px',
         position: 'relative',
         overflow: 'hidden'
       }}>
-        {/* Background glow effects */}
-        <div style={{
-          position: 'absolute',
-          top: '20%',
-          left: '70%',
-          transform: 'translate(-50%, -50%)',
-          width: '600px',
-          height: '600px',
-          background: 'radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(0,0,0,0) 70%)',
-          zIndex: -1,
-          borderRadius: '50%',
-          filter: 'blur(45px)'
-        }} />
-        <div style={{
-          position: 'absolute',
-          top: '60%',
-          left: '20%',
-          transform: 'translate(-50%, -50%)',
-          width: '500px',
-          height: '500px',
-          background: 'radial-gradient(circle, rgba(45,212,191,0.08) 0%, rgba(0,0,0,0) 70%)',
-          zIndex: -1,
-          borderRadius: '50%',
-          filter: 'blur(45px)'
-        }} />
-
         <div className="container hero-container">
           {/* Left Column (Text & CTAs) */}
           <div className="hero-left">
@@ -131,15 +106,16 @@ function App() {
               alignItems: 'center', 
               gap: '12px', 
               color: 'var(--accent-secondary)',
-              border: '1px solid rgba(110, 154, 120, 0.2)',
+              border: '1px solid rgba(110, 154, 120, 0.15)',
+              background: 'rgba(255, 255, 255, 0.01)',
               width: 'fit-content'
             }}>
               <div className="icon-box" style={{ 
                 width: '32px', 
                 height: '32px', 
                 borderRadius: '50%', 
-                background: 'rgba(110, 154, 120, 0.15)', 
-                border: '1px solid rgba(110, 154, 120, 0.3)', 
+                background: 'rgba(110, 154, 120, 0.08)', 
+                border: '1px solid rgba(110, 154, 120, 0.2)', 
                 color: 'var(--accent-secondary)',
                 boxShadow: 'none',
                 display: 'flex',
@@ -148,23 +124,26 @@ function App() {
               }}>
                 <Activity size={16} />
               </div>
-              <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
                 State-of-the-Art Laser Technology
               </span>
             </div>
 
-            <h1 style={{ fontSize: '4rem', marginBottom: '24px', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
+            <h1 style={{ fontSize: 'clamp(2.8rem, 7vw, 4.5rem)', fontWeight: '300', marginBottom: '24px', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
               Experience the world with <br/>
-              <span className="text-gradient">Absolute Clarity</span>
+              <span className="text-gradient" style={{ fontWeight: '800' }}>Absolute Clarity</span>
             </h1>
             
-            <p className="text-secondary" style={{ fontSize: '1.25rem', maxWidth: '600px', marginBottom: '40px', lineHeight: '1.6' }}>
+            <p className="text-secondary" style={{ fontSize: '1.25rem', maxWidth: '600px', marginBottom: '48px', lineHeight: '1.7', fontWeight: '400' }}>
               Discover how LASIK can transform your life. Learn about the procedure and see if you qualify in under 60 seconds.
             </p>
             
             <div className="responsive-flex-col" style={{ display: 'flex', gap: '16px' }}>
               <button onClick={() => scrollToSection('quiz')} className="btn btn-primary">
-                Take the Candidate Quiz
+                Take the Candidate Quiz 
+                <span className="btn-icon-wrapper">
+                  <Eye size={14} />
+                </span>
               </button>
               <button onClick={() => scrollToSection('education')} className="btn btn-secondary">
                 Learn About the Procedure
@@ -258,21 +237,7 @@ function App() {
       </main>
 
       {/* Full-width CTA Section */}
-      <section style={{ padding: '80px 24px 0 24px', position: 'relative', overflow: 'hidden' }}>
-        {/* Glow behind CTA */}
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '500px',
-          height: '500px',
-          background: 'radial-gradient(circle, rgba(14,165,233,0.1) 0%, rgba(0,0,0,0) 70%)',
-          zIndex: -1,
-          borderRadius: '50%',
-          filter: 'blur(45px)'
-        }} />
-
+      <section style={{ padding: '100px 24px 20px 24px', position: 'relative', overflow: 'hidden' }}>
         <div className="container">
           <div className="glass-panel" style={{
             padding: '60px 40px',
@@ -280,31 +245,29 @@ function App() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '24px',
-            border: '1px solid var(--border-light)',
-            borderRadius: '24px',
+            gap: '28px',
             position: 'relative',
             zIndex: 1
           }}>
-            <h2 className="text-gradient" style={{ fontSize: '3rem', margin: 0, fontWeight: '800', letterSpacing: '-0.02em' }}>
+            <h2 className="text-gradient" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', margin: 0, fontWeight: '700', letterSpacing: '-0.02em' }}>
               Ready to See Clearly?
             </h2>
-            <p className="text-secondary" style={{ fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
+            <p className="text-secondary" style={{ fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', lineHeight: '1.7' }}>
               Schedule your complimentary, no-obligation LASIK consultation today. Our world-class specialists are ready to guide you to visual freedom.
             </p>
             
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', margin: '16px 0' }}>
-              <span className="text-muted" style={{ textTransform: 'uppercase', fontSize: '0.85rem', letterSpacing: '2px', fontWeight: '600' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', margin: '12px 0' }}>
+              <span className="text-muted" style={{ textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2.5px', fontWeight: '700' }}>
                 Call us directly at
               </span>
               <a 
                 href="tel:9733220100" 
                 style={{ 
-                  fontSize: '2.5rem', 
+                  fontSize: 'clamp(2rem, 6vw, 3rem)', 
                   fontWeight: '800', 
                   color: 'var(--text-primary)', 
                   textDecoration: 'none',
-                  transition: 'color 0.2s',
+                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
                 onMouseOver={(e) => e.currentTarget.style.color = 'var(--accent-primary)'}
                 onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
@@ -322,6 +285,9 @@ function App() {
                 style={{ textDecoration: 'none', padding: '14px 36px', fontSize: '1.1rem' }}
               >
                 Schedule Free Consultation
+                <span className="btn-icon-wrapper">
+                  <Calendar size={14} />
+                </span>
               </a>
             </div>
           </div>

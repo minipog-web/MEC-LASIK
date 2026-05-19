@@ -9,7 +9,9 @@ const maranoCSS = `
         background-color: transparent;
         position: relative;
         z-index: 1;
-        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        font-family: "Outfit", system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.03em;
+        word-spacing: 0.06em;
       }
 
       .marano-inner {
@@ -32,7 +34,7 @@ const maranoCSS = `
         font-size: clamp(28px, 4vw, 42px);
         font-weight: 300;
         color: #f8fafc;
-        letter-spacing: -0.02em;
+        letter-spacing: 0.015em;
         margin-bottom: 16px;
       }
 
@@ -45,13 +47,40 @@ const maranoCSS = `
       }
 
       .marano-card {
-        background: rgba(20, 28, 39, 0.6);
-        -webkit-backdrop-filter: blur(24px);
-        backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
+        background: rgba(13, 20, 30, 0.55);
+        border-radius: 28px;
         padding: 48px;
-        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        box-shadow: 
+          0 24px 64px -16px rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(32px) saturate(140%);
+        -webkit-backdrop-filter: blur(32px) saturate(140%);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+      }
+
+      .marano-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(127, 161, 214, 0.2) 0%, rgba(110, 154, 120, 0.15) 50%, rgba(167, 139, 250, 0.2) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        pointer-events: none;
+        transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .marano-card:hover {
+        background: rgba(13, 20, 30, 0.6);
+        box-shadow: 
+          0 32px 80px -20px rgba(0, 0, 0, 0.8);
+      }
+
+      .marano-card:hover::before {
+        background: linear-gradient(135deg, rgba(127, 161, 214, 0.35) 0%, rgba(110, 154, 120, 0.28) 50%, rgba(167, 139, 250, 0.35) 100%);
       }
 
       .marano-text {
@@ -69,6 +98,7 @@ const maranoCSS = `
       @media (max-width: 768px) {
         .marano-card {
           padding: 32px 24px;
+          border-radius: 20px;
         }
         .marano-text {
           font-size: 16px;

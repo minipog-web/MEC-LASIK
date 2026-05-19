@@ -9,7 +9,9 @@ const eduCSS = `
         background-color: transparent;
         position: relative;
         z-index: 1;
-        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        font-family: "Outfit", system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.03em;
+        word-spacing: 0.06em;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
         margin: 48px 0;
       }
@@ -31,7 +33,7 @@ const eduCSS = `
         font-size: clamp(28px, 4vw, 42px);
         font-weight: 300;
         color: #f8fafc;
-        letter-spacing: -0.02em;
+        letter-spacing: 0.015em;
         margin-bottom: 16px;
       }
 
@@ -44,13 +46,40 @@ const eduCSS = `
       }
 
       .edu-card {
-        background: rgba(20, 28, 39, 0.6);
-        -webkit-backdrop-filter: blur(24px);
-        backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
+        background: rgba(13, 20, 30, 0.55);
+        border-radius: 28px;
         padding: 48px;
-        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        box-shadow: 
+          0 24px 64px -16px rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(32px) saturate(140%);
+        -webkit-backdrop-filter: blur(32px) saturate(140%);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+      }
+
+      .edu-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(127, 161, 214, 0.2) 0%, rgba(110, 154, 120, 0.15) 50%, rgba(167, 139, 250, 0.2) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        pointer-events: none;
+        transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .edu-card:hover {
+        background: rgba(13, 20, 30, 0.6);
+        box-shadow: 
+          0 32px 80px -20px rgba(0, 0, 0, 0.8);
+      }
+
+      .edu-card:hover::before {
+        background: linear-gradient(135deg, rgba(127, 161, 214, 0.35) 0%, rgba(110, 154, 120, 0.28) 50%, rgba(167, 139, 250, 0.35) 100%);
       }
 
       .edu-text {
@@ -68,6 +97,7 @@ const eduCSS = `
       @media (max-width: 768px) {
         .edu-card {
           padding: 32px 24px;
+          border-radius: 20px;
         }
         .edu-text {
           font-size: 16px;
@@ -82,7 +112,7 @@ const eduHTML = `
     </div>
     <div class="edu-card">
       <p class="edu-text">
-        LASIK (Laser Assisted In Situ Keratomileusis) has transformed vision correction since its introduction more than 20 years ago. Instead of relying on older refractive surgical techniques, LASIK uses ultra precise, computer guided excimer lasers to gently reshape the cornea (the clear, curved front surface of the eye). By refining the corneal curvature, the procedure corrects refractive errors caused by the shape of the eye, such as nearsightedness, farsightedness, and astigmatism. The result is simple, but powerful: light enters the eye and focuses cleanly on the retina, producing crisp, sharp vision.
+        LASIK (Laser Refractive Surgery) has transformed vision correction since its introduction more than 20 years ago. Instead of relying on older refractive surgical techniques, LASIK uses ultra precise, computer guided excimer lasers to gently reshape the cornea (the clear, curved front surface of the eye). By refining the corneal curvature, the procedure corrects refractive errors caused by the shape of the eye, such as nearsightedness, farsightedness, and astigmatism. The result is simple, but powerful: light enters the eye and focuses cleanly on the retina, producing crisp, sharp vision.
       </p>
       <p class="edu-text">
         Most patients achieve 20/20 vision or better, often within a day, giving them a remarkable sense of visual freedom. For people with active or demanding lifestyles—athletes, frequent travelers, swimmers, outdoor enthusiasts—being free from glasses and daily contact lenses can be life changing. LASIK allows you to move through the world without visual limitations or the constant maintenance of corrective eyewear.
