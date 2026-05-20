@@ -84,7 +84,7 @@ export default function CandidateQuiz() {
         
         <p className="text-secondary" style={{ fontSize: '1.15rem', marginBottom: '40px', lineHeight: '1.7' }}>
           {isGoodCandidate 
-            ? 'Based on your answers, you meet the initial criteria for LASIK. The next step is a comprehensive dilated eye exam to measure your corneal thickness and pupil size.' 
+            ? 'Based on your answers, you meet the initial criteria for LASIK. Most patients in your position wish they hadn\u2019t waited so long. The next step is a comprehensive eye exam \u2014 consultation spots this month are limited.' 
             : 'Based on your answers, there are a few factors we need to evaluate further. LASIK might not be the best fit right now, but alternative procedures like PRK or ICL might be an option.'}
         </p>
 

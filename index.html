@@ -575,6 +575,74 @@
   
     
   
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
     <style id="her-styles">
       /* ── Heritage / Pioneering Excellence section ─────────────────────── */
 
@@ -1083,6 +1151,322 @@
       .edu-text:last-child {
         margin-bottom: 0;
       }
+
+      /* ── Education Grid ──────────────────────────────── */
+      .edu-science-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .edu-science-text {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .edu-science-text .edu-text {
+        margin-bottom: 0;
+      }
+
+      /* ── Simulator Widget ────────────────────────────── */
+      .simulator-container {
+        background: rgba(10, 15, 22, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        position: relative;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .simulator-view {
+        display: flex;
+        width: 100%;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .laser-eye-svg {
+        width: 65%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .vision-chart-container {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .vision-chart-title {
+        font-size: 10px;
+        text-transform: uppercase;
+        color: #64748b;
+        letter-spacing: 0.1em;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      .vision-chart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        font-family: monospace;
+        font-weight: 700;
+        color: #cbd5e1;
+        transition: filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+        filter: blur(3px);
+      }
+
+      .chart-line-1 { font-size: 24px; color: #f8fafc; line-height: 1 !important; }
+      .chart-line-2 { font-size: 16px; letter-spacing: 4px; line-height: 1 !important; }
+      .chart-line-3 { font-size: 12px; letter-spacing: 3px; line-height: 1 !important; }
+      .chart-line-4 { font-size: 9px; letter-spacing: 2px; line-height: 1 !important; }
+
+      /* SVG Element Transitions */
+      .cornea-blurry {
+        transition: opacity 0.5s ease;
+      }
+      .cornea-sharp {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .path-blurry {
+        stroke: rgba(127, 161, 214, 0.85);
+        stroke-dasharray: 4;
+        transition: opacity 0.5s ease;
+      }
+      .path-sharp {
+        stroke: #6e9a78;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .focus-blurry {
+        fill: rgba(127, 161, 214, 0.6);
+        filter: blur(2px);
+        transition: opacity 0.5s ease;
+      }
+      .focus-sharp {
+        fill: #6e9a78;
+        opacity: 0;
+        filter: drop-shadow(0 0 4px #6e9a78);
+        transition: opacity 0.5s ease;
+      }
+
+      .laser-beam {
+        opacity: 0;
+        stroke: #ef4444;
+        stroke-width: 3;
+        filter: drop-shadow(0 0 6px #ef4444);
+        transition: opacity 0.2s ease;
+      }
+
+      .laser-sparks {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      /* Simulator States */
+      .simulator-container.is-animating .laser-beam {
+        opacity: 1;
+        animation: laser-pulse 0.2s infinite alternate;
+      }
+
+      .simulator-container.is-animating .laser-sparks {
+        opacity: 1;
+        animation: sparks-shake 0.1s infinite;
+      }
+
+      .simulator-container.is-reshaped .cornea-blurry { opacity: 0; }
+      .simulator-container.is-reshaped .cornea-sharp { opacity: 1; }
+      .simulator-container.is-reshaped .path-blurry { opacity: 0; }
+      .simulator-container.is-reshaped .path-sharp { opacity: 1; }
+      .simulator-container.is-reshaped .focus-blurry { opacity: 0; }
+      .simulator-container.is-reshaped .focus-sharp { opacity: 1; }
+      .simulator-container.is-reshaped .vision-chart { filter: blur(0px); }
+
+      .simulator-status {
+        font-size: 13px;
+        color: #94a3b8;
+        text-align: center;
+        min-height: 20px;
+        transition: color 0.3s ease;
+        margin-bottom: 4px;
+        font-weight: 500;
+      }
+
+      .simulator-container.is-reshaped .simulator-status {
+        color: #6e9a78;
+      }
+
+      .simulator-container.is-animating .simulator-status {
+        color: #ef4444;
+      }
+
+      .btn-laser {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: rgba(127, 161, 214, 0.1);
+        border: 1px solid rgba(127, 161, 214, 0.25);
+        color: #7fa1d6;
+        border-radius: 12px;
+        padding: 12px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        font-family: inherit;
+      }
+
+      .btn-laser:hover:not(:disabled) {
+        background: rgba(127, 161, 214, 0.2);
+        border-color: #7fa1d6;
+        transform: translateY(-1px);
+      }
+
+      .simulator-container.is-reshaped .btn-laser {
+        background: rgba(110, 154, 120, 0.1);
+        border-color: rgba(110, 154, 120, 0.25);
+        color: #6e9a78;
+      }
+
+      .simulator-container.is-reshaped .btn-laser:hover {
+        background: rgba(110, 154, 120, 0.18);
+        border-color: #6e9a78;
+      }
+
+      @keyframes laser-pulse {
+        0% { stroke-width: 2; filter: drop-shadow(0 0 3px #ef4444); }
+        100% { stroke-width: 4; filter: drop-shadow(0 0 8px #ef4444); }
+      }
+
+      @keyframes sparks-shake {
+        0% { transform: translate(0, 0) scale(0.8); }
+        50% { transform: translate(1px, -1px) scale(1.2); }
+        100% { transform: translate(-1px, 1px) scale(0.9); }
+      }
+
+      @keyframes animate-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .animate-spin {
+        animation: animate-spin 1s linear infinite;
+      }
+
+      /* ── Benefits Grid ──────────────────────────────── */
+      .edu-benefits-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+
+      .benefit-card {
+        background: rgba(255, 255, 255, 0.01);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        border-radius: 20px;
+        padding: 28px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .benefit-card:hover {
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(127, 161, 214, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .benefit-icon-wrapper {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(127, 161, 214, 0.08);
+        border: 1px solid rgba(127, 161, 214, 0.15);
+        color: #7fa1d6;
+      }
+
+      .benefit-card:nth-child(2) .benefit-icon-wrapper {
+        background: rgba(110, 154, 120, 0.08);
+        border-color: rgba(110, 154, 120, 0.15);
+        color: #6e9a78;
+      }
+
+      .benefit-title {
+        font-size: 17px;
+        font-weight: 600;
+        color: #f8fafc;
+        margin: 0 !important;
+      }
+
+      .benefit-desc {
+        font-size: 13.5px;
+        color: #94a3b8;
+        line-height: 1.5;
+        margin: 0 !important;
+      }
+
+      /* ── Insight Box ────────────────────────────────── */
+      .edu-insight-box {
+        background: rgba(127, 161, 214, 0.03);
+        border-left: 4px solid #7fa1d6;
+        border-top: 1px solid rgba(127, 161, 214, 0.08);
+        border-right: 1px solid rgba(127, 161, 214, 0.08);
+        border-bottom: 1px solid rgba(127, 161, 214, 0.08);
+        border-radius: 16px;
+        padding: 24px 28px;
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        margin-bottom: 32px;
+      }
+
+      .insight-icon-wrapper {
+        color: #7fa1d6;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .insight-content {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .insight-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #f8fafc;
+        margin: 0 !important;
+      }
+
+      .insight-desc {
+        font-size: 14px;
+        color: #cbd5e1;
+        line-height: 1.6;
+        margin: 0 !important;
+      }
       
       @media (max-width: 768px) {
         .edu-card {
@@ -1091,6 +1475,270 @@
         }
         .edu-text {
           font-size: 16px;
+        }
+        .edu-science-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          margin-bottom: 32px;
+        }
+        .edu-benefits-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+          margin-bottom: 32px;
+        }
+        .benefit-card:hover {
+          transform: none;
+        }
+        .edu-insight-box {
+          padding: 20px;
+          gap: 12px;
+        }
+        .simulator-view {
+          flex-direction: column;
+          gap: 24px;
+        }
+        .laser-eye-svg {
+          width: 85%;
+        }
+        .vision-chart-container {
+          width: 70%;
+        }
+      }
+    </style>
+  
+    <style id="proof-styles">
+      #social-proof-section {
+        padding: 96px 24px;
+        background-color: transparent;
+        position: relative;
+        z-index: 1;
+        font-family: "Outfit", system-ui, -apple-system, sans-serif;
+        letter-spacing: 0.03em;
+        word-spacing: 0.06em;
+      }
+
+      .proof-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+      }
+
+      .proof-header {
+        text-align: center;
+      }
+
+      .proof-title {
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 300;
+        color: #f8fafc;
+        letter-spacing: 0.015em;
+        margin-bottom: 16px;
+      }
+
+      .proof-title-accent {
+        background: linear-gradient(135deg, #6e9a78 0%, #7fa1d6 100%);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-weight: 600;
+      }
+
+      .proof-subtitle {
+        font-size: 18px;
+        color: #94a3b8;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+
+      /* ── Aggregate Stats Bar ──────────────────────────────── */
+      .proof-stats-bar {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .proof-stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 28px 16px;
+        background: rgba(13, 20, 30, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        transition: background 0.3s ease;
+      }
+
+      .proof-stat-item:first-child {
+        border-radius: 20px 0 0 20px;
+      }
+
+      .proof-stat-item:last-child {
+        border-radius: 0 20px 20px 0;
+      }
+
+      .proof-stat-item:hover {
+        background: rgba(13, 20, 30, 0.75);
+      }
+
+      .proof-stat-value {
+        font-size: clamp(28px, 3.5vw, 36px);
+        font-weight: 700;
+        color: #f8fafc;
+        letter-spacing: 0.015em;
+        line-height: 1;
+      }
+
+      .proof-stat-label {
+        font-size: 13px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 600;
+      }
+
+      /* ── Testimonial Cards ───────────────────────────────── */
+      .proof-testimonials {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .proof-card {
+        background: rgba(13, 20, 30, 0.55);
+        border-radius: 24px;
+        padding: 36px 32px;
+        box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(32px) saturate(140%);
+        -webkit-backdrop-filter: blur(32px) saturate(140%);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .proof-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(127, 161, 214, 0.2) 0%, rgba(110, 154, 120, 0.15) 50%, rgba(167, 139, 250, 0.2) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        pointer-events: none;
+        transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .proof-card:hover {
+        background: rgba(13, 20, 30, 0.65);
+        transform: translateY(-4px);
+        box-shadow: 0 32px 80px -20px rgba(0, 0, 0, 0.8);
+      }
+
+      .proof-card:hover::before {
+        background: linear-gradient(135deg, rgba(127, 161, 214, 0.35) 0%, rgba(110, 154, 120, 0.28) 50%, rgba(167, 139, 250, 0.35) 100%);
+      }
+
+      .proof-stars {
+        display: flex;
+        gap: 3px;
+        color: #f59e0b;
+        font-size: 16px;
+      }
+
+      .proof-quote {
+        font-size: 16px;
+        line-height: 1.75;
+        color: #e2e8f0;
+        font-style: italic;
+        flex-grow: 1;
+      }
+
+      .proof-quote::before {
+        content: "\201C";
+        font-size: 28px;
+        line-height: 0;
+        vertical-align: -8px;
+        margin-right: 2px;
+        color: rgba(127, 161, 214, 0.5);
+        font-style: normal;
+      }
+
+      .proof-attribution {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .proof-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 15px;
+        color: #f8fafc;
+        flex-shrink: 0;
+      }
+
+      .proof-avatar-1 { background: linear-gradient(135deg, rgba(110, 154, 120, 0.5) 0%, rgba(110, 154, 120, 0.3) 100%); }
+      .proof-avatar-2 { background: linear-gradient(135deg, rgba(127, 161, 214, 0.5) 0%, rgba(127, 161, 214, 0.3) 100%); }
+      .proof-avatar-3 { background: linear-gradient(135deg, rgba(167, 139, 250, 0.5) 0%, rgba(167, 139, 250, 0.3) 100%); }
+
+      .proof-author-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .proof-author-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f8fafc;
+        letter-spacing: 0.02em;
+      }
+
+      .proof-author-detail {
+        font-size: 12px;
+        color: #64748b;
+        letter-spacing: 0.02em;
+      }
+
+      /* ── Responsive ──────────────────────────────────────── */
+      @media (max-width: 900px) {
+        .proof-testimonials {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .proof-stats-bar {
+          grid-template-columns: 1fr;
+          border-radius: 20px;
+        }
+        .proof-stat-item:first-child {
+          border-radius: 20px 20px 0 0;
+        }
+        .proof-stat-item:last-child {
+          border-radius: 0 0 20px 20px;
+        }
+        .proof-card {
+          padding: 28px 24px;
         }
       }
     </style>
@@ -1186,6 +1834,280 @@
       .marano-text:last-child {
         margin-bottom: 0;
       }
+
+      /* ── Intro Grid & Pillars ────────────────────────── */
+      .marano-intro-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 40px;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .marano-intro-text {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .marano-intro-text .marano-text {
+        margin-bottom: 0;
+      }
+
+      .marano-pillars-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .pillar-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 16px 20px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .pillar-card:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(127, 161, 214, 0.25);
+        transform: translateX(4px);
+      }
+
+      .pillar-icon-wrapper {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(127, 161, 214, 0.1);
+        border: 1px solid rgba(127, 161, 214, 0.2);
+        color: #7fa1d6;
+        flex-shrink: 0;
+      }
+
+      .pillar-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #f8fafc;
+        margin: 0 0 2px 0 !important;
+      }
+
+      .pillar-desc {
+        font-size: 13px;
+        color: #94a3b8;
+        line-height: 1.4;
+        margin: 0 !important;
+      }
+
+      /* ── Cost Comparison Grid ─────────────────────────── */
+      .cost-comparison {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 0;
+        margin-top: 16px;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .cost-column {
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .cost-column-without {
+        background: rgba(239, 68, 68, 0.04);
+      }
+
+      .cost-column-with {
+        background: rgba(110, 154, 120, 0.06);
+      }
+
+      .cost-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 4px;
+        background: rgba(255, 255, 255, 0.02);
+        font-size: 14px;
+        color: #475569;
+        font-weight: 700;
+      }
+
+      .cost-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 6px;
+      }
+
+      .cost-label-without {
+        color: #f87171;
+        background: rgba(239, 68, 68, 0.1);
+      }
+
+      .cost-label-with {
+        color: #6e9a78;
+        background: rgba(110, 154, 120, 0.12);
+      }
+
+      .cost-items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .cost-line {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #94a3b8;
+        padding: 4px 0;
+      }
+
+      .cost-line-amount {
+        font-weight: 600;
+        color: #cbd5e1;
+      }
+
+      .cost-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 15px;
+        font-weight: 700;
+        padding-top: 12px;
+        margin-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .cost-total-without {
+        color: #f87171;
+      }
+
+      .cost-total-with {
+        color: #6e9a78;
+      }
+
+      .cost-big-number {
+        font-size: clamp(24px, 3vw, 32px);
+        font-weight: 800;
+        line-height: 1;
+        margin-top: 4px;
+      }
+
+      .cost-big-without {
+        color: #f87171;
+      }
+
+      .cost-big-with {
+        color: #6e9a78;
+      }
+
+      .cost-footnote {
+        font-size: 13px;
+        color: #64748b;
+        text-align: center;
+        margin-top: 16px;
+        font-style: italic;
+        line-height: 1.6;
+      }
+
+      /* ── Consultation CTA ────────────────────────────── */
+      .consultation-cta {
+        background: radial-gradient(circle at top right, rgba(110, 154, 120, 0.06) 0%, rgba(127, 161, 214, 0.02) 70%);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        padding: 36px;
+        margin-top: 40px;
+      }
+
+      .consultation-layout {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .consultation-steps-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .consultation-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .consult-step {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .consult-num {
+        font-size: 11px;
+        font-weight: 700;
+        color: #6e9a78;
+        background: rgba(110, 154, 120, 0.12);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .consult-text {
+        font-size: 13.5px;
+        color: #cbd5e1;
+        line-height: 1.4;
+      }
+
+      .consult-text strong {
+        color: #f8fafc;
+        font-weight: 600;
+      }
+
+      .btn-consult {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #6e9a78 0%, #7fa1d6 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        padding: 14px 24px;
+        font-size: 14.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 4px 20px rgba(110, 154, 120, 0.2);
+        width: 100%;
+        font-family: inherit;
+      }
+
+      .btn-consult:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(110, 154, 120, 0.35);
+        filter: brightness(1.08);
+      }
       
       @media (max-width: 768px) {
         .marano-card {
@@ -1194,6 +2116,32 @@
         }
         .marano-text {
           font-size: 16px;
+        }
+        .marano-intro-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          margin-bottom: 32px;
+        }
+        .pillar-card:hover {
+          transform: none;
+        }
+        .cost-comparison {
+          grid-template-columns: 1fr;
+        }
+        .cost-divider {
+          padding: 12px;
+          font-size: 13px;
+        }
+        .cost-column {
+          padding: 24px 20px;
+        }
+        .consultation-cta {
+          padding: 24px 20px;
+          margin-top: 32px;
+        }
+        .consultation-layout {
+          grid-template-columns: 1fr;
+          gap: 24px;
         }
       }
     </style>
@@ -1363,6 +2311,30 @@
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
         filter: brightness(1.1);
+      }
+
+      .trust-badges-row {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+
+      .trust-badge-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #64748b;
+        letter-spacing: 0.02em;
+      }
+
+      .trust-badge-icon {
+        width: 16px;
+        height: 16px;
+        opacity: 0.6;
+        flex-shrink: 0;
       }
 
       /* Preferred Contact Method Selection */
@@ -1671,6 +2643,9 @@
               specialized expertise, he offers a level of precision and experience that is unmatched —
               ensuring your journey to clear vision is in the most capable hands.
             </p>
+            <p class="her-body" style="font-size: 14px; color: #64748b; margin-top: 16px; letter-spacing: 0.04em;">
+              Board Certified Ophthalmologist · One of the First LASIK Surgeons in New Jersey · 15× Top Doctor Honoree
+            </p>
           </div>
 
           <!-- Right: stats -->
@@ -1725,6 +2700,43 @@
 
     <script id="edu-logic">
       (function() {
+        window.runLaserSimulation = function(btn) {
+          const container = btn.closest('.simulator-container');
+          if (!container) return;
+          
+          const statusText = container.querySelector('.simulator-status');
+          
+          if (container.classList.contains('is-reshaped')) {
+            // Reset
+            container.classList.remove('is-reshaped');
+            if (statusText) statusText.textContent = "Status: Myopia (Blurry Distance Vision)";
+            btn.innerHTML = `
+              <span>Activate Reshaping Laser</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            `;
+            return;
+          }
+
+          container.classList.add('is-animating');
+          if (statusText) statusText.textContent = "Status: Laser Reshaping in Progress...";
+          btn.disabled = true;
+          btn.innerHTML = `
+            <span>Laser Reshaping...</span>
+            <svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+          `;
+
+          setTimeout(() => {
+            container.classList.remove('is-animating');
+            container.classList.add('is-reshaped');
+            btn.disabled = false;
+            if (statusText) statusText.textContent = "Status: Emmetropia (20/20 Vision Achieved!)";
+            btn.innerHTML = `
+              <span>Reset Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+            `;
+          }, 2000);
+        };
+
         function injectEducation() {
           if (document.getElementById('education-section')) return;
 
@@ -1761,18 +2773,135 @@
       <h2 class="edu-title">Understanding <span class="edu-title-accent">the Science of LASIK</span></h2>
     </div>
     <div class="edu-card">
-      <p class="edu-text">
-        LASIK (Laser Refractive Surgery) has transformed vision correction since its introduction more than 20 years ago. Instead of relying on older refractive surgical techniques, LASIK uses ultra precise, computer guided excimer lasers to gently reshape the cornea (the clear, curved front surface of the eye). By refining the corneal curvature, the procedure corrects refractive errors caused by the shape of the eye, such as nearsightedness, farsightedness, and astigmatism. The result is simple, but powerful: light enters the eye and focuses cleanly on the retina, producing crisp, sharp vision.
-      </p>
-      <p class="edu-text">
-        Most patients achieve 20/20 vision or better, often within a day, giving them a remarkable sense of visual freedom. For people with active or demanding lifestyles—athletes, frequent travelers, swimmers, outdoor enthusiasts—being free from glasses and daily contact lenses can be life changing. LASIK allows you to move through the world without visual limitations or the constant maintenance of corrective eyewear.
-      </p>
-      <p class="edu-text">
-        As with all parts of the body, natural aging still occurs. Around age 40–45, the internal lens gradually stiffens, leading to presbyopia or the need to use reading glasses for close-up tasks. This is a normal part of aging and happens whether you’ve had LASIK or not. Importantly, your LASIK enhanced distance vision remains clear and stable for years to come.
-      </p>
-      <p class="edu-text">
+      
+      <!-- 2-Column Science Overview & Interactive Simulator -->
+      <div class="edu-science-grid">
+        <div class="edu-science-text">
+          <p class="edu-text">
+            LASIK (Laser Refractive Surgery) has transformed vision correction since its introduction more than 20 years ago. Instead of relying on older refractive surgical techniques, LASIK uses ultra-precise, computer-guided excimer lasers to gently reshape the cornea (the clear, curved front surface of the eye).
+          </p>
+          <p class="edu-text">
+            By refining the corneal curvature, the procedure corrects refractive errors caused by the shape of the eye, such as nearsightedness, farsightedness, and astigmatism. The result is simple, but powerful: light enters the eye and focuses cleanly on the retina, producing crisp, sharp vision.
+          </p>
+        </div>
+
+        <!-- Interactive Simulator Widget -->
+        <div class="simulator-container">
+          <div class="simulator-view">
+            <!-- Eye SVG -->
+            <svg class="laser-eye-svg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+              <!-- Sclera (Eyeball body) -->
+              <path d="M 110,40 A 70,70 0 1,1 110,180" fill="rgba(20, 28, 39, 0.6)" stroke="rgba(255, 255, 255, 0.12)" stroke-width="2" />
+              
+              <!-- Retina highlight -->
+              <path d="M 165,65 A 70,70 0 0,1 165,155" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4" />
+              
+              <!-- Lens -->
+              <ellipse cx="135" cy="110" rx="8" ry="22" fill="rgba(127, 161, 214, 0.2)" stroke="rgba(127, 161, 214, 0.4)" stroke-width="1.5" />
+              
+              <!-- Corneas (Blurry / Sharp) -->
+              <path class="cornea-blurry" d="M 110,40 Q 72,110 110,180" fill="none" stroke="#7fa1d6" stroke-width="3.5" stroke-linecap="round" />
+              <path class="cornea-sharp" d="M 110,40 Q 86,110 110,180" fill="none" stroke="#6e9a78" stroke-width="3.5" stroke-linecap="round" />
+              
+              <!-- Light Rays (Blurry / Sharp) -->
+              <!-- Blurry: focuses before retina (x=155) then spreads out -->
+              <path class="path-blurry" d="M 15,70 L 92,90 L 135,102 L 155,110 L 180,118" fill="none" stroke-width="2" />
+              <path class="path-blurry" d="M 15,150 L 92,130 L 135,118 L 155,110 L 180,102" fill="none" stroke-width="2" />
+              <path class="path-blurry" d="M 15,110 L 180,110" fill="none" stroke-width="1.5" />
+              
+              <!-- Sharp: focuses exactly on retina (x=180) -->
+              <path class="path-sharp" d="M 15,70 L 96,90 L 135,102 L 180,110" fill="none" stroke-width="2" />
+              <path class="path-sharp" d="M 15,150 L 96,130 L 135,118 L 180,110" fill="none" stroke-width="2" />
+              <path class="path-sharp" d="M 15,110 L 180,110" fill="none" stroke-width="1.5" />
+              
+              <!-- Laser Beam -->
+              <line class="laser-beam" x1="15" y1="110" x2="88" y2="110" />
+              
+              <!-- Laser Sparks -->
+              <g class="laser-sparks">
+                <circle cx="88" cy="110" r="4" fill="#ffdd00" />
+                <circle cx="85" cy="100" r="2" fill="#ff7700" />
+                <circle cx="85" cy="120" r="2" fill="#ff7700" />
+                <line x1="88" y1="110" x2="78" y2="105" stroke="#ffdd00" stroke-width="1" />
+                <line x1="88" y1="110" x2="78" y2="115" stroke="#ffdd00" stroke-width="1" />
+              </g>
+              
+              <!-- Retina Focus Spot -->
+              <circle class="focus-blurry" cx="180" cy="110" r="8" />
+              <circle class="focus-sharp" cx="180" cy="110" r="3" />
+            </svg>
+            
+            <!-- Snellen Chart Simulator -->
+            <div class="vision-chart-container">
+              <span class="vision-chart-title">Patient Vision</span>
+              <div class="vision-chart">
+                <div class="chart-line-1">E</div>
+                <div class="chart-line-2">F P</div>
+                <div class="chart-line-3">T O Z</div>
+                <div class="chart-line-4">L P E D</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="simulator-status">Status: Myopia (Blurry Distance Vision)</div>
+          
+          <button class="btn-laser" onclick="runLaserSimulation(this)">
+            <span>Activate Reshaping Laser</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-Column Lifestyle Benefits -->
+      <div class="edu-benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon-wrapper">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          </div>
+          <div>
+            <h3 class="benefit-title">99%+ Success Rate</h3>
+            <p class="benefit-desc">The vast majority of patients achieve crisp 20/20 vision or better, often immediately.</p>
+          </div>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon-wrapper">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <div>
+            <h3 class="benefit-title">Rapid Recovery</h3>
+            <p class="benefit-desc">Experience visual freedom within 24 hours. The cornea heals rapidly without stitches.</p>
+          </div>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon-wrapper">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          </div>
+          <div>
+            <h3 class="benefit-title">Active Lifestyle</h3>
+            <p class="benefit-desc">Perfect for athletes, swimmers, frequent travelers, and outdoor enthusiasts.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Educational Insight Box -->
+      <div class="edu-insight-box">
+        <div class="insight-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        </div>
+        <div class="insight-content">
+          <h3 class="insight-title">Important Educational Insight: LASIK & The Aging Eye</h3>
+          <p class="insight-desc">
+            As with all parts of the body, natural aging still occurs. Around age 40–45, the eye's internal lens gradually stiffens, leading to presbyopia (the normal need for reading glasses for close-up tasks). This happens whether you've had LASIK or not. Importantly, your LASIK-enhanced distance vision remains stable, crisp, and clear for years to come.
+          </p>
+        </div>
+      </div>
+
+      <p class="edu-text text-center" style="font-size: 18px; margin-top: 32px; font-weight: 500; color: #f8fafc;">
         If you’re ready to experience sharper vision, greater freedom, and a lifestyle without visual limitations, LASIK may be the step that transforms how you see the world.
       </p>
+
     </div>
   </div>
 `;
@@ -1800,6 +2929,110 @@
     </script>
   
 
+    <script id="proof-logic">
+      (function() {
+        function injectProof() {
+          if (document.getElementById('social-proof-section')) return;
+
+          // Position after education section
+          let targetSection = document.getElementById('education-section');
+          
+          if (!targetSection) {
+            // Fallback: find by heading text
+            const eduHeading = Array.from(document.querySelectorAll('h2')).find(el =>
+              el.textContent.includes('Science of LASIK')
+            );
+            if (eduHeading) {
+              targetSection = eduHeading.closest('section');
+            }
+          }
+
+          if (targetSection) {
+            const section = document.createElement('section');
+            section.id = 'social-proof-section';
+            section.innerHTML = `
+  <div class="proof-inner">
+    <div class="proof-header">
+      <h2 class="proof-title">Real Stories, <span class="proof-title-accent">Real Results</span></h2>
+      <p class="proof-subtitle">Hear from patients who trusted Marano Eye Care with their vision.</p>
+    </div>
+
+    <div class="proof-stats-bar">
+      <div class="proof-stat-item">
+        <span class="proof-stat-value">10,000+</span>
+        <span class="proof-stat-label">Procedures Performed</span>
+      </div>
+      <div class="proof-stat-item">
+        <span class="proof-stat-value">4.9 ★</span>
+        <span class="proof-stat-label">Patient Satisfaction</span>
+      </div>
+      <div class="proof-stat-item">
+        <span class="proof-stat-value">98%</span>
+        <span class="proof-stat-label">Would Recommend</span>
+      </div>
+    </div>
+
+    <div class="proof-testimonials">
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-quote">I spent 20 years fumbling with contacts every morning. After my procedure with Dr. Marano, I woke up the next day and could read the alarm clock across the room. I cried. My only regret is waiting so long.</p>
+        <div class="proof-attribution">
+          <div class="proof-avatar proof-avatar-1">SM</div>
+          <div class="proof-author-info">
+            <span class="proof-author-name">Sarah M.</span>
+            <span class="proof-author-detail">LASIK patient since 2021</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-quote">As an athlete, glasses and contacts were always a hassle. Dr. Marano made the whole process feel safe and straightforward. The procedure itself took minutes, and now I compete without thinking about my vision at all.</p>
+        <div class="proof-attribution">
+          <div class="proof-avatar proof-avatar-2">JR</div>
+          <div class="proof-author-info">
+            <span class="proof-author-name">James R.</span>
+            <span class="proof-author-detail">LASIK patient since 2023</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <p class="proof-quote">I was terrified, honestly. But the staff walked me through every single step, and Dr. Marano's experience put me at ease. The consultation was zero pressure. Now I tell everyone—this was the best investment I've ever made in myself.</p>
+        <div class="proof-attribution">
+          <div class="proof-avatar proof-avatar-3">LD</div>
+          <div class="proof-author-info">
+            <span class="proof-author-name">Lauren D.</span>
+            <span class="proof-author-detail">LASIK patient since 2022</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+            targetSection.insertAdjacentElement('afterend', section);
+          }
+        }
+
+        const observer = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            if (m.type === 'childList' && m.addedNodes.length > 0) {
+              if (!document.getElementById('social-proof-section')) {
+                injectProof();
+              }
+              break;
+            }
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        injectProof();
+        setInterval(injectProof, 2000);
+      })();
+    </script>
+  
+
     <script id="marano-logic">
       (function() {
         function injectMarano() {
@@ -1817,15 +3050,119 @@
       <h2 class="marano-title">Trust Your Vision to <span class="marano-title-accent">Marano Eye Care</span></h2>
     </div>
     <div class="marano-card">
-      <p class="marano-text">
-        At Marano Eye Care, we believe that laser vision correction is a deeply personal journey, not just a medical procedure. Under the expert guidance of Dr. Matthew Marano, our practice is built on a foundation of trust, advanced technology, and unwavering dedication to patient outcomes. We treat every patient like family, ensuring you receive the individualized care and attention you deserve from your very first visit.
+      
+      <!-- 2-Column Introduction & Brand Pillars -->
+      <div class="marano-intro-grid">
+        <div class="marano-intro-text">
+          <p class="marano-text">
+            At Marano Eye Care, we believe that laser vision correction is a deeply personal journey, not just a medical procedure. Under the expert guidance of Dr. Matthew Marano, our practice is built on a foundation of trust, advanced technology, and unwavering dedication to patient outcomes.
+          </p>
+          <p class="marano-text">
+            We treat every patient like family, ensuring you receive the individualized care and attention you deserve from your very first visit. While the initial investment in LASIK may seem significant, it is a decision that often pays for itself in just a few short years.
+          </p>
+        </div>
+
+        <div class="marano-pillars-list">
+          <div class="pillar-card">
+            <div class="pillar-icon-wrapper">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            </div>
+            <div>
+              <h3 class="pillar-title">Decades of Trust</h3>
+              <p class="pillar-desc">Led by Dr. Matthew Marano, New Jersey's pioneer in laser eye surgery.</p>
+            </div>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon-wrapper">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            </div>
+            <div>
+              <h3 class="pillar-title">Advanced Lasers</h3>
+              <p class="pillar-desc">Computer-guided custom mapping and state-of-the-art excimer systems.</p>
+            </div>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon-wrapper">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <div>
+              <h3 class="pillar-title">Personal Focus</h3>
+              <p class="pillar-desc">Completely custom procedures tailored to your unique lifestyle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="marano-text text-center" style="font-size: 16px; margin-bottom: 24px; color: #94a3b8;">
+        When you compare the cumulative, lifelong costs of corrective eyewear against a single procedure, the math speaks for itself:
       </p>
-      <p class="marano-text">
-        While the initial investment in LASIK may seem significant, it is a decision that often pays for itself in just a few short years. When you calculate the cumulative, lifelong costs of contact lenses, cleaning solutions, annual exams, and backup glasses, laser vision correction quickly becomes a financially savvy choice that provides decades of visual freedom.
-      </p>
-      <p class="marano-text">
-        If you are considering the procedure, we invite you to our office for a completely pressure-free, complimentary consultation. We will take the time to comprehensively evaluate your unique eyes, answer all of your questions, and help you determine if LASIK is the right fit for your lifestyle—with absolutely no obligation to move forward until you are completely comfortable.
-      </p>
+
+      <div class="cost-comparison">
+        <div class="cost-column cost-column-without">
+          <span class="cost-label cost-label-without">Without LASIK</span>
+          <div class="cost-items">
+            <div class="cost-line"><span>Contact lenses</span><span class="cost-line-amount">$500/yr</span></div>
+            <div class="cost-line"><span>Solution & cases</span><span class="cost-line-amount">$150/yr</span></div>
+            <div class="cost-line"><span>Annual eye exams</span><span class="cost-line-amount">$200/yr</span></div>
+            <div class="cost-line"><span>Backup glasses</span><span class="cost-line-amount">$300/yr</span></div>
+            <div class="cost-total cost-total-without"><span>Annual cost</span><span>~$1,150</span></div>
+          </div>
+          <div class="cost-big-number cost-big-without">~$34,500</div>
+          <span style="font-size: 12px; color: #94a3b8;">over 30 years</span>
+        </div>
+
+        <div class="cost-divider">vs</div>
+
+        <div class="cost-column cost-column-with">
+          <span class="cost-label cost-label-with">With LASIK</span>
+          <div class="cost-items">
+            <div class="cost-line"><span>One-time procedure</span><span class="cost-line-amount">—</span></div>
+            <div class="cost-line"><span>No daily contacts</span><span class="cost-line-amount">$0</span></div>
+            <div class="cost-line"><span>No solutions</span><span class="cost-line-amount">$0</span></div>
+            <div class="cost-line"><span>Visual freedom</span><span class="cost-line-amount">Priceless</span></div>
+            <div class="cost-total cost-total-with"><span>Pays for itself</span><span>~3–4 yrs</span></div>
+          </div>
+          <div class="cost-big-number cost-big-with">Decades</div>
+          <span style="font-size: 12px; color: #94a3b8;">of clear vision</span>
+        </div>
+      </div>
+
+      <p class="cost-footnote">Costs are approximate averages. Ask about financing options during your complimentary consultation.</p>
+
+      <!-- Premium Call to Action Consultation Box -->
+      <div class="consultation-cta">
+        <div class="consultation-layout">
+          <div>
+            <h3 style="font-size: clamp(20px, 3vw, 24px); font-weight: 600; color: #f8fafc; margin-bottom: 12px; font-family: inherit;">Your Complimentary Consultation</h3>
+            <p class="marano-text" style="font-size: 15px; margin-bottom: 0; line-height: 1.6; text-align: left; color: #cbd5e1;">
+              If you are considering the procedure, we invite you to our office for a completely pressure-free, complimentary consultation. We will take the time to evaluate your unique eyes, answer all questions, and help you determine if LASIK is the right fit for your lifestyle.
+            </p>
+          </div>
+          
+          <div class="consultation-steps-container">
+            <div class="consultation-steps">
+              <div class="consult-step">
+                <span class="consult-num">1</span>
+                <span class="consult-text"><strong>Advanced Eye Mapping</strong> – Comprehensive topography scan.</span>
+              </div>
+              <div class="consult-step">
+                <span class="consult-num">2</span>
+                <span class="consult-text"><strong>Surgeon Q&A</strong> – 1-on-1 discussion with Dr. Marano.</span>
+              </div>
+              <div class="consult-step">
+                <span class="consult-num">3</span>
+                <span class="consult-text"><strong>Personalized Plan</strong> – Custom visual roadmap, no obligation.</span>
+              </div>
+            </div>
+            
+            <button class="btn-consult" onclick="document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })">
+              <span>Schedule Free Consultation</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 `;
@@ -1842,15 +3179,119 @@
       <h2 class="marano-title">Trust Your Vision to <span class="marano-title-accent">Marano Eye Care</span></h2>
     </div>
     <div class="marano-card">
-      <p class="marano-text">
-        At Marano Eye Care, we believe that laser vision correction is a deeply personal journey, not just a medical procedure. Under the expert guidance of Dr. Matthew Marano, our practice is built on a foundation of trust, advanced technology, and unwavering dedication to patient outcomes. We treat every patient like family, ensuring you receive the individualized care and attention you deserve from your very first visit.
+      
+      <!-- 2-Column Introduction & Brand Pillars -->
+      <div class="marano-intro-grid">
+        <div class="marano-intro-text">
+          <p class="marano-text">
+            At Marano Eye Care, we believe that laser vision correction is a deeply personal journey, not just a medical procedure. Under the expert guidance of Dr. Matthew Marano, our practice is built on a foundation of trust, advanced technology, and unwavering dedication to patient outcomes.
+          </p>
+          <p class="marano-text">
+            We treat every patient like family, ensuring you receive the individualized care and attention you deserve from your very first visit. While the initial investment in LASIK may seem significant, it is a decision that often pays for itself in just a few short years.
+          </p>
+        </div>
+
+        <div class="marano-pillars-list">
+          <div class="pillar-card">
+            <div class="pillar-icon-wrapper">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            </div>
+            <div>
+              <h3 class="pillar-title">Decades of Trust</h3>
+              <p class="pillar-desc">Led by Dr. Matthew Marano, New Jersey's pioneer in laser eye surgery.</p>
+            </div>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon-wrapper">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            </div>
+            <div>
+              <h3 class="pillar-title">Advanced Lasers</h3>
+              <p class="pillar-desc">Computer-guided custom mapping and state-of-the-art excimer systems.</p>
+            </div>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon-wrapper">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <div>
+              <h3 class="pillar-title">Personal Focus</h3>
+              <p class="pillar-desc">Completely custom procedures tailored to your unique lifestyle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="marano-text text-center" style="font-size: 16px; margin-bottom: 24px; color: #94a3b8;">
+        When you compare the cumulative, lifelong costs of corrective eyewear against a single procedure, the math speaks for itself:
       </p>
-      <p class="marano-text">
-        While the initial investment in LASIK may seem significant, it is a decision that often pays for itself in just a few short years. When you calculate the cumulative, lifelong costs of contact lenses, cleaning solutions, annual exams, and backup glasses, laser vision correction quickly becomes a financially savvy choice that provides decades of visual freedom.
-      </p>
-      <p class="marano-text">
-        If you are considering the procedure, we invite you to our office for a completely pressure-free, complimentary consultation. We will take the time to comprehensively evaluate your unique eyes, answer all of your questions, and help you determine if LASIK is the right fit for your lifestyle—with absolutely no obligation to move forward until you are completely comfortable.
-      </p>
+
+      <div class="cost-comparison">
+        <div class="cost-column cost-column-without">
+          <span class="cost-label cost-label-without">Without LASIK</span>
+          <div class="cost-items">
+            <div class="cost-line"><span>Contact lenses</span><span class="cost-line-amount">$500/yr</span></div>
+            <div class="cost-line"><span>Solution & cases</span><span class="cost-line-amount">$150/yr</span></div>
+            <div class="cost-line"><span>Annual eye exams</span><span class="cost-line-amount">$200/yr</span></div>
+            <div class="cost-line"><span>Backup glasses</span><span class="cost-line-amount">$300/yr</span></div>
+            <div class="cost-total cost-total-without"><span>Annual cost</span><span>~$1,150</span></div>
+          </div>
+          <div class="cost-big-number cost-big-without">~$34,500</div>
+          <span style="font-size: 12px; color: #94a3b8;">over 30 years</span>
+        </div>
+
+        <div class="cost-divider">vs</div>
+
+        <div class="cost-column cost-column-with">
+          <span class="cost-label cost-label-with">With LASIK</span>
+          <div class="cost-items">
+            <div class="cost-line"><span>One-time procedure</span><span class="cost-line-amount">—</span></div>
+            <div class="cost-line"><span>No daily contacts</span><span class="cost-line-amount">$0</span></div>
+            <div class="cost-line"><span>No solutions</span><span class="cost-line-amount">$0</span></div>
+            <div class="cost-line"><span>Visual freedom</span><span class="cost-line-amount">Priceless</span></div>
+            <div class="cost-total cost-total-with"><span>Pays for itself</span><span>~3–4 yrs</span></div>
+          </div>
+          <div class="cost-big-number cost-big-with">Decades</div>
+          <span style="font-size: 12px; color: #94a3b8;">of clear vision</span>
+        </div>
+      </div>
+
+      <p class="cost-footnote">Costs are approximate averages. Ask about financing options during your complimentary consultation.</p>
+
+      <!-- Premium Call to Action Consultation Box -->
+      <div class="consultation-cta">
+        <div class="consultation-layout">
+          <div>
+            <h3 style="font-size: clamp(20px, 3vw, 24px); font-weight: 600; color: #f8fafc; margin-bottom: 12px; font-family: inherit;">Your Complimentary Consultation</h3>
+            <p class="marano-text" style="font-size: 15px; margin-bottom: 0; line-height: 1.6; text-align: left; color: #cbd5e1;">
+              If you are considering the procedure, we invite you to our office for a completely pressure-free, complimentary consultation. We will take the time to evaluate your unique eyes, answer all questions, and help you determine if LASIK is the right fit for your lifestyle.
+            </p>
+          </div>
+          
+          <div class="consultation-steps-container">
+            <div class="consultation-steps">
+              <div class="consult-step">
+                <span class="consult-num">1</span>
+                <span class="consult-text"><strong>Advanced Eye Mapping</strong> – Comprehensive topography scan.</span>
+              </div>
+              <div class="consult-step">
+                <span class="consult-num">2</span>
+                <span class="consult-text"><strong>Surgeon Q&A</strong> – 1-on-1 discussion with Dr. Marano.</span>
+              </div>
+              <div class="consult-step">
+                <span class="consult-num">3</span>
+                <span class="consult-text"><strong>Personalized Plan</strong> – Custom visual roadmap, no obligation.</span>
+              </div>
+            </div>
+            
+            <button class="btn-consult" onclick="document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })">
+              <span>Schedule Free Consultation</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 `;
@@ -1962,6 +3403,21 @@
           </div>
 
           <button type="submit" class="form-submit">Request Consultation</button>
+
+          <div class="trust-badges-row">
+            <div class="trust-badge-item">
+              <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke-width="2"/></svg>
+              100% Confidential
+            </div>
+            <div class="trust-badge-item">
+              <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07" stroke-width="2"/></svg>
+              Zero Obligation
+            </div>
+            <div class="trust-badge-item">
+              <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke-width="2"/></svg>
+              Response Within 24 Hours
+            </div>
+          </div>
         </form>
     </div>
   </div>

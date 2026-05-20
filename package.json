@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node fix_index.js && node inject_education.js && node inject_marano.js && node inject_contact_form.js && node inject_laser_animation.js && node inject_journey_mobile.js",
+    "prebuild": "node fix_index.js && node inject_education.js && node inject_social_proof.js && node inject_marano.js && node inject_contact_form.js && node inject_laser_animation.js && node inject_journey_mobile.js",
     "build": "npm run prebuild && vite build",
     "start": "npm run build && electron .",
     "package": "electron-builder --win --x64"

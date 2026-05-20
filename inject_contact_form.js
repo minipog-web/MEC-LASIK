@@ -171,6 +171,30 @@ const contactCSS = `
         filter: brightness(1.1);
       }
 
+      .trust-badges-row {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+
+      .trust-badge-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #64748b;
+        letter-spacing: 0.02em;
+      }
+
+      .trust-badge-icon {
+        width: 16px;
+        height: 16px;
+        opacity: 0.6;
+        flex-shrink: 0;
+      }
+
       /* Preferred Contact Method Selection */
       .contact-method-group {
         display: grid;
@@ -316,6 +340,21 @@ const contactHTML = `
           </div>
 
           <button type="submit" class="form-submit">Request Consultation</button>
+
+          <div class="trust-badges-row">
+            <div class="trust-badge-item">
+              <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke-width="2"/></svg>
+              100% Confidential
+            </div>
+            <div class="trust-badge-item">
+              <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07" stroke-width="2"/></svg>
+              Zero Obligation
+            </div>
+            <div class="trust-badge-item">
+              <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke-width="2"/></svg>
+              Response Within 24 Hours
+            </div>
+          </div>
         </form>
     </div>
   </div>

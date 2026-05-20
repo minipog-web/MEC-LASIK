@@ -135,7 +135,7 @@ function App() {
             </h1>
             
             <p className="text-secondary" style={{ fontSize: '1.25rem', maxWidth: '600px', marginBottom: '48px', lineHeight: '1.7', fontWeight: '400' }}>
-              Discover how LASIK can transform your life. Learn about the procedure and see if you qualify in under 60 seconds.
+              Every morning without LASIK is another day reaching for glasses. Learn about the procedure and see if you qualify in under 60 seconds.
             </p>
             
             <div className="responsive-flex-col" style={{ display: 'flex', gap: '16px' }}>
@@ -250,10 +250,10 @@ function App() {
             zIndex: 1
           }}>
             <h2 className="text-gradient" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', margin: 0, fontWeight: '700', letterSpacing: '-0.02em' }}>
-              Ready to See Clearly?
+              How Much Longer Will You Wait?
             </h2>
             <p className="text-secondary" style={{ fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', lineHeight: '1.7' }}>
-              Schedule your complimentary, no-obligation LASIK consultation today. Our world-class specialists are ready to guide you to visual freedom.
+              Every year you wait costs ~$1,150 in contacts and glasses. Schedule your complimentary, no-obligation consultation — most patients say their only regret is not doing it sooner.
             </p>
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', margin: '12px 0' }}>

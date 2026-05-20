@@ -463,6 +463,9 @@ const heritageSectionHTML = `
               specialized expertise, he offers a level of precision and experience that is unmatched —
               ensuring your journey to clear vision is in the most capable hands.
             </p>
+            <p class="her-body" style="font-size: 14px; color: #64748b; margin-top: 16px; letter-spacing: 0.04em;">
+              Board Certified Ophthalmologist · One of the First LASIK Surgeons in New Jersey · 15× Top Doctor Honoree
+            </p>
           </div>
 
           <!-- Right: stats -->
