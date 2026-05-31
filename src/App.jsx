@@ -3,6 +3,7 @@ import LasikSteps from './components/LasikSteps';
 import CandidateQuiz from './components/CandidateQuiz';
 import MaranoSection from './components/MaranoSection';
 import ContactForm from './components/ContactForm';
+import SocialProofSection from './components/SocialProofSection';
 import { Eye, ArrowDown, Activity, Award, MapPin, ShieldCheck, Calendar } from 'lucide-react';
 import logo from './assets/marano-logo.png';
 import heroImg from './assets/hero.png';
@@ -270,6 +271,8 @@ function App() {
         <div id="education">
           <LasikSteps />
         </div>
+
+        <SocialProofSection />
       </main>
 
       {/* Full-width CTA Section */}
