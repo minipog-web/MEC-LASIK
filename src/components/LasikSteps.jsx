@@ -1,41 +1,62 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronRight, ChevronLeft, Info, CheckCircle2, Play, RotateCcw } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Info, CheckCircle2, Play, RotateCcw, Activity } from 'lucide-react';
+import prepImg from '../assets/lasik_prep.png';
+import flapImg from '../assets/lasik_flap.png';
+import reshapeImg from '../assets/lasik_reshape.png';
+import repositionImg from '../assets/lasik_reposition.png';
+import healingImg from '../assets/lasik_healing.png';
 
 const steps = [
   {
     id: 1,
     title: 'Pre-Procedure Preparation',
     purpose: 'To map the exact topography of your eye and prepare it for treatment.',
-    experience: 'You will rest comfortably as we administer numbing eye drops. A gentle eyelid holder is placed to prevent blinking. You will focus on a light while we take a precise 3D digital scan of your cornea.'
+    experience: 'You will rest comfortably as we administer numbing eye drops. A gentle eyelid holder is placed to prevent blinking. You will focus on a light while we take a precise 3D digital scan of your cornea.',
+    image: prepImg,
+    scienceTitle: 'Diagnostic Wavefront & Topography Mapping',
+    scienceDetails: 'Our doctors use a high-definition wavefront analyzer to project 22,000 unique elevation points onto your cornea. This creates a detailed 3D optical map, measuring aberrations down to the sub-micron level (0.01 µm) to guide custom laser profiling.'
   },
   {
     id: 2,
     title: 'Creating the Corneal Flap',
     purpose: 'To access the underlying corneal tissue (stroma) where the vision correction will take place.',
-    experience: 'You may feel a slight pressure, and your vision will momentarily dim. A state-of-the-art femtosecond laser creates microscopic bubbles to form a highly precise, ultra-thin flap in less than 30 seconds.'
+    experience: 'You may feel a slight pressure, and your vision will momentarily dim. A state-of-the-art femtosecond laser creates microscopic bubbles to form a highly precise, ultra-thin flap in less than 30 seconds.',
+    image: flapImg,
+    scienceTitle: 'Femtosecond Laser Incision',
+    scienceDetails: 'An ultra-fast femtosecond laser emits light pulses at a quadrillionth of a second. It focuses light to form a precise layer of microscopic carbon dioxide/water gas bubbles at a calibrated depth (typically 110 µm) beneath the corneal surface, separating the tissue without heat or blades.'
   },
   {
     id: 3,
     title: 'Reshaping the Cornea',
     purpose: 'To permanently correct your refractive error (nearsightedness, farsightedness, or astigmatism) based on your custom 3D map.',
-    experience: 'You will hear a clicking sound. You just need to stare at the target light. The computer-guided excimer laser painlessly removes microscopic tissue to flatten or reshape the cornea in seconds.'
+    experience: 'You will hear a clicking sound. You just need to stare at the target light. The computer-guided excimer laser painlessly removes microscopic tissue to flatten or reshape the cornea in seconds.',
+    image: reshapeImg,
+    scienceTitle: 'Excimer Laser Photoablation',
+    scienceDetails: 'A computer-guided cold excimer laser uses 193 nm ultraviolet light to disrupt molecular bonds in the stromal layer. Each pulse vaporizes a minute layer of tissue (0.25 microns deep) in under 1.4 milliseconds, reshaping the curvature to eliminate myopia, hyperopia, or astigmatism.'
   },
   {
     id: 4,
     title: 'Repositioning the Flap',
     purpose: 'To protect the reshaped tissue and promote rapid, natural healing without stitches.',
-    experience: 'The surgeon gently folds the flap back into its original position. It acts as a natural bandage. Your vision will begin to clear almost immediately, though it may be slightly blurry like looking underwater.'
+    experience: 'The surgeon gently folds the flap back into its original position. It acts as a natural bandage. Your vision will begin to clear almost immediately, though it may be slightly blurry like looking underwater.',
+    image: repositionImg,
+    scienceTitle: 'Stitchless Corneal Cohesion',
+    scienceDetails: 'The flap is smoothed back over the reshaped cornea, matching the custom borders. Within minutes, natural osmotic pressure and cellular adhesion pull the flap taut. Natural endothelial cell pumps seal the edge, eliminating any need for sutures.'
   },
   {
     id: 5,
     title: 'Post-Procedure Healing',
     purpose: 'To allow the eye to rest and stabilize the new visual acuity.',
-    experience: 'The entire procedure is complete! The healing process begins instantly. When you wake up, much of the healing has already begun. Many patients notice dramatically improved vision within 24 hours.'
+    experience: 'The entire procedure is complete! The healing process begins instantly. When you wake up, much of the healing has already begun. Many patients notice dramatically improved vision within 24 hours.',
+    image: healingImg,
+    scienceTitle: 'Epithelial Regeneration & Stabilization',
+    scienceDetails: 'The surface epithelium regenerates and seals the flap edge within 24 to 48 hours. Medicated anti-inflammatory and antibiotic drops promote smooth corneal re-epithelialization, leading to structural stability and sharp visual acuity within a day.'
   }
 ];
 
 export default function LasikSteps() {
   const [activeStep, setActiveStep] = useState(0);
+  const [visualMode, setVisualMode] = useState('render'); // 'render' or 'simulator'
   const [isAutoplay, setIsAutoplay] = useState(false);
   const [autoplayProgress, setAutoplayProgress] = useState(0); // 0 to 100
   const animationRef = useRef(null);
@@ -60,7 +81,6 @@ export default function LasikSteps() {
 
     if (elapsed < 2000) {
       // Step 1: Flap Creation
-      // Active step is 1
       if (elapsed < 1000) {
         cutActive = true;
         const cutProgress = elapsed / 1000;
@@ -186,6 +206,7 @@ export default function LasikSteps() {
       setActiveStep(0);
     } else {
       setActiveStep(0);
+      setVisualMode('simulator'); // Automatically switch to simulator to show animation
       setIsAutoplay(true);
       setAutoplayProgress(0);
     }
@@ -206,10 +227,10 @@ export default function LasikSteps() {
       <div className="container" style={{ maxWidth: '1100px' }}>
         <div className="text-center" style={{ marginBottom: '48px' }}>
           <h2 className="text-gradient" style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', marginBottom: '20px', fontWeight: '700', letterSpacing: '-0.02em' }}>
-            The Science of LASIK
+            The LASIK Journey
           </h2>
           <p className="text-secondary" style={{ maxWidth: '800px', margin: '0 auto', fontSize: '1.25rem', lineHeight: '1.7' }}>
-            Understanding the technology behind your visual freedom. Explore our interactive laser simulator below.
+            Understanding the state-of-the-art technology behind your visual freedom. Explore our high-resolution concept art or live laser simulator below.
           </p>
         </div>
 
@@ -267,8 +288,57 @@ export default function LasikSteps() {
           {/* Core Interactive Layout */}
           <div className="responsive-grid" style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '48px', alignItems: 'center' }}>
             
-            {/* Left Column: Interactive SVG Simulator */}
+            {/* Left Column: Interactive Visual Panel */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }} className="step-image-col">
+              
+              {/* Segmented Mode Selector */}
+              <div style={{
+                display: 'flex',
+                background: 'rgba(255, 255, 255, 0.02)',
+                padding: '4px',
+                borderRadius: '12px',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                alignSelf: 'flex-start'
+              }}>
+                <button
+                  onClick={() => {
+                    setIsAutoplay(false);
+                    setVisualMode('render');
+                  }}
+                  style={{
+                    padding: '8px 18px',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: '700',
+                    background: visualMode === 'render' ? 'linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%)' : 'transparent',
+                    color: visualMode === 'render' ? '#fff' : 'var(--text-muted)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                >
+                  3D Concept Render
+                </button>
+                <button
+                  onClick={() => {
+                    setVisualMode('simulator');
+                  }}
+                  style={{
+                    padding: '8px 18px',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: '700',
+                    background: visualMode === 'simulator' ? 'linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%)' : 'transparent',
+                    color: visualMode === 'simulator' ? '#fff' : 'var(--text-muted)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                >
+                  Live Simulator
+                </button>
+              </div>
+
               <div 
                 className="glass-panel" 
                 style={{ 
@@ -284,107 +354,146 @@ export default function LasikSteps() {
                   boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.4)'
                 }}
               >
-                <div style={{ display: 'flex', width: '100%', gap: '16px', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', width: '100%', gap: '16px', alignItems: 'center', justifyContent: 'center' }} key={`${visualMode}-${activeStep}`}>
                   
-                  {/* Eye Anatomy SVG */}
-                  <svg 
-                    viewBox="0 0 200 220" 
-                    style={{ width: '65%', height: 'auto', overflow: 'visible' }}
-                  >
-                    {/* Sclera Eyeball */}
-                    <path d="M 110,40 A 70,70 0 1,1 110,180" fill="rgba(20, 28, 39, 0.6)" stroke="rgba(255, 255, 255, 0.12)" strokeWidth="2" />
-                    <path d="M 165,65 A 70,70 0 0,1 165,155" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="4" />
-                    
-                    {/* Lens */}
-                    <ellipse cx="135" cy="110" rx="8" ry="22" fill="rgba(127, 161, 214, 0.2)" stroke="rgba(127, 161, 214, 0.4)" strokeWidth="1.5" />
-                    
-                    {/* Corneal Bed */}
-                    <path d="M 110,40 Q 72,110 110,180" fill="none" stroke="rgba(127, 161, 214, 0.25)" strokeWidth="3" strokeDasharray="2 3" />
-                    
-                    {/* Dynamic Cornea Profile */}
-                    <path d={`M 110,40 Q ${corneaCurve},110 110,180`} fill="none" stroke="var(--accent-primary)" strokeWidth="3.5" strokeLinecap="round" />
-                    
-                    {/* Corneal Flap */}
-                    <path 
-                      d="M 110,45 Q 72,110 110,175" 
-                      fill="none" 
-                      stroke="rgba(255, 255, 255, 0.6)" 
-                      strokeWidth="2" 
-                      strokeLinecap="round"
-                      transform={`rotate(${flapAngle}, 110, 45)`}
-                      style={{ transition: isAutoplay ? 'none' : 'transform 0.5s ease' }}
-                    />
-                    
-                    {/* Light Rays */}
-                    {activeStep === 4 ? (
-                      // Perfect focus rays
-                      <>
-                        <path d="M 15,70 L 92,90 L 135,102 L 155,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
-                        <path d="M 15,150 L 92,130 L 135,118 L 155,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
-                        <path d="M 15,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeWidth="1.5" />
-                      </>
-                    ) : (
-                      // Blurry focus rays
-                      <>
-                        <path d="M 15,70 L 92,90 L 135,102 L 155,110 L 180,118" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
-                        <path d="M 15,150 L 92,130 L 135,118 L 155,110 L 180,102" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
-                        <path d="M 15,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeWidth="1.5" />
-                      </>
-                    )}
+                  {visualMode === 'render' ? (
+                    /* Futuristic High-Res Image */
+                    <div 
+                      className="animate-fade-in" 
+                      style={{ 
+                        position: 'relative', 
+                        width: '65%', 
+                        borderRadius: '16px', 
+                        overflow: 'hidden', 
+                        border: '1px solid rgba(255, 255, 255, 0.06)',
+                        background: 'rgba(0,0,0,0.2)',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                      }}
+                    >
+                      <img 
+                        src={steps[activeStep].image} 
+                        alt={steps[activeStep].title} 
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          aspectRatio: '1',
+                          objectFit: 'cover',
+                          display: 'block'
+                        }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(180deg, transparent 65%, rgba(11, 19, 41, 0.9) 100%)',
+                        pointerEvents: 'none'
+                      }} />
+                      <div className="animate-scan" style={{
+                        position: 'absolute',
+                        inset: 0,
+                        pointerEvents: 'none'
+                      }} />
+                    </div>
+                  ) : (
+                    /* Eye Anatomy SVG Simulator */
+                    <svg 
+                      viewBox="0 0 200 220" 
+                      style={{ width: '65%', height: 'auto', overflow: 'visible' }}
+                    >
+                      {/* Sclera Eyeball */}
+                      <path d="M 110,40 A 70,70 0 1,1 110,180" fill="rgba(20, 28, 39, 0.6)" stroke="rgba(255, 255, 255, 0.12)" strokeWidth="2" />
+                      <path d="M 165,65 A 70,70 0 0,1 165,155" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="4" />
+                      
+                      {/* Lens */}
+                      <ellipse cx="135" cy="110" rx="8" ry="22" fill="rgba(127, 161, 214, 0.2)" stroke="rgba(127, 161, 214, 0.4)" strokeWidth="1.5" />
+                      
+                      {/* Corneal Bed */}
+                      <path d="M 110,40 Q 72,110 110,180" fill="none" stroke="rgba(127, 161, 214, 0.25)" strokeWidth="3" strokeDasharray="2 3" />
+                      
+                      {/* Dynamic Cornea Profile */}
+                      <path d={`M 110,40 Q ${corneaCurve},110 110,180`} fill="none" stroke="var(--accent-primary)" strokeWidth="3.5" strokeLinecap="round" />
+                      
+                      {/* Corneal Flap */}
+                      <path 
+                        d="M 110,45 Q 72,110 110,175" 
+                        fill="none" 
+                        stroke="rgba(255, 255, 255, 0.6)" 
+                        strokeWidth="2" 
+                        strokeLinecap="round"
+                        transform={`rotate(${flapAngle}, 110, 45)`}
+                        style={{ transition: isAutoplay ? 'none' : 'transform 0.5s ease' }}
+                      />
+                      
+                      {/* Light Rays */}
+                      {activeStep === 4 ? (
+                        // Perfect focus rays
+                        <>
+                          <path d="M 15,70 L 92,90 L 135,102 L 155,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
+                          <path d="M 15,150 L 92,130 L 135,118 L 155,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
+                          <path d="M 15,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeWidth="1.5" />
+                        </>
+                      ) : (
+                        // Blurry focus rays
+                        <>
+                          <path d="M 15,70 L 92,90 L 135,102 L 155,110 L 180,118" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
+                          <path d="M 15,150 L 92,130 L 135,118 L 155,110 L 180,102" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
+                          <path d="M 15,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeWidth="1.5" />
+                        </>
+                      )}
 
-                    {/* Laser Cutting Beam (Step 1) */}
-                    {cutActive && (
-                      <line x1="15" y1="45" x2="110" y2="45" stroke="#10b981" strokeWidth="2" strokeDasharray="none" filter="drop-shadow(0 0 4px #10b981)" />
-                    )}
+                      {/* Laser Cutting Beam (Step 1) */}
+                      {cutActive && (
+                        <line x1="15" y1="45" x2="110" y2="45" stroke="#10b981" strokeWidth="2" strokeDasharray="none" filter="drop-shadow(0 0 4px #10b981)" />
+                      )}
 
-                    {/* Reshaping Laser Beam (Step 2) */}
-                    {laserActive && (
-                      <line x1="15" y1="110" x2="90" y2="110" stroke="#f43f5e" strokeWidth="3.5" filter="drop-shadow(0 0 5px #f43f5e)" />
-                    )}
+                      {/* Reshaping Laser Beam (Step 2) */}
+                      {laserActive && (
+                        <line x1="15" y1="110" x2="90" y2="110" stroke="#f43f5e" strokeWidth="3.5" filter="drop-shadow(0 0 5px #f43f5e)" />
+                      )}
 
-                    {/* Laser Nozzle */}
-                    <g transform={`translate(0, ${nozzleY})`}>
-                      <rect x="8" y="100" width="10" height="20" rx="3" fill="#1e293b" stroke="#475569" strokeWidth="1.5" />
-                      <rect x="18" y="107" width="4" height="6" fill="#64748b" />
-                      <circle cx="20" cy="110" r="1.5" fill={laserActive ? '#f43f5e' : cutActive ? '#10b981' : '#475569'} />
-                    </g>
-
-                    {/* Sparks particle container */}
-                    <g>
-                      {sparks.map((s, idx) => (
-                        <circle key={idx} cx={s.cx} cy={s.cy} r={s.r} fill="#ffdd67" opacity={s.opacity} />
-                      ))}
-                    </g>
-
-                    {/* Retina focus spot */}
-                    <circle cx="180" cy={activeStep === 4 ? 110 : 110} r={focusRadius} fill={focusColor} style={{ filter: focusBlur ? `blur(${focusBlur}px)` : 'none', transition: 'all 0.5s ease' }} />
-
-                    {/* Educational label pointers & text overlay */}
-                    {activeStep === 0 && (
-                      <g opacity="0.8">
-                        <path d="M 68,206 L 98,140" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
-                        <text x="15" y="212" fill="var(--accent-primary)" fontSize="7.5" fontWeight="bold">Corneal Topography</text>
+                      {/* Laser Nozzle */}
+                      <g transform={`translate(0, ${nozzleY})`}>
+                        <rect x="8" y="100" width="10" height="20" rx="3" fill="#1e293b" stroke="#475569" strokeWidth="1.5" />
+                        <rect x="18" y="107" width="4" height="6" fill="#64748b" />
+                        <circle cx="20" cy="110" r="1.5" fill={laserActive ? '#f43f5e' : cutActive ? '#10b981' : '#475569'} />
                       </g>
-                    )}
-                    {activeStep === 1 && (
-                      <g opacity="0.8">
-                        <path d="M 80,18 L 105,38" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
-                        <text x="5" y="15" fill="var(--accent-primary)" fontSize="7.5" fontWeight="bold">Micro-Thin Flap</text>
+
+                      {/* Sparks particle container */}
+                      <g>
+                        {sparks.map((s, idx) => (
+                          <circle key={idx} cx={s.cx} cy={s.cy} r={s.r} fill="#ffdd67" opacity={s.opacity} />
+                        ))}
                       </g>
-                    )}
-                    {activeStep === 2 && (
-                      <g opacity="0.8">
-                        <path d="M 28,88 L 18,102" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
-                        <text x="25" y="85" fill="#f43f5e" fontSize="7.5" fontWeight="bold">Excimer Sculpting</text>
-                      </g>
-                    )}
-                    {activeStep === 4 && (
-                      <g opacity="0.8">
-                        <path d="M 160,206 L 178,118" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
-                        <text x="125" y="212" fill="var(--accent-secondary)" fontSize="7.5" fontWeight="bold">Retinal Focal Point</text>
-                      </g>
-                    )}
-                  </svg>
+
+                      {/* Retina focus spot */}
+                      <circle cx="180" cy={activeStep === 4 ? 110 : 110} r={focusRadius} fill={focusColor} style={{ filter: focusBlur ? `blur(${focusBlur}px)` : 'none', transition: 'all 0.5s ease' }} />
+
+                      {/* Educational label pointers & text overlay */}
+                      {activeStep === 0 && (
+                        <g opacity="0.8">
+                          <path d="M 68,206 L 98,140" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
+                          <text x="15" y="212" fill="var(--accent-primary)" fontSize="7.5" fontWeight="bold">Corneal Topography</text>
+                        </g>
+                      )}
+                      {activeStep === 1 && (
+                        <g opacity="0.8">
+                          <path d="M 80,18 L 105,38" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
+                          <text x="5" y="15" fill="var(--accent-primary)" fontSize="7.5" fontWeight="bold">Micro-Thin Flap</text>
+                        </g>
+                      )}
+                      {activeStep === 2 && (
+                        <g opacity="0.8">
+                          <path d="M 28,88 L 18,102" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
+                          <text x="25" y="85" fill="#f43f5e" fontSize="7.5" fontWeight="bold">Excimer Sculpting</text>
+                        </g>
+                      )}
+                      {activeStep === 4 && (
+                        <g opacity="0.8">
+                          <path d="M 160,206 L 178,118" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
+                          <text x="125" y="212" fill="var(--accent-secondary)" fontSize="7.5" fontWeight="bold">Retinal Focal Point</text>
+                        </g>
+                      )}
+                    </svg>
+                  )}
 
                   {/* Patient Vision Snellen Chart */}
                   <div 
@@ -400,7 +509,7 @@ export default function LasikSteps() {
                       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
                     }}
                   >
-                    <span style={{ fontSize: '9px', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '1px', marginBottom: '8px', fontWeight: '700' }}>Patient Vision</span>
+                    <span style={{ fontSize: '9px', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '1px', marginBottom: '8px', fontWeight: '700', textAlign: 'center' }}>Patient Vision</span>
                     <div 
                       style={{ 
                         display: 'flex', 
@@ -424,7 +533,7 @@ export default function LasikSteps() {
                 </div>
 
                 {/* Status Indicator */}
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600', minHeight: '20px' }}>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600', minHeight: '20px', textAlign: 'center' }}>
                   {isAutoplay ? (
                     autoplayProgress * 9000 < 2000 ? 'Status: Creating protective flap...' :
                     autoplayProgress * 9000 < 6000 ? 'Status: Sculpting corneal bed...' :
@@ -477,6 +586,7 @@ export default function LasikSteps() {
                 </h3>
               </div>
 
+              {/* Stage Objective */}
               <div style={{ 
                 background: 'rgba(140, 178, 242, 0.03)', 
                 padding: '20px', 
@@ -494,10 +604,27 @@ export default function LasikSteps() {
                 </p>
               </div>
 
+              {/* Experience */}
               <div>
                 <h4 style={{ fontSize: '1.05rem', marginBottom: '8px', fontWeight: '600', color: 'var(--text-primary)' }}>What You Experience:</h4>
                 <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
                   {steps[activeStep].experience}
+                </p>
+              </div>
+
+              {/* Scientific Precision Breakdown */}
+              <div style={{ 
+                background: 'rgba(255, 255, 255, 0.01)', 
+                border: '1px solid rgba(255, 255, 255, 0.05)', 
+                padding: '20px', 
+                borderRadius: '16px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: 'var(--accent-secondary)', fontWeight: '700', fontSize: '0.9rem', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                  <Activity size={14} /> {steps[activeStep].scienceTitle}
+                </div>
+                <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', margin: 0, color: 'var(--text-secondary)' }}>
+                  {steps[activeStep].scienceDetails}
                 </p>
               </div>
 
@@ -532,3 +659,4 @@ export default function LasikSteps() {
     </div>
   );
 }
+
