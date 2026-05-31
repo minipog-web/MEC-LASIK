@@ -230,7 +230,7 @@ export default function LasikSteps() {
             The LASIK Journey
           </h2>
           <p className="text-secondary" style={{ maxWidth: '800px', margin: '0 auto', fontSize: '1.25rem', lineHeight: '1.7' }}>
-            Understanding the state-of-the-art technology behind your visual freedom. Explore our high-resolution concept art or live laser simulator below.
+            Understanding the state-of-the-art technology behind your visual freedom. Explore our high-resolution concept art or animated laser simulator below.
           </p>
         </div>
 
@@ -335,7 +335,7 @@ export default function LasikSteps() {
                     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                 >
-                  Live Simulator
+                  Animated Simulator
                 </button>
               </div>
 
