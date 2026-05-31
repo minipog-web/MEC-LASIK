@@ -65,7 +65,7 @@ export default function CandidateQuiz() {
     const isGoodCandidate = totalScore === questions.length;
 
     return (
-      <div className="glass-panel animate-fade-in" style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', padding: '48px 36px' }}>
+      <div className="glass-panel quiz-result-card animate-fade-in" style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', padding: '48px 36px' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
           {isGoodCandidate ? (
             <div className="pulse-animation" style={{ color: 'var(--success)', background: 'rgba(16, 185, 129, 0.1)', padding: '24px', borderRadius: '50%' }}>
@@ -114,7 +114,7 @@ export default function CandidateQuiz() {
 
       <div className="container">
         {!isFinished ? (
-          <div className="glass-panel animate-fade-in" key={currentQuestion} style={{ maxWidth: '700px', margin: '0 auto', padding: '48px 40px' }}>
+          <div className="glass-panel quiz-card animate-fade-in" key={currentQuestion} style={{ maxWidth: '700px', margin: '0 auto', padding: '48px 40px' }}>
             <div style={{ marginBottom: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span className="text-muted" style={{ fontWeight: 700, fontSize: '0.8rem', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
                 Question {currentQuestion + 1} of {questions.length}

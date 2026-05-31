@@ -1,6 +1,8 @@
 import React from 'react';
 import LasikSteps from './components/LasikSteps';
 import CandidateQuiz from './components/CandidateQuiz';
+import MaranoSection from './components/MaranoSection';
+import ContactForm from './components/ContactForm';
 import { Eye, ArrowDown, Activity, Award, MapPin, ShieldCheck, Calendar } from 'lucide-react';
 import logo from './assets/marano-logo.png';
 import heroImg from './assets/hero.png';
@@ -44,8 +46,9 @@ function App() {
           <img src={logo} alt="Marano Eye Care" height="36" style={{ objectFit: 'contain' }} />
         </div>
         
-        {/* Menu Buttons - Fades out completely when scrolled */}
+        {/* Menu Buttons - hidden on mobile, fades on scroll on desktop */}
         <div 
+          className="nav-links-group"
           style={{ 
             display: 'flex', 
             gap: '24px', 
@@ -83,6 +86,24 @@ function App() {
             The Procedure
           </button>
         </div>
+
+        {/* Mobile-only CTA button */}
+        <div
+          className="nav-cta-only"
+          style={{
+            display: 'none',
+            marginLeft: 'auto',
+            alignItems: 'center',
+          }}
+        >
+          <button
+            onClick={() => scrollToSection('quiz')}
+            className="btn btn-primary"
+            style={{ padding: '8px 18px', fontSize: '0.85rem' }}
+          >
+            Check Candidacy
+          </button>
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -91,7 +112,7 @@ function App() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '140px 24px 100px 24px',
+        padding: 'clamp(100px, 15vh, 140px) 24px clamp(60px, 10vh, 100px)',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -129,16 +150,28 @@ function App() {
               </span>
             </div>
 
-            <h1 style={{ fontSize: 'clamp(2.8rem, 7vw, 4.5rem)', fontWeight: '300', marginBottom: '24px', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+            <h1 style={{ 
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(3.2rem, 8vw, 5.5rem)', 
+              fontWeight: '300', 
+              marginBottom: '24px', 
+              letterSpacing: '-0.01em', 
+              lineHeight: 1.1 
+            }}>
               Experience the world with <br/>
-              <span className="text-gradient" style={{ fontWeight: '800' }}>Absolute Clarity</span>
+              <span className="text-gradient" style={{ 
+                fontFamily: 'var(--font-sans)', 
+                fontWeight: '800',
+                letterSpacing: '-0.03em',
+                whiteSpace: 'nowrap'
+              }}>Absolute Clarity</span>
             </h1>
             
             <p className="text-secondary" style={{ fontSize: '1.25rem', maxWidth: '600px', marginBottom: '48px', lineHeight: '1.7', fontWeight: '400' }}>
               Every morning without LASIK is another day reaching for glasses. Learn about the procedure and see if you qualify in under 60 seconds.
             </p>
             
-            <div className="responsive-flex-col" style={{ display: 'flex', gap: '16px' }}>
+            <div className="responsive-flex-col" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               <button onClick={() => scrollToSection('quiz')} className="btn btn-primary">
                 Take the Candidate Quiz 
                 <span className="btn-icon-wrapper">
@@ -225,6 +258,9 @@ function App() {
         </div>
       </section>
 
+      {/* Meet Dr. Matthew Marano & Brand/Cost Comparison */}
+      <MaranoSection />
+
       {/* Main Content Areas */}
       <main>
         <CandidateQuiz />
@@ -237,9 +273,9 @@ function App() {
       </main>
 
       {/* Full-width CTA Section */}
-      <section style={{ padding: '100px 24px 20px 24px', position: 'relative', overflow: 'hidden' }}>
+      <section className="cta-section" style={{ padding: '100px 24px 20px 24px', position: 'relative', overflow: 'hidden' }}>
         <div className="container">
-          <div className="glass-panel" style={{
+          <div className="glass-panel cta-glass-panel" style={{
             padding: '60px 40px',
             textAlign: 'center',
             display: 'flex',
@@ -249,11 +285,11 @@ function App() {
             position: 'relative',
             zIndex: 1
           }}>
-            <h2 className="text-gradient" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', margin: 0, fontWeight: '700', letterSpacing: '-0.02em' }}>
+            <h2 className="text-gradient" style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', margin: 0, fontWeight: '700', letterSpacing: '-0.02em' }}>
               How Much Longer Will You Wait?
             </h2>
-            <p className="text-secondary" style={{ fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', lineHeight: '1.7' }}>
-              Every year you wait costs ~$1,150 in contacts and glasses. Schedule your complimentary, no-obligation consultation — most patients say their only regret is not doing it sooner.
+            <p className="text-secondary" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.7' }}>
+              Schedule your complimentary, no-obligation consultation today — most patients say their only regret is not doing it sooner.
             </p>
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', margin: '12px 0' }}>
@@ -263,7 +299,7 @@ function App() {
               <a 
                 href="tel:9733220100" 
                 style={{ 
-                  fontSize: 'clamp(2rem, 6vw, 3rem)', 
+                  fontSize: 'clamp(1.6rem, 6vw, 3rem)', 
                   fontWeight: '800', 
                   color: 'var(--text-primary)', 
                   textDecoration: 'none',
@@ -277,40 +313,39 @@ function App() {
             </div>
 
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a 
-                href="https://mec1.net/contact" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <button 
+                onClick={() => scrollToSection('contact')} 
                 className="btn btn-primary"
-                style={{ textDecoration: 'none', padding: '14px 36px', fontSize: '1.1rem' }}
+                style={{ padding: '14px 36px', fontSize: '1.1rem' }}
               >
                 Schedule Free Consultation
                 <span className="btn-icon-wrapper">
                   <Calendar size={14} />
                 </span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Native Contact Form */}
+      <ContactForm />
+
       {/* Footer */}
-      <footer style={{
+      <footer className="footer-content" style={{
         padding: '40px',
         textAlign: 'center',
         borderTop: '1px solid var(--border-light)',
         color: 'var(--text-muted)',
         marginTop: '80px'
       }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)', fontSize: '1.1rem', fontWeight: 'bold' }}>
-            <img src={logo} alt="Marano Eye Care Logo" height="32" style={{ objectFit: 'contain' }} />
-          </div>
-          <p>200 South Orange Ave, Suite 209, Livingston NJ, 07039</p>
-          <p>Phone: <a href="tel:973-322-0100">(973) 322-0100</a> | Email: <a href="mailto:LASIK@mec1.net">LASIK@mec1.net</a></p>
+        <div style={{ marginBottom: '16px' }}>
+          <img src={logo} alt="Marano Eye Care Logo" height="32" style={{ objectFit: 'contain', display: 'inline-block', marginBottom: '8px' }} />
+          <p style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)', lineHeight: '1.6', margin: '8px 0' }}>200 South Orange Ave, Suite 209, Livingston NJ, 07039</p>
+          <p style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)', lineHeight: '1.6', margin: '8px 0' }}>Phone: <a href="tel:973-322-0100">(973) 322-0100</a> | Email: <a href="mailto:LASIK@mec1.net">LASIK@mec1.net</a></p>
         </div>
-        <p>© 2026 Marano Eye Care. All rights reserved.</p>
-        <p style={{ fontSize: '0.85rem', marginTop: '8px', maxWidth: '600px', margin: '8px auto' }}>
+        <p style={{ fontSize: 'clamp(0.75rem, 2vw, 0.9rem)' }}>© 2026 Marano Eye Care. All rights reserved.</p>
+        <p style={{ fontSize: '0.8rem', marginTop: '8px', maxWidth: '600px', margin: '8px auto', lineHeight: '1.6' }}>
           Disclaimer: This self-test is for educational purposes only and does not replace a comprehensive medical examination and consultation with a qualified ophthalmologist.
         </p>
       </footer>
