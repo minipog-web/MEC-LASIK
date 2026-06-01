@@ -52,3 +52,6 @@ This log captures successful design decisions, conversion-rate optimization (CRO
 - **Side-by-Side Bento Grid for Conversions:** Placing emotional headlines, trust signals, and direct call channels next to a multi-stage interactive wizard card creates a visual association that builds immediate user confidence.
 - **Persistent Left-Column Context on Submission:** Transitioning the form card to a success state while keeping the emotional copy and telephone block fully interactive on the left ensures patients can still access the phone number if they prefer direct clinic contact.
 - **React-Netlify Wizard Form Sync:** When building multi-step AJAX-submitted forms, maintain hidden input fields within the active form container for all wizard states to ensure forms processors (like Netlify) capture all parameters accurately.
+
+## Deployment Rules & Safeguards
+- **Strict Verification Protocol:** Never trigger a remote deployment (to Netlify, Vercel, or production environments) automatically or based on historical next-steps. Always verify all UI changes in a local dev server environment, present screenshots to the user, and wait for an explicit user command stating "Deploy to production/Netlify" before executing.
