@@ -85,7 +85,7 @@ function App() {
             onMouseOver={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
             onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
           >
-            Am I a Candidate?
+            Am I a LASIK Candidate?
           </button>
           <button 
             id="nav-procedure-btn"
@@ -110,7 +110,7 @@ function App() {
             className="btn btn-primary"
             style={{ padding: '8px 18px', fontSize: '0.85rem' }}
           >
-            Check Candidacy
+            Check LASIK Candidacy
           </button>
         </div>
       </nav>
@@ -145,7 +145,7 @@ function App() {
                 <Activity size={16} />
               </div>
               <span style={{ fontSize: '0.75rem', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--accent-primary)' }}>
-                State-of-the-Art Laser Technology
+                State-of-the-Art LASIK Technology
               </span>
             </div>
 
@@ -156,12 +156,12 @@ function App() {
 
             
             <p className="text-secondary animate-fade-up delay-3" style={{ fontSize: '1.25rem', maxWidth: '600px', marginBottom: '48px', lineHeight: '1.7', fontWeight: '400' }}>
-              Stop renting your sight from lenses and frames. Reclaim instant visual autonomy and wake up to pristine, high-definition clarity. Calculate your compatibility in under 60 seconds.
+              Stop renting your sight from lenses and frames. Reclaim instant visual autonomy and wake up to pristine, high-definition clarity. Calculate your LASIK compatibility in under 60 seconds.
             </p>
             
             <div className="responsive-flex-col animate-fade-up delay-4" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               <button type="button" onClick={() => scrollToSection('quiz')} className="btn btn-primary" style={{ padding: '14px 32px' }}>
-                Take the Candidate Quiz 
+                Take the LASIK Candidate Quiz 
                 <span className="btn-icon-wrapper">
                   <Eye size={14} />
                 </span>
