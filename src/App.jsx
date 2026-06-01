@@ -1,5 +1,6 @@
 import React from 'react';
 import LasikSteps from './components/LasikSteps';
+import LasikScience from './components/LasikScience';
 import CandidateQuiz from './components/CandidateQuiz';
 import MaranoSection from './components/MaranoSection';
 import ContactForm from './components/ContactForm';
@@ -35,23 +36,31 @@ function App() {
         className={isScrolled ? 'scrolled' : ''}
       >
         {/* Integrated Logo inside header bar */}
-        <div 
+        <a 
           id="logo-container"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          href="https://www.maranoeyecare.com"
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             display: 'flex',
             alignItems: 'center',
             cursor: 'pointer',
+            transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
           }}
+          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
-          <img src={logo} alt="Marano Eye Care" height="36" style={{ objectFit: 'contain' }} />
-        </div>
+          <img 
+            src={logo} 
+            alt="Marano Eye Care" 
+            className="nav-logo"
+          />
+        </a>
         
         {/* Menu Buttons - hidden on mobile, fades on scroll on desktop */}
         <div 
           className="nav-links-group"
           style={{ 
-            display: 'flex', 
             gap: '24px', 
             marginLeft: 'auto', 
             alignItems: 'center',
@@ -92,7 +101,6 @@ function App() {
         <div
           className="nav-cta-only"
           style={{
-            display: 'none',
             marginLeft: 'auto',
             alignItems: 'center',
           }}
@@ -111,34 +119,24 @@ function App() {
       <header style={{
         minHeight: '100dvh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'clamp(100px, 15vh, 140px) 24px clamp(60px, 10vh, 100px)',
+        padding: 'clamp(80px, 10vh, 100px) 24px clamp(40px, 5vh, 60px)',
         position: 'relative',
         overflow: 'hidden'
       }}>
-        <div className="container hero-container">
+        <div className="container hero-container" style={{ width: '100%' }}>
           {/* Left Column (Text & CTAs) */}
           <div className="hero-left">
-            <div className="glass-panel" style={{ 
-              padding: '6px 16px 6px 6px', 
-              borderRadius: 'var(--border-radius-full)', 
-              marginBottom: '32px', 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              gap: '12px', 
-              color: 'var(--accent-secondary)',
-              border: '1px solid rgba(110, 154, 120, 0.15)',
-              background: 'rgba(255, 255, 255, 0.01)',
-              width: 'fit-content'
-            }}>
+            <div className="hero-eyebrow animate-fade-up delay-1">
               <div className="icon-box" style={{ 
                 width: '32px', 
                 height: '32px', 
                 borderRadius: '50%', 
-                background: 'rgba(110, 154, 120, 0.08)', 
-                border: '1px solid rgba(110, 154, 120, 0.2)', 
-                color: 'var(--accent-secondary)',
+                background: 'rgba(0, 240, 255, 0.08)', 
+                border: '1px solid rgba(0, 240, 255, 0.2)', 
+                color: 'var(--accent-primary)',
                 boxShadow: 'none',
                 display: 'flex',
                 alignItems: 'center',
@@ -146,48 +144,46 @@ function App() {
               }}>
                 <Activity size={16} />
               </div>
-              <span style={{ fontSize: '0.8rem', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--accent-primary)' }}>
                 State-of-the-Art Laser Technology
               </span>
             </div>
 
-            <h1 style={{ 
-              fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(3.2rem, 8vw, 5.5rem)', 
-              fontWeight: '300', 
-              marginBottom: '24px', 
-              letterSpacing: '-0.01em', 
-              lineHeight: 1.1 
-            }}>
-              Experience the world with <br/>
-              <span className="text-gradient" style={{ 
-                fontFamily: 'var(--font-sans)', 
-                fontWeight: '800',
-                letterSpacing: '-0.03em',
-                whiteSpace: 'nowrap'
-              }}>Absolute Clarity</span>
+            <h1 className="animate-fade-up delay-2" style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
+              <span className="hero-serif-title">Experience the world with</span>
+              <span className="hero-display-title">Absolute Clarity</span>
             </h1>
+
             
-            <p className="text-secondary" style={{ fontSize: '1.25rem', maxWidth: '600px', marginBottom: '48px', lineHeight: '1.7', fontWeight: '400' }}>
-              Every morning without LASIK is another day reaching for glasses. Learn about the procedure and see if you qualify in under 60 seconds.
+            <p className="text-secondary animate-fade-up delay-3" style={{ fontSize: '1.25rem', maxWidth: '600px', marginBottom: '48px', lineHeight: '1.7', fontWeight: '400' }}>
+              Stop renting your sight from lenses and frames. Reclaim instant visual autonomy and wake up to pristine, high-definition clarity. Calculate your compatibility in under 60 seconds.
             </p>
             
-            <div className="responsive-flex-col" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <button onClick={() => scrollToSection('quiz')} className="btn btn-primary">
+            <div className="responsive-flex-col animate-fade-up delay-4" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              <button type="button" onClick={() => scrollToSection('quiz')} className="btn btn-primary" style={{ padding: '14px 32px' }}>
                 Take the Candidate Quiz 
                 <span className="btn-icon-wrapper">
                   <Eye size={14} />
                 </span>
               </button>
-              <button onClick={() => scrollToSection('education')} className="btn btn-secondary">
+              <button type="button" onClick={() => scrollToSection('education')} className="btn btn-secondary" style={{ padding: '14px 32px' }}>
                 Learn About the Procedure
               </button>
             </div>
           </div>
 
-          {/* Right Column (Hero Image) */}
-          <div className="hero-image-wrapper">
-            <div className="hero-image-card hero-float">
+          {/* Right Column (Hero Image with Diagnostic HUD Overlay) */}
+          <div className="hero-image-wrapper animate-fade-up delay-5" style={{ position: 'relative' }}>
+            {/* HUD Reticle Corners */}
+            <div style={{ position: 'absolute', top: '-10px', left: '-10px', width: '20px', height: '20px', borderTop: '3px solid var(--accent-primary)', borderLeft: '3px solid var(--accent-primary)', zIndex: 10 }} />
+            <div style={{ position: 'absolute', top: '-10px', right: '-10px', width: '20px', height: '20px', borderTop: '3px solid var(--accent-primary)', borderRight: '3px solid var(--accent-primary)', zIndex: 10 }} />
+            <div style={{ position: 'absolute', bottom: '-10px', left: '-10px', width: '20px', height: '20px', borderBottom: '3px solid var(--accent-primary)', borderLeft: '3px solid var(--accent-primary)', zIndex: 10 }} />
+            <div style={{ position: 'absolute', bottom: '-10px', right: '-10px', width: '20px', height: '20px', borderBottom: '3px solid var(--accent-primary)', borderRight: '3px solid var(--accent-primary)', zIndex: 10 }} />
+            
+            <div className="hero-image-card hero-float" style={{
+              border: '1px solid rgba(0, 240, 255, 0.25)',
+              boxShadow: '0 30px 60px rgba(0, 0, 0, 0.7), 0 0 45px rgba(0, 240, 255, 0.15)'
+            }}>
               <img 
                 src={heroImg} 
                 alt="LASIK Eye Surgery Technology" 
@@ -197,67 +193,49 @@ function App() {
           </div>
         </div>
 
-        <div 
-          onClick={() => scrollToSection('quiz')}
-          style={{
-            position: 'absolute',
-            bottom: '24px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            color: 'var(--text-muted)',
-            cursor: 'pointer',
-            animation: 'bounce 2s infinite ease-in-out',
-            zIndex: 10
-          }}
-        >
-          <ArrowDown size={32} />
-        </div>
-      </header>
-
-      {/* Trust Metrics Section */}
-      <section className="trust-metrics-section">
-        <div className="container trust-metrics-grid">
-          <div className="glass-panel trust-metric-card">
-            <div className="icon-box">
+        {/* Trust Metrics Grid (Moved inside header so it shows on first view, numbers removed) */}
+        <div className="container trust-metrics-grid animate-fade-up delay-6" style={{ width: '100%', marginTop: '48px', position: 'relative', zIndex: 10 }}>
+          <div className="trust-pillar-card" style={{ border: '1px solid rgba(0, 240, 255, 0.15)' }}>
+            <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Award className="trust-icon" size={24} />
             </div>
-            <div>
-              <div className="trust-value">30+ Years</div>
-              <div className="trust-label">Clinical Experience</div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>30+ Years</div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Clinical Experience</div>
             </div>
           </div>
           
-          <div className="glass-panel trust-metric-card">
-            <div className="icon-box">
+          <div className="trust-pillar-card" style={{ border: '1px solid rgba(0, 240, 255, 0.15)' }}>
+            <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <MapPin className="trust-icon" size={24} />
             </div>
-            <div>
-              <div className="trust-value">3 NJ Locations</div>
-              <div className="trust-label">Convenient Care</div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>3 NJ Locations</div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Convenient Care</div>
             </div>
           </div>
           
-          <div className="glass-panel trust-metric-card">
-            <div className="icon-box">
+          <div className="trust-pillar-card" style={{ border: '1px solid rgba(0, 240, 255, 0.15)' }}>
+            <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <ShieldCheck className="trust-icon" size={24} />
             </div>
-            <div>
-              <div className="trust-value">FDA-Approved</div>
-              <div className="trust-label">Safe & Proven Tech</div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>FDA-Approved</div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Safe & Proven Tech</div>
             </div>
           </div>
           
-          <div className="glass-panel trust-metric-card">
-            <div className="icon-box">
+          <div className="trust-pillar-card" style={{ border: '1px solid rgba(0, 240, 255, 0.15)' }}>
+            <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Calendar className="trust-icon" size={24} />
             </div>
-            <div>
-              <div className="trust-value">Pressure Free</div>
-              <div className="trust-label">Consultation</div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>Pressure Free</div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Consultation</div>
             </div>
           </div>
         </div>
-      </section>
+      </header>
 
       {/* Meet Dr. Matthew Marano & Brand/Cost Comparison */}
       <MaranoSection />
@@ -269,69 +247,15 @@ function App() {
         <div style={{ height: '1px', background: 'var(--border-light)', maxWidth: '800px', margin: '40px auto' }} />
         
         <div id="education">
+          <LasikScience />
+          <div style={{ height: '1px', background: 'var(--border-light)', maxWidth: '800px', margin: '40px auto' }} />
           <LasikSteps />
         </div>
 
         <SocialProofSection />
       </main>
 
-      {/* Full-width CTA Section */}
-      <section className="cta-section" style={{ padding: '100px 24px 20px 24px', position: 'relative', overflow: 'hidden' }}>
-        <div className="container">
-          <div className="glass-panel cta-glass-panel" style={{
-            padding: '60px 40px',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '28px',
-            position: 'relative',
-            zIndex: 1
-          }}>
-            <h2 className="text-gradient" style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', margin: 0, fontWeight: '700', letterSpacing: '-0.02em' }}>
-              How Much Longer Will You Wait?
-            </h2>
-            <p className="text-secondary" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.7' }}>
-              Schedule your complimentary, no-obligation consultation today — most patients say their only regret is not doing it sooner.
-            </p>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', margin: '12px 0' }}>
-              <span className="text-muted" style={{ textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2.5px', fontWeight: '700' }}>
-                Call us directly at
-              </span>
-              <a 
-                href="tel:9733220100" 
-                style={{ 
-                  fontSize: 'clamp(1.6rem, 6vw, 3rem)', 
-                  fontWeight: '800', 
-                  color: 'var(--text-primary)', 
-                  textDecoration: 'none',
-                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                }}
-                onMouseOver={(e) => e.currentTarget.style.color = 'var(--accent-primary)'}
-                onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
-              >
-                973-322-0100
-              </a>
-            </div>
-
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="btn btn-primary"
-                style={{ padding: '14px 36px', fontSize: '1.1rem' }}
-              >
-                Schedule Free Consultation
-                <span className="btn-icon-wrapper">
-                  <Calendar size={14} />
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Native Contact Form */}
+      {/* Native Contact Form (which now incorporates the merged CTA details) */}
       <ContactForm />
 
       {/* Footer */}
@@ -342,14 +266,35 @@ function App() {
         color: 'var(--text-muted)',
         marginTop: '80px'
       }}>
-        <div style={{ marginBottom: '16px' }}>
-          <img src={logo} alt="Marano Eye Care Logo" height="32" style={{ objectFit: 'contain', display: 'inline-block', marginBottom: '8px' }} />
+        <div style={{ marginBottom: '24px' }}>
+          <a 
+            href="https://www.maranoeyecare.com" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            style={{ 
+              display: 'inline-block', 
+              marginBottom: '16px',
+              transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            <img 
+              src={logo} 
+              alt="Marano Eye Care Logo" 
+              height="54" 
+              style={{ 
+                objectFit: 'contain', 
+                filter: 'drop-shadow(0 0 8px rgba(0, 240, 255, 0.15)) brightness(1.05)' 
+              }} 
+            />
+          </a>
           <p style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)', lineHeight: '1.6', margin: '8px 0' }}>200 South Orange Ave, Suite 209, Livingston NJ, 07039</p>
           <p style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)', lineHeight: '1.6', margin: '8px 0' }}>Phone: <a href="tel:973-322-0100">(973) 322-0100</a> | Email: <a href="mailto:LASIK@mec1.net">LASIK@mec1.net</a></p>
         </div>
         <p style={{ fontSize: 'clamp(0.75rem, 2vw, 0.9rem)' }}>© 2026 Marano Eye Care. All rights reserved.</p>
-        <p style={{ fontSize: '0.8rem', marginTop: '8px', maxWidth: '600px', margin: '8px auto', lineHeight: '1.6' }}>
-          Disclaimer: This self-test is for educational purposes only and does not replace a comprehensive medical examination and consultation with a qualified ophthalmologist.
+        <p style={{ fontSize: '0.8rem', marginTop: '8px', maxWidth: '750px', margin: '8px auto', lineHeight: '1.6' }}>
+          Disclaimer: This self-test is for educational purposes only and does not replace a comprehensive medical examination and consultation with a qualified ophthalmologist. LASIK is a surgical procedure that carries risks. Possible post-operative side effects include dry eyes, temporary or permanent visual disturbances (such as glare, halos, starbursts, and double vision, particularly at night), and the possible need for a repeat enhancement procedure to correct residual refractive errors.
         </p>
       </footer>
     </>

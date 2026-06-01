@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronRight, ChevronLeft, Info, CheckCircle2, Play, RotateCcw, Activity } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Info, CheckCircle2, Play, RotateCcw, Activity, Eye, Settings, ShieldCheck } from 'lucide-react';
 import prepImg from '../assets/lasik_prep.png';
 import flapImg from '../assets/lasik_flap.png';
 import reshapeImg from '../assets/lasik_reshape.png';
@@ -9,15 +9,24 @@ import healingImg from '../assets/lasik_healing.png';
 const steps = [
   {
     id: 1,
-    title: 'Pre-Procedure Preparation',
-    purpose: 'To map the exact topography of your eye and prepare it for treatment.',
-    experience: 'You will rest comfortably as we administer numbing eye drops. A gentle eyelid holder is placed to prevent blinking. You will focus on a light while we take a precise 3D digital scan of your cornea.',
+    title: 'Pre-Operative Measurements',
+    purpose: 'To capture the exact baseline specifications and topography of your cornea for custom treatment planning.',
+    experience: 'You will undergo detailed corneal mapping and diagnostic scans. CRITICAL: To ensure precise calculations, patients must stop wearing contact lenses prior to these measurements (soft lenses for at least 10 days, hard/gas permeable lenses for 3 weeks) so the cornea can return to its natural shape.',
     image: prepImg,
-    scienceTitle: 'Diagnostic Wavefront & Topography Mapping',
-    scienceDetails: 'Our doctors use a high-definition wavefront analyzer to project 22,000 unique elevation points onto your cornea. This creates a detailed 3D optical map, measuring aberrations down to the sub-micron level (0.01 µm) to guide custom laser profiling.'
+    scienceTitle: 'Ocular Topography & Keratometry',
+    scienceDetails: 'We measure the curvature, thickness, and elevation profiles of your cornea using high-precision optical mapping. Because contact lenses temporarily alter the shape of the cornea, being out of contacts is essential to prevent surgical diopter miscalculations.'
   },
   {
     id: 2,
+    title: 'Day-of Procedure Preparation',
+    purpose: 'To prepare your eye and ensure you are comfortable and relaxed for the treatment.',
+    experience: 'You will rest comfortably as we administer numbing eye drops. We also provide a mild oral sedative/anxiolytic at this stage to help you feel completely relaxed during the procedure, and to support sleep and recovery immediately afterward.',
+    image: prepImg,
+    scienceTitle: 'Diagnostic Refraction Verification',
+    scienceDetails: 'On the day of surgery, we verify your pupil dilation, confirm eye stability, and calibrate the lasers. The numbing drops block sensation in the trigeminal nerve endings of the cornea, ensuring complete comfort.'
+  },
+  {
+    id: 3,
     title: 'Creating the Corneal Flap',
     purpose: 'To access the underlying corneal tissue (stroma) where the vision correction will take place.',
     experience: 'You may feel a slight pressure, and your vision will momentarily dim. A state-of-the-art femtosecond laser creates microscopic bubbles to form a highly precise, ultra-thin flap in less than 30 seconds.',
@@ -26,7 +35,7 @@ const steps = [
     scienceDetails: 'An ultra-fast femtosecond laser emits light pulses at a quadrillionth of a second. It focuses light to form a precise layer of microscopic carbon dioxide/water gas bubbles at a calibrated depth (typically 110 µm) beneath the corneal surface, separating the tissue without heat or blades.'
   },
   {
-    id: 3,
+    id: 4,
     title: 'Reshaping the Cornea',
     purpose: 'To permanently correct your refractive error (nearsightedness, farsightedness, or astigmatism) based on your custom 3D map.',
     experience: 'You will hear a clicking sound. You just need to stare at the target light. The computer-guided excimer laser painlessly removes microscopic tissue to flatten or reshape the cornea in seconds.',
@@ -35,7 +44,7 @@ const steps = [
     scienceDetails: 'A computer-guided cold excimer laser uses 193 nm ultraviolet light to disrupt molecular bonds in the stromal layer. Each pulse vaporizes a minute layer of tissue (0.25 microns deep) in under 1.4 milliseconds, reshaping the curvature to eliminate myopia, hyperopia, or astigmatism.'
   },
   {
-    id: 4,
+    id: 5,
     title: 'Repositioning the Flap',
     purpose: 'To protect the reshaped tissue and promote rapid, natural healing without stitches.',
     experience: 'The surgeon gently folds the flap back into its original position. It acts as a natural bandage. Your vision will begin to clear almost immediately, though it may be slightly blurry like looking underwater.',
@@ -44,10 +53,10 @@ const steps = [
     scienceDetails: 'The flap is smoothed back over the reshaped cornea, matching the custom borders. Within minutes, natural osmotic pressure and cellular adhesion pull the flap taut. Natural endothelial cell pumps seal the edge, eliminating any need for sutures.'
   },
   {
-    id: 5,
+    id: 6,
     title: 'Post-Procedure Healing',
     purpose: 'To allow the eye to rest and stabilize the new visual acuity.',
-    experience: 'The entire procedure is complete! The healing process begins instantly. When you wake up, much of the healing has already begun. Many patients notice dramatically improved vision within 24 hours.',
+    experience: 'The entire procedure is complete! The healing process begins instantly. The sedative given at the start will help you sleep and recover restfully when you return home. Many patients notice dramatically improved vision within 24 hours.',
     image: healingImg,
     scienceTitle: 'Epithelial Regeneration & Stabilization',
     scienceDetails: 'The surface epithelium regenerates and seals the flap edge within 24 to 48 hours. Medicated anti-inflammatory and antibiotic drops promote smooth corneal re-epithelialization, leading to structural stability and sharp visual acuity within a day.'
@@ -56,104 +65,112 @@ const steps = [
 
 export default function LasikSteps() {
   const [activeStep, setActiveStep] = useState(0);
-  const [visualMode, setVisualMode] = useState('render'); // 'render' or 'simulator'
+  const [visualMode, setVisualMode] = useState('render'); // Default to 3D Concept Render on load
   const [isAutoplay, setIsAutoplay] = useState(false);
-  const [autoplayProgress, setAutoplayProgress] = useState(0); // 0 to 100
+  const [autoplayProgress, setAutoplayProgress] = useState(0); // 0 to 1
+  const [sliderProgress, setSliderProgress] = useState(0); // 0 to 100
+  const [showClinicalTelemetry, setShowClinicalTelemetry] = useState(false);
   const animationRef = useRef(null);
   const startTimeRef = useRef(null);
 
-  // Animation values computed from step or autoplay progress
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth > 768) {
+      setShowClinicalTelemetry(true);
+    }
+  }, []);
+
+  // Compute combined progress (0 to 100)
+  const progressVal = isAutoplay ? autoplayProgress * 100 : sliderProgress;
+
+  // Sync activeStep with progressVal
+  useEffect(() => {
+    if (progressVal < 15) {
+      setActiveStep(0);
+    } else if (progressVal >= 15 && progressVal < 32) {
+      setActiveStep(1);
+    } else if (progressVal >= 32 && progressVal < 50) {
+      setActiveStep(2);
+    } else if (progressVal >= 50 && progressVal < 72) {
+      setActiveStep(3);
+    } else if (progressVal >= 72 && progressVal < 90) {
+      setActiveStep(4);
+    } else {
+      setActiveStep(5);
+    }
+  }, [progressVal]);
+
+  // Animation values computed from progressVal
   let flapAngle = 0;
   let corneaCurve = 72; // 72 is normal myopia, 86 is reshaped/flatter
-  let chartBlur = 3; // 3px to 0px
+  let chartBlur = 3.5; // 3.5px to 0px
   let focusRadius = 8;
-  let focusBlur = 2;
-  let focusColor = 'rgba(127, 161, 214, 0.6)';
+  let focusBlur = 3;
+  let focusColor = 'rgba(0, 240, 255, 0.4)';
   let laserActive = false;
   let cutActive = false;
   let nozzleY = 0;
   let sparks = [];
 
-  // If in autoplay, compute values based on elapsed animation time
-  if (isAutoplay) {
-    const totalDuration = 9000; // 9 seconds total autoplay
-    const elapsed = autoplayProgress * totalDuration;
-
-    if (elapsed < 2000) {
-      // Step 1: Flap Creation
-      if (elapsed < 1000) {
-        cutActive = true;
-        const cutProgress = elapsed / 1000;
-        nozzleY = cutProgress * 130;
-      } else {
-        const openProgress = (elapsed - 1000) / 1000;
-        flapAngle = openProgress * 130;
-        nozzleY = 130 - openProgress * 65;
-      }
-    } else if (elapsed >= 2000 && elapsed < 6000) {
-      // Step 2: Sculpting
-      flapAngle = 130;
-      laserActive = true;
-      const sculptProgress = (elapsed - 2000) / 4000;
-      corneaCurve = 72 + sculptProgress * 14;
-      chartBlur = 3 - sculptProgress * 2;
-      nozzleY = 65;
-
-      // Generate visual sparks based on elapsed frame
-      const sparkCount = 3;
-      for (let i = 0; i < sparkCount; i++) {
-        const angle = Math.random() * Math.PI - Math.PI / 2;
-        const dist = 5 + Math.random() * 15;
-        sparks.push({
-          cx: 110 + Math.cos(angle) * dist - 25,
-          cy: 110 + Math.sin(angle) * dist,
-          r: 1 + Math.random() * 2,
-          opacity: 0.5 + Math.random() * 0.5
-        });
-      }
-    } else if (elapsed >= 6000 && elapsed < 7500) {
-      // Step 3: Repositioning
-      const closeProgress = (elapsed - 6000) / 1500;
-      flapAngle = 130 - closeProgress * 130;
-      corneaCurve = 86;
-      chartBlur = 1;
-      nozzleY = 65 - closeProgress * 65;
-    } else {
-      // Step 4: Healing / Crisp focus
+  // Logic mapping progressVal (0 - 100) to visual properties
+  if (progressVal < 32) {
+    // Stage 1 & 2: Preparation & Specs (0 to 32%)
+    flapAngle = 0;
+    corneaCurve = 72;
+    chartBlur = 3.5;
+    nozzleY = 0;
+  } else if (progressVal >= 32 && progressVal < 50) {
+    // Stage 3: Flap Incision & Open (32% to 50%)
+    const stagePct = (progressVal - 32) / 18; // 0 to 1
+    if (stagePct < 0.5) {
+      // Slicing
+      cutActive = true;
+      nozzleY = stagePct * 2 * 130;
       flapAngle = 0;
-      corneaCurve = 86;
-      const focusProgress = Math.min((elapsed - 7500) / 1500, 1);
-      chartBlur = 1 - focusProgress;
-      focusRadius = 8 - focusProgress * 5;
-      focusBlur = 2 - focusProgress * 2;
-      focusColor = `rgba(${110 + focusProgress * 17}, ${154 + focusProgress * 31}, ${120 + focusProgress * 54}, ${0.6 + focusProgress * 0.4})`;
+    } else {
+      // Opening flap
+      const openPct = (stagePct - 0.5) * 2; // 0 to 1
+      flapAngle = openPct * 130;
+      nozzleY = 130 - openPct * 65;
     }
+    corneaCurve = 72;
+    chartBlur = 3.5;
+  } else if (progressVal >= 50 && progressVal < 72) {
+    // Stage 4: Reshaping (50% to 72%)
+    flapAngle = 130;
+    laserActive = true;
+    const stagePct = (progressVal - 50) / 22; // 0 to 1
+    corneaCurve = 72 + stagePct * 14;
+    chartBlur = 3.5 - stagePct * 2.5;
+    nozzleY = 65;
+
+    // Generate visual sparks based on elapsed frame
+    const sparkCount = 3;
+    for (let i = 0; i < sparkCount; i++) {
+      const angle = Math.random() * Math.PI - Math.PI / 2;
+      const dist = 5 + Math.random() * 15;
+      sparks.push({
+        cx: 110 + Math.cos(angle) * dist - 25,
+        cy: 110 + Math.sin(angle) * dist,
+        r: 1 + Math.random() * 2,
+        opacity: 0.5 + Math.random() * 0.5
+      });
+    }
+  } else if (progressVal >= 72 && progressVal < 90) {
+    // Stage 5: Repositioning (72% to 90%)
+    const stagePct = (progressVal - 72) / 18; // 0 to 1
+    flapAngle = 130 - stagePct * 130;
+    corneaCurve = 86;
+    chartBlur = 1.0 - stagePct * 0.5;
+    nozzleY = 65 - stagePct * 65;
   } else {
-    // Manual Step Mode
-    if (activeStep === 0) {
-      flapAngle = 0;
-      corneaCurve = 72;
-      chartBlur = 3;
-    } else if (activeStep === 1) {
-      flapAngle = 130;
-      corneaCurve = 72;
-      chartBlur = 3;
-    } else if (activeStep === 2) {
-      flapAngle = 130;
-      corneaCurve = 86;
-      chartBlur = 1.2;
-    } else if (activeStep === 3) {
-      flapAngle = 0;
-      corneaCurve = 86;
-      chartBlur = 0.8;
-    } else {
-      flapAngle = 0;
-      corneaCurve = 86;
-      chartBlur = 0;
-      focusRadius = 3;
-      focusBlur = 0;
-      focusColor = 'rgba(110, 154, 120, 1)';
-    }
+    // Stage 6: Healing (90% to 100%)
+    flapAngle = 0;
+    corneaCurve = 86;
+    const stagePct = (progressVal - 90) / 10; // 0 to 1
+    chartBlur = Math.max(0.5 - stagePct * 0.5, 0);
+    focusRadius = Math.max(8 - stagePct * 6, 2);
+    focusBlur = Math.max(3 - stagePct * 3, 0);
+    focusColor = `rgba(16, 185, 129, ${0.4 + stagePct * 0.6})`;
   }
 
   // Handle Autoplay Animation loop
@@ -162,27 +179,17 @@ export default function LasikSteps() {
       const animate = (timestamp) => {
         if (!startTimeRef.current) startTimeRef.current = timestamp;
         const elapsed = timestamp - startTimeRef.current;
-        const duration = 9000;
+        const duration = 10000; // 10 seconds total autoplay
         const progress = Math.min(elapsed / duration, 1);
 
         setAutoplayProgress(progress);
-
-        // Update corresponding text steps along the way
-        if (elapsed < 2000) {
-          setActiveStep(1);
-        } else if (elapsed >= 2000 && elapsed < 6000) {
-          setActiveStep(2);
-        } else if (elapsed >= 6000 && elapsed < 7500) {
-          setActiveStep(3);
-        } else {
-          setActiveStep(4);
-        }
 
         if (progress < 1) {
           animationRef.current = requestAnimationFrame(animate);
         } else {
           setIsAutoplay(false);
           setAutoplayProgress(0);
+          setSliderProgress(100);
           startTimeRef.current = null;
         }
       };
@@ -203,158 +210,318 @@ export default function LasikSteps() {
     if (isAutoplay) {
       setIsAutoplay(false);
       setAutoplayProgress(0);
-      setActiveStep(0);
+      setSliderProgress(0);
     } else {
-      setActiveStep(0);
-      setVisualMode('simulator'); // Automatically switch to simulator to show animation
+      setVisualMode('simulator');
+      setSliderProgress(0);
       setIsAutoplay(true);
       setAutoplayProgress(0);
     }
   };
 
-  const nextStep = () => {
+  const handleSliderChange = (e) => {
     if (isAutoplay) setIsAutoplay(false);
-    setActiveStep((prev) => (prev + 1) % steps.length);
+    setSliderProgress(Number(e.target.value));
   };
 
-  const prevStep = () => {
-    if (isAutoplay) setIsAutoplay(false);
-    setActiveStep((prev) => (prev - 1 + steps.length) % steps.length);
+  const handlePrevStep = () => {
+    if (activeStep > 0) {
+      const prevIdx = activeStep - 1;
+      const targetProgress = prevIdx === 5 ? 95 : prevIdx * 18 + 5;
+      setSliderProgress(targetProgress);
+      setIsAutoplay(false);
+    }
   };
+
+  const handleNextStep = () => {
+    if (activeStep < steps.length - 1) {
+      const nextIdx = activeStep + 1;
+      const targetProgress = nextIdx === 5 ? 95 : nextIdx * 18 + 5;
+      setSliderProgress(targetProgress);
+      setIsAutoplay(false);
+    }
+  };
+
+  // Compile active stage descriptions dynamically for the telemetry block
+  let phaseName = "1. Calibration";
+  let laserStatus = "STANDBY";
+  let pulseRate = "0 Hz";
+  let energyLevel = "0 mJ";
+  let thicknessStr = "545 µm";
+  let trackingLock = "LOCKING...";
+
+  if (progressVal < 15) {
+    phaseName = "1. PRE-OP MEASURE";
+    laserStatus = "SCANNING";
+    pulseRate = "2.4 kHz (low-pulse)";
+    energyLevel = "2.5 µJ";
+    thicknessStr = "545 µm (Normal)";
+    trackingLock = "LOCK OK (99.8%)";
+  } else if (progressVal >= 15 && progressVal < 32) {
+    phaseName = "2. DAY-OF PREP";
+    laserStatus = "PREPARING";
+    pulseRate = "0 Hz";
+    energyLevel = "0.0 µJ";
+    thicknessStr = "545 µm (Numbed)";
+    trackingLock = "PATIENT STABLE";
+  } else if (progressVal >= 32 && progressVal < 50) {
+    phaseName = "3. FLAP INCI";
+    laserStatus = cutActive ? "FEMTO PULSE" : "ELEVATING";
+    pulseRate = cutActive ? "150 kHz" : "0 Hz";
+    energyLevel = cutActive ? "1.2 µJ" : "0.0 µJ";
+    thicknessStr = "435 µm (Stroma Exposed)";
+    trackingLock = "LOCK OK (100.0%)";
+  } else if (progressVal >= 50 && progressVal < 72) {
+    phaseName = "4. EXCIMER ABLATION";
+    laserStatus = "EXCIMER ACTIVE";
+    pulseRate = "250 Hz";
+    energyLevel = "120 mJ/cm²";
+    thicknessStr = `${Math.round(435 - ((progressVal - 50) / 22) * 45)} µm (Target)`;
+    trackingLock = "AUTO-TRACK ON";
+  } else if (progressVal >= 72 && progressVal < 90) {
+    phaseName = "5. REPOSITIONING";
+    laserStatus = "FLAP REALIGN";
+    pulseRate = "0 Hz";
+    energyLevel = "0.0 mJ";
+    thicknessStr = "490 µm (Corrected)";
+    trackingLock = "BORDER MATCH OK";
+  } else {
+    phaseName = "6. EPITHELIAL HEAL";
+    laserStatus = "HEALING ENABLED";
+    pulseRate = "0 Hz";
+    energyLevel = "CALIBRATION PASS";
+    thicknessStr = "490 µm (Stable)";
+    trackingLock = "PERFECT FOCUS";
+  }
 
   return (
-    <div className="section" style={{ padding: '80px 24px' }}>
+    <div className="section" style={{ padding: '48px 24px 32px 24px' }}>
+      {/* SVG Filters for Neon Laser Glow */}
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+        <defs>
+          <filter id="neon-glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="neon-glow-red" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="neon-glow-green" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
+
       <div className="container" style={{ maxWidth: '1100px' }}>
-        <div className="text-center" style={{ marginBottom: '48px' }}>
-          <h2 className="text-gradient" style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', marginBottom: '20px', fontWeight: '700', letterSpacing: '-0.02em' }}>
-            The LASIK Journey
+        <div className="text-center" style={{ marginBottom: '32px' }}>
+          <h2 className="bio-heading">
+            The LASIK <span className="bio-heading-accent">Journey</span>
           </h2>
-          <p className="text-secondary" style={{ maxWidth: '800px', margin: '0 auto', fontSize: '1.25rem', lineHeight: '1.7' }}>
-            Understanding the state-of-the-art technology behind your visual freedom. Explore our high-resolution concept art or animated laser simulator below.
+          <p className="text-secondary" style={{ maxWidth: '800px', margin: '0 auto', fontSize: '1.15rem', lineHeight: '1.6', fontWeight: '300' }}>
+            Explore our state-of-the-art procedure. Switch between 3D renders or drag the active simulator to perform the steps yourself.
           </p>
         </div>
 
-        <div className="glass-panel lasik-steps-panel" style={{ padding: '48px 40px', display: 'flex', flexDirection: 'column', gap: '36px', overflow: 'hidden' }}>
+        <div className="glass-panel lasik-steps-panel" style={{ 
+          padding: '24px 32px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '24px', 
+          overflow: 'hidden',
+          border: '1px solid rgba(0, 240, 255, 0.25)',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 240, 255, 0.05)'
+        }}>
           
+          {/* Tracker Instruction Label */}
+          <div style={{
+            fontSize: '0.75rem',
+            fontFamily: 'monospace',
+            color: 'var(--accent-primary)',
+            letterSpacing: '2px',
+            textTransform: 'uppercase',
+            fontWeight: '700',
+            textAlign: 'center',
+            marginBottom: '-8px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px'
+          }}>
+            <Activity size={12} className="animate-pulse" /> Click Steps to Advance Surgery Simulator <Activity size={12} className="animate-pulse" />
+          </div>
+
           {/* Progress Timeline Tracker */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', marginBottom: '12px' }}>
-            <div style={{ position: 'absolute', top: '50%', left: '0', right: '0', height: '2px', background: 'rgba(255, 255, 255, 0.08)', zIndex: 0, transform: 'translateY(-50%)' }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', marginBottom: '12px', padding: '0 10px' }}>
+            <div style={{ position: 'absolute', top: '18px', left: '20px', right: '20px', height: '2px', background: 'rgba(255, 255, 255, 0.06)', zIndex: 0 }} />
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '0',
+              top: '18px',
+              left: '20px',
               height: '2px',
-              background: 'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))',
+              background: 'linear-gradient(95deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary))',
               zIndex: 1,
-              transform: 'translateY(-50%)',
-              width: `${(activeStep / (steps.length - 1)) * 100}%`,
+              width: `calc(${(activeStep / (steps.length - 1)) * 100}% - 8px)`,
               transition: 'width 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-              boxShadow: '0 0 10px rgba(140, 178, 242, 0.2)'
+              boxShadow: '0 0 12px var(--accent-primary)'
             }} />
 
-            {steps.map((step, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setIsAutoplay(false);
-                  setActiveStep(index);
-                }}
-                className="steps-progress-dot"
-                style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '50%',
-                  background: index < activeStep ? 'linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%)' : index === activeStep ? 'var(--bg-secondary)' : 'var(--bg-tertiary)',
-                  border: index <= activeStep ? '2px solid var(--accent-primary)' : '2px solid rgba(255, 255, 255, 0.08)',
-                  color: index < activeStep ? '#fff' : index === activeStep ? 'var(--accent-primary)' : 'var(--text-muted)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: '700',
-                  fontSize: '0.9rem',
-                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: index === activeStep ? '0 0 15px rgba(140, 178, 242, 0.2)' : 'none',
-                  transform: index === activeStep ? 'scale(1.1)' : 'scale(1)'
-                }}
-                aria-label={`Go to step ${index + 1}`}
-              >
-                {index < activeStep ? <CheckCircle2 size={16} /> : step.id}
-              </button>
-            ))}
+            {steps.map((step, index) => {
+              const isActive = index === activeStep;
+              const isPast = index < activeStep;
+              const shortTitles = ['1. Measurements', '2. Day-Of Prep', '3. Flap Creation', '4. Reshaping', '5. Reposition', '6. Healing'];
+              return (
+                <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', zIndex: 2 }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAutoplay(false);
+                      // Set progressVal to start of that step's range
+                      const targetProgress = index === 5 ? 95 : index * 18 + 5;
+                      setSliderProgress(targetProgress);
+                    }}
+                    className={`steps-progress-dot ${isActive ? 'active-radar-dot' : ''}`}
+                    style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: isPast 
+                        ? 'linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%)' 
+                        : isActive 
+                          ? '#081125' 
+                          : '#132247',
+                      border: isPast || isActive 
+                        ? '2px solid var(--accent-primary)' 
+                        : '2px solid rgba(255, 255, 255, 0.08)',
+                      color: isPast ? '#030712' : isActive ? 'var(--accent-primary)' : 'var(--text-muted)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: '700',
+                      fontSize: '0.85rem',
+                      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                      boxShadow: isActive ? '0 0 12px rgba(0, 240, 255, 0.5)' : 'none',
+                      transform: isActive ? 'scale(1.1)' : 'scale(1)'
+                    }}
+                    aria-label={`Go to step ${index + 1}`}
+                  >
+                    {isPast ? <CheckCircle2 size={14} /> : step.id}
+                  </button>
+                  <span className="nav-links-group" style={{
+                    fontSize: '0.7rem',
+                    fontFamily: 'monospace',
+                    fontWeight: isActive ? '700' : '500',
+                    color: isActive ? 'var(--accent-primary)' : 'var(--text-muted)',
+                    textAlign: 'center',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    {shortTitles[index]}
+                  </span>
+                </div>
+              );
+            })}
           </div>
 
           {/* Core Interactive Layout */}
-          <div className="responsive-grid" style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '48px', alignItems: 'center' }}>
+          <div className="steps-grid">
             
             {/* Left Column: Interactive Visual Panel */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }} className="step-image-col">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }} className="step-image-col">
               
               {/* Segmented Mode Selector */}
               <div style={{
                 display: 'flex',
                 background: 'rgba(255, 255, 255, 0.02)',
                 padding: '4px',
-                borderRadius: '12px',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
+                borderRadius: '14px',
+                border: '1px solid rgba(0, 240, 255, 0.15)',
                 alignSelf: 'flex-start'
               }}>
                 <button
+                  type="button"
                   onClick={() => {
                     setIsAutoplay(false);
                     setVisualMode('render');
                   }}
                   style={{
-                    padding: '8px 18px',
-                    borderRadius: '8px',
+                    padding: '8px 20px',
+                    borderRadius: '10px',
                     fontSize: '0.8rem',
                     fontWeight: '700',
                     background: visualMode === 'render' ? 'linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%)' : 'transparent',
-                    color: visualMode === 'render' ? '#fff' : 'var(--text-muted)',
+                    color: visualMode === 'render' ? '#030712' : 'var(--text-secondary)',
                     border: 'none',
                     cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    letterSpacing: '0.5px'
                   }}
                 >
                   3D Concept Render
                 </button>
                 <button
+                  type="button"
                   onClick={() => {
                     setVisualMode('simulator');
                   }}
                   style={{
-                    padding: '8px 18px',
-                    borderRadius: '8px',
+                    padding: '8px 20px',
+                    borderRadius: '10px',
                     fontSize: '0.8rem',
                     fontWeight: '700',
                     background: visualMode === 'simulator' ? 'linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%)' : 'transparent',
-                    color: visualMode === 'simulator' ? '#fff' : 'var(--text-muted)',
+                    color: visualMode === 'simulator' ? '#030712' : 'var(--text-secondary)',
                     border: 'none',
                     cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    letterSpacing: '0.5px'
                   }}
                 >
                   Animated Simulator
                 </button>
               </div>
 
+              {/* Main Visual Display Terminal */}
               <div 
                 className="glass-panel" 
                 style={{ 
-                  background: 'rgba(10, 15, 22, 0.4)', 
-                  border: '1px solid rgba(255, 255, 255, 0.05)', 
-                  borderRadius: '20px', 
-                  padding: '24px', 
+                  background: 'rgba(6, 11, 23, 0.85)', 
+                  border: '1px solid rgba(0, 240, 255, 0.15)', 
+                  borderRadius: '24px', 
+                  padding: '16px', 
                   width: '100%', 
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '16px',
                   alignItems: 'center',
-                  boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.4)'
+                  boxShadow: 'inset 0 0 40px rgba(0, 0, 0, 0.6), 0 10px 40px rgba(0,0,0,0.4)',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
               >
-                <div style={{ display: 'flex', width: '100%', gap: '16px', alignItems: 'center', justifyContent: 'center' }} key={`${visualMode}-${activeStep}`}>
+                {/* CRT Screen Scan-Line overlay */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  backgroundImage: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%), linear-gradient(90deg, rgba(0, 240, 255, 0.01), rgba(139, 92, 246, 0.005), rgba(236, 72, 153, 0.01))',
+                  backgroundSize: '100% 4px, 6px 100%',
+                  pointerEvents: 'none',
+                  zIndex: 5,
+                  opacity: 0.6
+                }} />
+
+                <div style={{ width: '100%', maxWidth: '480px' }}>
                   
                   {visualMode === 'render' ? (
                     /* Futuristic High-Res Image */
@@ -362,12 +529,13 @@ export default function LasikSteps() {
                       className="animate-fade-in" 
                       style={{ 
                         position: 'relative', 
-                        width: '65%', 
+                        width: '100%', 
                         borderRadius: '16px', 
                         overflow: 'hidden', 
-                        border: '1px solid rgba(255, 255, 255, 0.06)',
-                        background: 'rgba(0,0,0,0.2)',
-                        boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                        border: '1px solid rgba(0, 240, 255, 0.25)',
+                        background: 'rgba(0,0,0,0.4)',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                        aspectRatio: '1.1'
                       }}
                     >
                       <img 
@@ -375,8 +543,7 @@ export default function LasikSteps() {
                         alt={steps[activeStep].title} 
                         style={{
                           width: '100%',
-                          height: 'auto',
-                          aspectRatio: '1',
+                          height: '100%',
                           objectFit: 'cover',
                           display: 'block'
                         }}
@@ -384,7 +551,7 @@ export default function LasikSteps() {
                       <div style={{
                         position: 'absolute',
                         inset: 0,
-                        background: 'linear-gradient(180deg, transparent 65%, rgba(11, 19, 41, 0.9) 100%)',
+                        background: 'linear-gradient(180deg, transparent 60%, rgba(3, 7, 18, 0.95) 100%)',
                         pointerEvents: 'none'
                       }} />
                       <div className="animate-scan" style={{
@@ -395,259 +562,334 @@ export default function LasikSteps() {
                     </div>
                   ) : (
                     /* Eye Anatomy SVG Simulator */
-                    <svg 
-                      viewBox="0 0 200 220" 
-                      style={{ width: '65%', height: 'auto', overflow: 'visible' }}
-                    >
-                      {/* Sclera Eyeball */}
-                      <path d="M 110,40 A 70,70 0 1,1 110,180" fill="rgba(20, 28, 39, 0.6)" stroke="rgba(255, 255, 255, 0.12)" strokeWidth="2" />
-                      <path d="M 165,65 A 70,70 0 0,1 165,155" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="4" />
-                      
-                      {/* Lens */}
-                      <ellipse cx="135" cy="110" rx="8" ry="22" fill="rgba(127, 161, 214, 0.2)" stroke="rgba(127, 161, 214, 0.4)" strokeWidth="1.5" />
-                      
-                      {/* Corneal Bed */}
-                      <path d="M 110,40 Q 72,110 110,180" fill="none" stroke="rgba(127, 161, 214, 0.25)" strokeWidth="3" strokeDasharray="2 3" />
-                      
-                      {/* Dynamic Cornea Profile */}
-                      <path d={`M 110,40 Q ${corneaCurve},110 110,180`} fill="none" stroke="var(--accent-primary)" strokeWidth="3.5" strokeLinecap="round" />
-                      
-                      {/* Corneal Flap */}
-                      <path 
-                        d="M 110,45 Q 72,110 110,175" 
-                        fill="none" 
-                        stroke="rgba(255, 255, 255, 0.6)" 
-                        strokeWidth="2" 
-                        strokeLinecap="round"
-                        transform={`rotate(${flapAngle}, 110, 45)`}
-                        style={{ transition: isAutoplay ? 'none' : 'transform 0.5s ease' }}
-                      />
-                      
-                      {/* Light Rays */}
-                      {activeStep === 4 ? (
-                        // Perfect focus rays
-                        <>
-                          <path d="M 15,70 L 92,90 L 135,102 L 155,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
-                          <path d="M 15,150 L 92,130 L 135,118 L 155,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
-                          <path d="M 15,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeWidth="1.5" />
-                        </>
-                      ) : (
-                        // Blurry focus rays
-                        <>
-                          <path d="M 15,70 L 92,90 L 135,102 L 155,110 L 180,118" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
-                          <path d="M 15,150 L 92,130 L 135,118 L 155,110 L 180,102" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeDasharray="4" strokeWidth="2" />
-                          <path d="M 15,110 L 180,110" fill="none" stroke="rgba(127, 161, 214, 0.85)" strokeWidth="1.5" />
-                        </>
-                      )}
+                    <div style={{ width: '100%', background: 'rgba(3, 7, 18, 0.5)', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.05)', padding: '6px' }}>
+                      <svg 
+                        viewBox="0 0 200 220" 
+                        style={{ width: '100%', height: 'auto', overflow: 'visible' }}
+                      >
+                        {/* Eyeball Sclera Background */}
+                        <path d="M 110,40 A 70,70 0 1,1 110,180" fill="rgba(8, 17, 37, 0.8)" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="1.5" />
+                        <path d="M 165,65 A 70,70 0 0,1 165,155" fill="none" stroke="rgba(0, 240, 255, 0.05)" strokeWidth="3" />
+                        
+                        {/* Inner Lens */}
+                        <ellipse cx="135" cy="110" rx="8" ry="22" fill="rgba(139, 92, 246, 0.15)" stroke="var(--accent-secondary)" strokeWidth="1" />
+                        
+                        {/* Ideal Corneal Profile Template (dashed) */}
+                        <path d="M 110,40 Q 72,110 110,180" fill="none" stroke="rgba(0, 240, 255, 0.2)" strokeWidth="2" strokeDasharray="2 3" />
+                        
+                        {/* Dynamic Cornea Profile */}
+                        <path d={`M 110,40 Q ${corneaCurve},110 110,180`} fill="none" stroke="var(--accent-primary)" strokeWidth="3.5" strokeLinecap="round" filter="url(#neon-glow-cyan)" />
+                        
+                        {/* Corneal Flap */}
+                        <path 
+                          d="M 110,45 Q 72,110 110,175" 
+                          fill="none" 
+                          stroke="rgba(255, 255, 255, 0.8)" 
+                          strokeWidth="2.5" 
+                          strokeLinecap="round"
+                          transform={`rotate(${flapAngle}, 110, 45)`}
+                          style={{ transition: isAutoplay ? 'none' : 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                        />
+                        
+                        {/* Focus Light Rays */}
+                        {progressVal >= 90 ? (
+                          /* Perfect focused light rays */
+                          <>
+                            <path d="M 15,65 L 95,92 L 135,103 L 155,110 L 180,110" fill="none" stroke="var(--accent-primary)" strokeDasharray="3" strokeWidth="2" opacity="0.8" filter="url(#neon-glow-cyan)" />
+                            <path d="M 15,155 L 95,128 L 135,117 L 155,110 L 180,110" fill="none" stroke="var(--accent-primary)" strokeDasharray="3" strokeWidth="2" opacity="0.8" filter="url(#neon-glow-cyan)" />
+                            <path d="M 15,110 L 180,110" fill="none" stroke="rgba(0, 240, 255, 0.5)" strokeWidth="1.5" />
+                          </>
+                        ) : (
+                          /* Blurry visual focus rays */
+                          <>
+                            <path d="M 15,65 L 95,92 L 135,103 L 155,110 L 180,122" fill="none" stroke="rgba(255, 255, 255, 0.4)" strokeDasharray="3" strokeWidth="1.5" />
+                            <path d="M 15,155 L 95,128 L 135,117 L 155,110 L 180,98" fill="none" stroke="rgba(255, 255, 255, 0.4)" strokeDasharray="3" strokeWidth="1.5" />
+                            <path d="M 15,110 L 180,110" fill="none" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
+                          </>
+                        )}
 
-                      {/* Laser Cutting Beam (Step 1) */}
-                      {cutActive && (
-                        <line x1="15" y1="45" x2="110" y2="45" stroke="#10b981" strokeWidth="2" strokeDasharray="none" filter="drop-shadow(0 0 4px #10b981)" />
-                      )}
+                        {/* Laser Cutting Beam (Femtosecond Flap Creation) */}
+                        {cutActive && (
+                          <line x1="15" y1="45" x2="110" y2="45" stroke="var(--success)" strokeWidth="2.5" filter="url(#neon-glow-green)" />
+                        )}
 
-                      {/* Reshaping Laser Beam (Step 2) */}
-                      {laserActive && (
-                        <line x1="15" y1="110" x2="90" y2="110" stroke="#f43f5e" strokeWidth="3.5" filter="drop-shadow(0 0 5px #f43f5e)" />
-                      )}
+                        {/* Reshaping Laser Beam (Excimer Sculpting) */}
+                        {laserActive && (
+                          <line x1="15" y1="110" x2="90" y2="110" stroke="var(--accent-tertiary)" strokeWidth="4" filter="url(#neon-glow-red)" />
+                        )}
 
-                      {/* Laser Nozzle */}
-                      <g transform={`translate(0, ${nozzleY})`}>
-                        <rect x="8" y="100" width="10" height="20" rx="3" fill="#1e293b" stroke="#475569" strokeWidth="1.5" />
-                        <rect x="18" y="107" width="4" height="6" fill="#64748b" />
-                        <circle cx="20" cy="110" r="1.5" fill={laserActive ? '#f43f5e' : cutActive ? '#10b981' : '#475569'} />
-                      </g>
-
-                      {/* Sparks particle container */}
-                      <g>
-                        {sparks.map((s, idx) => (
-                          <circle key={idx} cx={s.cx} cy={s.cy} r={s.r} fill="#ffdd67" opacity={s.opacity} />
-                        ))}
-                      </g>
-
-                      {/* Retina focus spot */}
-                      <circle cx="180" cy={activeStep === 4 ? 110 : 110} r={focusRadius} fill={focusColor} style={{ filter: focusBlur ? `blur(${focusBlur}px)` : 'none', transition: 'all 0.5s ease' }} />
-
-                      {/* Educational label pointers & text overlay */}
-                      {activeStep === 0 && (
-                        <g opacity="0.8">
-                          <path d="M 68,206 L 98,140" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
-                          <text x="15" y="212" fill="var(--accent-primary)" fontSize="7.5" fontWeight="bold">Corneal Topography</text>
+                        {/* Laser Nozzle */}
+                        <g transform={`translate(0, ${nozzleY})`}>
+                          <rect x="8" y="100" width="10" height="20" rx="3" fill="#111827" stroke="rgba(0,240,255,0.4)" strokeWidth="1.5" />
+                          <rect x="18" y="107" width="4" height="6" fill="#4b5563" />
+                          <circle cx="20" cy="110" r="1.5" fill={laserActive ? 'var(--accent-tertiary)' : cutActive ? 'var(--success)' : '#4b5563'} />
                         </g>
-                      )}
-                      {activeStep === 1 && (
-                        <g opacity="0.8">
-                          <path d="M 80,18 L 105,38" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
-                          <text x="5" y="15" fill="var(--accent-primary)" fontSize="7.5" fontWeight="bold">Micro-Thin Flap</text>
+
+                        {/* Spark particles when firing */}
+                        <g>
+                          {sparks.map((s, idx) => (
+                            <circle key={idx} cx={s.cx} cy={s.cy} r={s.r} fill="var(--accent-gold)" opacity={s.opacity} />
+                          ))}
                         </g>
-                      )}
-                      {activeStep === 2 && (
-                        <g opacity="0.8">
-                          <path d="M 28,88 L 18,102" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
-                          <text x="25" y="85" fill="#f43f5e" fontSize="7.5" fontWeight="bold">Excimer Sculpting</text>
-                        </g>
-                      )}
-                      {activeStep === 4 && (
-                        <g opacity="0.8">
-                          <path d="M 160,206 L 178,118" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.75" strokeDasharray="1.5" />
-                          <text x="125" y="212" fill="var(--accent-secondary)" fontSize="7.5" fontWeight="bold">Retinal Focal Point</text>
-                        </g>
-                      )}
-                    </svg>
+
+                        {/* Retina focus spot */}
+                        <circle cx="180" cy="110" r={focusRadius} fill={focusColor} style={{ filter: focusBlur ? `blur(${focusBlur}px)` : 'none', transition: 'all 0.4s ease' }} />
+
+                        {/* Label annotations */}
+                        {progressVal < 32 && (
+                          <g opacity="0.7">
+                            <path d="M 68,206 L 98,140" fill="none" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="0.75" strokeDasharray="2" />
+                            <text x="15" y="212" fill="var(--accent-primary)" fontSize="8" fontFamily="monospace" fontWeight="bold">TOPOGRAPHY SCAN</text>
+                          </g>
+                        )}
+                        {progressVal >= 32 && progressVal < 50 && (
+                          <g opacity="0.7">
+                            <path d="M 80,18 L 105,38" fill="none" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="0.75" strokeDasharray="2" />
+                            <text x="5" y="14" fill="var(--accent-primary)" fontSize="8" fontFamily="monospace" fontWeight="bold">FEMTOSEC FLAP</text>
+                          </g>
+                        )}
+                        {progressVal >= 50 && progressVal < 72 && (
+                          <g opacity="0.7">
+                            <path d="M 28,88 L 18,102" fill="none" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="0.75" strokeDasharray="2" />
+                            <text x="25" y="85" fill="var(--accent-tertiary)" fontSize="8" fontFamily="monospace" fontWeight="bold">EXCIMER SCULPT</text>
+                          </g>
+                        )}
+                        {progressVal >= 90 && (
+                          <g opacity="0.7">
+                            <path d="M 160,206 L 178,118" fill="none" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="0.75" strokeDasharray="2" />
+                            <text x="120" y="212" fill="var(--success)" fontSize="8" fontFamily="monospace" fontWeight="bold">FOCAL CALIBRATION</text>
+                          </g>
+                        )}
+                      </svg>
+                    </div>
                   )}
 
-                  {/* Patient Vision Snellen Chart */}
-                  <div 
-                    style={{ 
-                      width: '30%', 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      alignItems: 'center', 
-                      background: 'rgba(255, 255, 255, 0.02)', 
-                      border: '1px solid rgba(255, 255, 255, 0.05)', 
-                      borderRadius: '12px', 
-                      padding: '12px',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
-                    }}
-                  >
-                    <span style={{ fontSize: '9px', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '1px', marginBottom: '8px', fontWeight: '700', textAlign: 'center' }}>Patient Vision</span>
-                    <div 
-                      style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        gap: '4px', 
-                        fontFamily: 'monospace', 
-                        fontWeight: '700', 
-                        color: 'var(--text-secondary)',
-                        filter: chartBlur > 0 ? `blur(${chartBlur}px)` : 'none',
-                        transition: isAutoplay ? 'none' : 'filter 0.5s ease'
-                      }}
-                    >
-                      <div style={{ fontSize: '24px', color: '#f8fafc', lineHeight: 1 }}>E</div>
-                      <div style={{ fontSize: '16px', letterSpacing: '4px', lineHeight: 1 }}>F P</div>
-                      <div style={{ fontSize: '12px', letterSpacing: '3px', lineHeight: 1 }}>T O Z</div>
-                      <div style={{ fontSize: '9px', letterSpacing: '2px', lineHeight: 1 }}>L P E D</div>
-                    </div>
-                  </div>
-
                 </div>
+
+                {/* Manual Range Controller Slider */}
+                {visualMode === 'simulator' && (
+                  <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '4px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                      <span>Manual Laser Controller</span>
+                      <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>{Math.round(progressVal)}% Complete</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min="0" 
+                      max="100" 
+                      value={sliderProgress} 
+                      onChange={handleSliderChange}
+                      style={{
+                        width: '100%',
+                        height: '6px',
+                        borderRadius: '3px',
+                        outline: 'none',
+                        background: 'var(--bg-tertiary)',
+                        WebkitAppearance: 'none',
+                        cursor: 'pointer',
+                        accentColor: 'var(--accent-primary)',
+                        border: '1px solid rgba(0, 240, 255, 0.15)'
+                      }}
+                    />
+                  </div>
+                )}
 
                 {/* Status Indicator */}
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: '600', minHeight: '20px', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: '600', minHeight: '18px', textAlign: 'center', fontFamily: 'monospace' }}>
                   {isAutoplay ? (
-                    autoplayProgress * 9000 < 2000 ? 'Status: Creating protective flap...' :
-                    autoplayProgress * 9000 < 6000 ? 'Status: Sculpting corneal bed...' :
-                    autoplayProgress * 9000 < 7500 ? 'Status: Repositioning flap...' :
-                    'Status: Realignment complete. Vision is clear!'
+                    autoplayProgress * 100 < 15 ? 'SYS: Mapping corneal aberrations...' :
+                    autoplayProgress * 100 < 32 ? 'SYS: Preparing ocular surface...' :
+                    autoplayProgress * 100 < 50 ? 'SYS: Creating micro-thin protective flap...' :
+                    autoplayProgress * 100 < 72 ? 'SYS: Firing Excimer laser profiling...' :
+                    autoplayProgress * 100 < 90 ? 'SYS: Re-aligning corneal flap borders...' :
+                    'SYS: Validation successful. 20/20 Focus verified!'
                   ) : (
-                    activeStep === 0 ? 'Status: Blurry Myopic Vision' :
-                    activeStep === 1 ? 'Status: Flap Created & Folded Back' :
-                    activeStep === 2 ? 'Status: Corneal bed sculpted by laser' :
-                    activeStep === 3 ? 'Status: Flap returned to position' :
-                    'Status: Clear focused vision achieved!'
+                    progressVal < 15 ? 'SYS: Pre-op diagnostics active.' :
+                    progressVal < 32 ? 'SYS: Ocular surface anesthetized.' :
+                    progressVal < 50 ? 'SYS: Laser incision running.' :
+                    progressVal < 72 ? 'SYS: Excimer photoablation active.' :
+                    progressVal < 90 ? 'SYS: Flap seal alignment active.' :
+                    'SYS: Target focal point achieved.'
                   )}
                 </div>
 
-                {/* Autoplay play/reset button */}
-                <button 
-                  onClick={toggleAutoplay}
-                  className="btn btn-secondary"
-                  style={{ padding: '8px 16px', fontSize: '0.8rem', borderRadius: '8px', gap: '6px', height: 'auto', border: '1px solid rgba(255, 255, 255, 0.1)' }}
-                >
-                  {isAutoplay ? (
-                    <>
-                      <RotateCcw size={12} /> Reset Simulation
-                    </>
-                  ) : (
-                    <>
-                      <Play size={12} fill="currentColor" /> Play Surgery Animation
-                    </>
+                {/* Simulation Control Buttons */}
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <button 
+                    type="button"
+                    onClick={toggleAutoplay}
+                    className="btn btn-secondary"
+                    style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '6px', gap: '4px', height: 'auto', border: '1px solid rgba(0, 240, 255, 0.3)' }}
+                  >
+                    {isAutoplay ? (
+                      <>
+                        <RotateCcw size={12} /> Stop Autoplay
+                      </>
+                    ) : (
+                      <>
+                        <Play size={12} fill="currentColor" /> Play Surgery Animation
+                      </>
+                    )}
+                  </button>
+                  {sliderProgress !== 0 && !isAutoplay && (
+                    <button 
+                      type="button"
+                      onClick={() => setSliderProgress(0)}
+                      className="btn btn-secondary"
+                      style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '6px', gap: '4px', height: 'auto', border: '1px solid rgba(255, 255, 255, 0.1)' }}
+                    >
+                      <RotateCcw size={12} /> Reset
+                    </button>
                   )}
-                </button>
+                </div>
               </div>
             </div>
 
-            {/* Right Column: Step content detail and controls */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }} className="step-content-col">
+            {/* Right Column: Dynamic HUD Telemetry & Step Detail */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }} className="step-content-col">
+              
               <div>
                 <span style={{
-                  color: 'var(--accent-secondary)',
+                  color: 'var(--accent-primary)',
                   fontWeight: '700',
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase',
-                  fontSize: '0.8rem',
+                  fontSize: '0.7rem',
                   display: 'block',
-                  marginBottom: '8px'
+                  marginBottom: '4px'
                 }}>
-                  Stage {steps[activeStep].id} of 5
+                  Stage {steps[activeStep].id} of {steps.length}
                 </span>
-                <h3 style={{ fontSize: '1.85rem', margin: 0, fontWeight: '700', lineHeight: 1.25 }}>
+                <h3 style={{ fontSize: 'clamp(1.4rem, 3vw, 1.8rem)', margin: 0, fontWeight: '300', fontFamily: 'var(--font-serif)', fontStyle: 'italic', lineHeight: 1.2, color: '#ffffff' }}>
                   {steps[activeStep].title}
                 </h3>
               </div>
 
-              {/* Stage Objective */}
-              <div style={{ 
-                background: 'rgba(140, 178, 242, 0.03)', 
-                padding: '20px', 
-                borderRadius: '16px', 
-                borderLeft: '4px solid var(--accent-primary)',
-                borderTop: '1px solid rgba(255,255,255,0.02)',
-                borderRight: '1px solid rgba(255,255,255,0.02)',
-                borderBottom: '1px solid rgba(255,255,255,0.02)'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: 'var(--text-primary)', fontWeight: '600', fontSize: '0.95rem' }}>
-                  <Info size={16} color="var(--accent-primary)" /> Stage Objective
-                </div>
-                <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
-                  {steps[activeStep].purpose}
-                </p>
+              {/* Mobile Step Navigation Row */}
+              <div className="mobile-step-nav">
+                <button 
+                  type="button"
+                  onClick={handlePrevStep}
+                  disabled={activeStep === 0}
+                  className="btn btn-secondary"
+                  style={{
+                    padding: '8px 14px',
+                    fontSize: '0.75rem',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    opacity: activeStep === 0 ? 0.4 : 1,
+                    cursor: activeStep === 0 ? 'not-allowed' : 'pointer',
+                    height: 'auto',
+                    border: '1px solid rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <ChevronLeft size={14} /> Prev Stage
+                </button>
+                <span style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: 'var(--accent-primary)', fontWeight: 'bold' }}>
+                  {activeStep + 1} / {steps.length}
+                </span>
+                <button 
+                  type="button"
+                  onClick={handleNextStep}
+                  disabled={activeStep === steps.length - 1}
+                  className="btn btn-secondary"
+                  style={{
+                    padding: '8px 14px',
+                    fontSize: '0.75rem',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    opacity: activeStep === steps.length - 1 ? 0.4 : 1,
+                    cursor: activeStep === steps.length - 1 ? 'not-allowed' : 'pointer',
+                    height: 'auto',
+                    border: '1px solid rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  Next Stage <ChevronRight size={14} />
+                </button>
               </div>
 
-              {/* Experience */}
+              {/* Experience - Shown first for mobile readability */}
               <div>
-                <h4 style={{ fontSize: '1.05rem', marginBottom: '8px', fontWeight: '600', color: 'var(--text-primary)' }}>What You Experience:</h4>
-                <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+                <h4 style={{ fontSize: '0.9rem', marginBottom: '4px', fontWeight: '600', color: '#ffffff' }}>What You Experience:</h4>
+                <p className="text-secondary" style={{ fontSize: '0.85rem', lineHeight: '1.4', margin: 0, fontWeight: '300' }}>
                   {steps[activeStep].experience}
                 </p>
               </div>
 
-              {/* Scientific Precision Breakdown */}
-              <div style={{ 
-                background: 'rgba(255, 255, 255, 0.01)', 
-                border: '1px solid rgba(255, 255, 255, 0.05)', 
-                padding: '20px', 
-                borderRadius: '16px',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: 'var(--accent-secondary)', fontWeight: '700', fontSize: '0.9rem', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                  <Activity size={14} /> {steps[activeStep].scienceTitle}
-                </div>
-                <p className="text-secondary" style={{ fontSize: '0.9rem', lineHeight: '1.6', margin: 0, color: 'var(--text-secondary)' }}>
-                  {steps[activeStep].scienceDetails}
-                </p>
-              </div>
+              {/* Mobile-only Toggle for Clinical Telemetry / Details */}
+              <button
+                type="button"
+                onClick={() => setShowClinicalTelemetry(!showClinicalTelemetry)}
+                className="telemetry-toggle-btn"
+              >
+                <Activity size={14} className={showClinicalTelemetry ? '' : 'animate-pulse'} />
+                {showClinicalTelemetry ? 'HIDE CLINICAL DETAILS' : 'SHOW CLINICAL DETAILS & PHYSICS'}
+              </button>
 
-              <div style={{ display: 'flex', gap: '16px', marginTop: 'auto', paddingTop: '16px' }} className="responsive-flex-col">
-                <button
-                  onClick={prevStep}
-                  disabled={activeStep === 0}
-                  className={`btn btn-secondary ${activeStep === 0 ? 'btn-disabled' : ''}`}
-                  style={{ padding: '12px 24px', fontSize: '0.95rem' }}
-                >
-                  <ChevronLeft size={16} /> Previous
-                </button>
-                <button
-                  onClick={nextStep}
-                  className="btn btn-primary"
-                  style={{ padding: '12px 28px', fontSize: '0.95rem' }}
-                >
-                  {activeStep === steps.length - 1 ? 'Restart Journey' : 'Next Step'}
-                  <span className="btn-icon-wrapper">
-                    <ChevronRight size={16} />
-                  </span>
-                </button>
-              </div>
+              {/* Conditionally Rendered Telemetry Details */}
+              {showClinicalTelemetry && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {/* Stage Objective */}
+                  <div style={{ 
+                    background: 'rgba(0, 240, 255, 0.015)', 
+                    padding: '12px 16px', 
+                    borderRadius: '12px', 
+                    borderLeft: '3px solid var(--accent-primary)',
+                    borderTop: '1px solid rgba(255,255,255,0.04)',
+                    borderRight: '1px solid rgba(255,255,255,0.04)',
+                    borderBottom: '1px solid rgba(255,255,255,0.04)'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', color: '#ffffff', fontWeight: '600', fontSize: '0.85rem' }}>
+                      <Info size={14} color="var(--accent-primary)" /> Stage Objective
+                    </div>
+                    <p className="text-secondary" style={{ fontSize: '0.85rem', lineHeight: '1.4', margin: 0, fontWeight: '300' }}>
+                      {steps[activeStep].purpose}
+                    </p>
+                  </div>
+
+                  {/* Scientific Precision Breakdown */}
+                  <div style={{ 
+                    background: 'rgba(255, 255, 255, 0.01)', 
+                    border: '1px solid rgba(255, 255, 255, 0.04)', 
+                    padding: '12px 16px', 
+                    borderRadius: '12px',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', color: 'var(--accent-secondary)', fontWeight: '700', fontSize: '0.75rem', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                      <Activity size={12} /> {steps[activeStep].scienceTitle}
+                    </div>
+                    <p className="text-secondary" style={{ fontSize: '0.8rem', lineHeight: '1.4', margin: 0, color: 'var(--text-secondary)', fontWeight: '300' }}>
+                      {steps[activeStep].scienceDetails}
+                    </p>
+                  </div>
+
+                  {activeStep === 5 && (
+                    <div style={{ 
+                      background: 'rgba(251, 191, 36, 0.015)', 
+                      border: '1px solid rgba(251, 191, 36, 0.15)', 
+                      padding: '12px 16px', 
+                      borderRadius: '12px',
+                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', color: 'var(--accent-gold)', fontWeight: '700', fontSize: '0.75rem', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                        <Info size={12} /> Safety & Side Effects Expectations
+                      </div>
+                      <p className="text-secondary" style={{ fontSize: '0.8rem', lineHeight: '1.4', margin: 0, color: 'var(--text-secondary)', fontWeight: '300' }}>
+                        Ocular side effects are typically temporary and resolve over 1–6 months:
+                      </p>
+                      <ul style={{ margin: '4px 0 0 16px', padding: 0, fontSize: '0.75rem', lineHeight: '1.4', color: 'var(--text-secondary)' }}>
+                        <li><strong>Dry Eyes:</strong> Temporary tear film reduction, managed with lubricating drops.</li>
+                        <li><strong>Visual Disturbances:</strong> Post-op night glare, halos, or starbursts around light sources.</li>
+                        <li><strong>Refractive Variance:</strong> Rare under-corrections or over-corrections may require a repeat enhancement procedure.</li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
 
             </div>
 
@@ -659,4 +901,3 @@ export default function LasikSteps() {
     </div>
   );
 }
-
