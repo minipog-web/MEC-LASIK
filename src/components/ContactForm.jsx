@@ -44,13 +44,16 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" style={{ padding: '80px 24px 100px 24px', position: 'relative' }}>
+    <section id="contact" style={{ padding: 'clamp(112px, 8vw, 144px) 24px', position: 'relative' }}>
       <div className="container" style={{ maxWidth: '1100px' }}>
         <div className="contact-grid">
           
           {/* Left Column: CTA Context */}
           <div className="contact-cta-col">
             <div>
+              <span className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.25em] font-semibold bg-white/5 border border-white/10 text-white/70" style={{ display: 'inline-block', marginBottom: '16px', width: 'fit-content' }}>
+                PRIORITY SCHEDULING
+              </span>
               <h2 className="text-gradient" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', fontWeight: '700', marginBottom: '16px', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                 How Much Longer Will You Wait?
               </h2>
@@ -129,10 +132,50 @@ export default function ContactForm() {
                 display: 'flex', 
                 flexDirection: 'column', 
                 alignItems: 'center', 
-                gap: '20px'
+                gap: '24px'
               }}>
-                <div className="active-radar-dot" style={{ color: 'var(--success)', background: 'rgba(16, 185, 129, 0.1)', padding: '20px', borderRadius: '50%' }}>
-                  <CheckCircle2 size={48} />
+                <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '88px', height: '88px', margin: '8px 0' }}>
+                  {/* Concentric ripples */}
+                  <div className="success-ripple ripple-1" />
+                  <div className="success-ripple ripple-2" />
+                  
+                  {/* Icon wrapper */}
+                  <div style={{
+                    position: 'relative',
+                    zIndex: 2,
+                    background: 'rgba(16, 185, 129, 0.1)',
+                    borderRadius: '50%',
+                    padding: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid rgba(16, 185, 129, 0.2)'
+                  }}>
+                    <svg 
+                      width="38" 
+                      height="38" 
+                      viewBox="0 0 52 52" 
+                      fill="none" 
+                      style={{ overflow: 'visible' }}
+                    >
+                      <circle 
+                        cx="26" 
+                        cy="26" 
+                        r="24" 
+                        stroke="var(--success)" 
+                        strokeWidth="4" 
+                        className="draw-circle"
+                      />
+                      <path 
+                        d="M16.5 26.5 l6.5 6.5 l12.5 -13.5" 
+                        stroke="var(--success)" 
+                        strokeWidth="4.5" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        className="draw-check"
+                      />
+                    </svg>
+                  </div>
                 </div>
                 <h3 className="text-gradient" style={{ fontSize: '1.8rem', fontWeight: '700', margin: 0 }}>Priority Booking Confirmed</h3>
                 <p className="text-secondary" style={{ fontSize: '1rem', lineHeight: '1.6', fontWeight: '300', margin: 0 }}>

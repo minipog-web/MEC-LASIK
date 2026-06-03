@@ -173,6 +173,18 @@ export default function LasikSteps() {
     focusColor = `rgba(16, 185, 129, ${0.4 + stagePct * 0.6})`;
   }
 
+  // Dynamic morph calculations for laser focal achievement
+  const focusFactor = progressVal < 50 ? 0 : Math.min((progressVal - 50) / 40, 1);
+  if (progressVal >= 50 && progressVal < 90) {
+    focusRadius = 8 - focusFactor * 6;
+    focusBlur = 3 - focusFactor * 3;
+    const interpR = Math.round(0 + focusFactor * 16);
+    const interpG = Math.round(240 - focusFactor * 55);
+    const interpB = Math.round(255 - focusFactor * 126);
+    const interpA = 0.4 + focusFactor * 0.6;
+    focusColor = `rgba(${interpR}, ${interpG}, ${interpB}, ${interpA})`;
+  }
+
   // Handle Autoplay Animation loop
   useEffect(() => {
     if (isAutoplay) {
@@ -294,8 +306,12 @@ export default function LasikSteps() {
     trackingLock = "PERFECT FOCUS";
   }
 
+  const rayYTop = 122 - focusFactor * 12;
+  const rayYBottom = 98 + focusFactor * 12;
+  const rayColor = `rgba(0, 240, 255, ${0.4 + focusFactor * 0.4})`;
+  const centerRayColor = `rgba(0, 240, 255, ${0.25 + focusFactor * 0.25})`;
   return (
-    <div className="section" style={{ padding: '48px 24px 32px 24px' }}>
+    <div className="section" style={{ padding: 'clamp(112px, 8vw, 144px) 24px' }}>
       {/* SVG Filters for Neon Laser Glow */}
       <svg style={{ position: 'absolute', width: 0, height: 0 }}>
         <defs>
@@ -325,6 +341,9 @@ export default function LasikSteps() {
 
       <div className="container" style={{ maxWidth: '1100px' }}>
         <div className="text-center" style={{ marginBottom: '32px' }}>
+          <span className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.25em] font-semibold bg-white/5 border border-white/10 text-white/70" style={{ display: 'inline-block', marginBottom: '12px' }}>
+            Biometric Diagnostics
+          </span>
           <h2 className="bio-heading">
             The LASIK <span className="bio-heading-accent">Journey</span>
           </h2>
@@ -578,7 +597,15 @@ export default function LasikSteps() {
                         <path d="M 110,40 Q 72,110 110,180" fill="none" stroke="rgba(0, 240, 255, 0.2)" strokeWidth="2" strokeDasharray="2 3" />
                         
                         {/* Dynamic Cornea Profile */}
-                        <path d={`M 110,40 Q ${corneaCurve},110 110,180`} fill="none" stroke="var(--accent-primary)" strokeWidth="3.5" strokeLinecap="round" filter="url(#neon-glow-cyan)" />
+                        <path 
+                          d={`M 110,40 Q ${corneaCurve},110 110,180`} 
+                          fill="none" 
+                          stroke="var(--accent-primary)" 
+                          strokeWidth="3.5" 
+                          strokeLinecap="round" 
+                          filter="url(#neon-glow-cyan)" 
+                          style={{ transition: isAutoplay ? 'none' : 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}
+                        />
                         
                         {/* Corneal Flap */}
                         <path 
@@ -591,31 +618,59 @@ export default function LasikSteps() {
                           style={{ transition: isAutoplay ? 'none' : 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
                         />
                         
-                        {/* Focus Light Rays */}
-                        {progressVal >= 90 ? (
-                          /* Perfect focused light rays */
-                          <>
-                            <path d="M 15,65 L 95,92 L 135,103 L 155,110 L 180,110" fill="none" stroke="var(--accent-primary)" strokeDasharray="3" strokeWidth="2" opacity="0.8" filter="url(#neon-glow-cyan)" />
-                            <path d="M 15,155 L 95,128 L 135,117 L 155,110 L 180,110" fill="none" stroke="var(--accent-primary)" strokeDasharray="3" strokeWidth="2" opacity="0.8" filter="url(#neon-glow-cyan)" />
-                            <path d="M 15,110 L 180,110" fill="none" stroke="rgba(0, 240, 255, 0.5)" strokeWidth="1.5" />
-                          </>
-                        ) : (
-                          /* Blurry visual focus rays */
-                          <>
-                            <path d="M 15,65 L 95,92 L 135,103 L 155,110 L 180,122" fill="none" stroke="rgba(255, 255, 255, 0.4)" strokeDasharray="3" strokeWidth="1.5" />
-                            <path d="M 15,155 L 95,128 L 135,117 L 155,110 L 180,98" fill="none" stroke="rgba(255, 255, 255, 0.4)" strokeDasharray="3" strokeWidth="1.5" />
-                            <path d="M 15,110 L 180,110" fill="none" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
-                          </>
-                        )}
+                        {/* Dynamic Elastic Focused Light Rays */}
+                        <path 
+                          d={`M 15,65 L 95,92 L 135,103 L 155,110 L 180,${rayYTop}`} 
+                          fill="none" 
+                          stroke={rayColor} 
+                          strokeDasharray="3" 
+                          strokeWidth={rayWidth} 
+                          filter="url(#neon-glow-cyan)" 
+                          style={{ transition: isAutoplay ? 'none' : 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }} 
+                        />
+                        <path 
+                          d={`M 15,155 L 95,128 L 135,117 L 155,110 L 180,${rayYBottom}`} 
+                          fill="none" 
+                          stroke={rayColor} 
+                          strokeDasharray="3" 
+                          strokeWidth={rayWidth} 
+                          filter="url(#neon-glow-cyan)" 
+                          style={{ transition: isAutoplay ? 'none' : 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }} 
+                        />
+                        <path 
+                          d="M 15,110 L 180,110" 
+                          fill="none" 
+                          stroke={centerRayColor} 
+                          strokeWidth={rayWidth * 0.75} 
+                          style={{ transition: isAutoplay ? 'none' : 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }} 
+                        />
 
                         {/* Laser Cutting Beam (Femtosecond Flap Creation) */}
                         {cutActive && (
-                          <line x1="15" y1="45" x2="110" y2="45" stroke="var(--success)" strokeWidth="2.5" filter="url(#neon-glow-green)" />
+                          <line 
+                            x1="15" 
+                            y1="45" 
+                            x2="110" 
+                            y2="45" 
+                            stroke="var(--success)" 
+                            strokeWidth="2.5" 
+                            filter="url(#neon-glow-green)" 
+                            style={{ transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}
+                          />
                         )}
 
                         {/* Reshaping Laser Beam (Excimer Sculpting) */}
                         {laserActive && (
-                          <line x1="15" y1="110" x2="90" y2="110" stroke="var(--accent-tertiary)" strokeWidth="4" filter="url(#neon-glow-red)" />
+                          <line 
+                            x1="15" 
+                            y1="110" 
+                            x2="90" 
+                            y2="110" 
+                            stroke="var(--accent-tertiary)" 
+                            strokeWidth="4" 
+                            filter="url(#neon-glow-red)" 
+                            style={{ transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}
+                          />
                         )}
 
                         {/* Laser Nozzle */}

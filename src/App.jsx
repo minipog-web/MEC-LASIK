@@ -194,44 +194,56 @@ function App() {
         </div>
 
         {/* Trust Metrics Grid (Moved inside header so it shows on first view, numbers removed) */}
-        <div className="container trust-metrics-grid animate-fade-up delay-6" style={{ width: '100%', marginTop: '48px', position: 'relative', zIndex: 10 }}>
-          <div className="trust-pillar-card" style={{ border: '1px solid rgba(0, 240, 255, 0.15)' }}>
-            <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Award className="trust-icon" size={24} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>30+ Years</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Clinical Experience</div>
-            </div>
-          </div>
-          
-          <div className="trust-pillar-card" style={{ border: '1px solid rgba(0, 240, 255, 0.15)' }}>
-            <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <MapPin className="trust-icon" size={24} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>3 NJ Locations</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Convenient Care</div>
+        <div className="container trust-metrics-grid" style={{ width: '100%', marginTop: '48px', position: 'relative', zIndex: 10 }}>
+          {/* Card 1 */}
+          <div className="trust-pillar-wrapper animate-fade-up delay-6">
+            <div className="trust-pillar-card">
+              <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Award className="trust-icon" size={24} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>30+ Years</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Clinical Experience</div>
+              </div>
             </div>
           </div>
           
-          <div className="trust-pillar-card" style={{ border: '1px solid rgba(0, 240, 255, 0.15)' }}>
-            <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <ShieldCheck className="trust-icon" size={24} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>FDA-Approved</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Safe & Proven Tech</div>
+          {/* Card 2 */}
+          <div className="trust-pillar-wrapper animate-fade-up delay-7">
+            <div className="trust-pillar-card">
+              <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <MapPin className="trust-icon" size={24} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>3 NJ Locations</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Convenient Care</div>
+              </div>
             </div>
           </div>
           
-          <div className="trust-pillar-card" style={{ border: '1px solid rgba(0, 240, 255, 0.15)' }}>
-            <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Calendar className="trust-icon" size={24} />
+          {/* Card 3 */}
+          <div className="trust-pillar-wrapper animate-fade-up delay-8">
+            <div className="trust-pillar-card">
+              <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <ShieldCheck className="trust-icon" size={24} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>FDA-Approved</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Safe & Proven Tech</div>
+              </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>Pressure Free</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Consultation</div>
+          </div>
+          
+          {/* Card 4 */}
+          <div className="trust-pillar-wrapper animate-fade-up delay-9">
+            <div className="trust-pillar-card">
+              <div className="icon-box" style={{ background: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', color: 'var(--accent-primary)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Calendar className="trust-icon" size={24} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px', whiteSpace: 'nowrap' }}>Pressure Free</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '600' }}>Consultation</div>
+              </div>
             </div>
           </div>
         </div>

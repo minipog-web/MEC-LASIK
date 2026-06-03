@@ -18,79 +18,77 @@ export default function MaranoSection() {
   };
 
   return (
-    <section id="about-marano" style={{ padding: '80px 24px', position: 'relative' }}>
+    <section id="about-marano" style={{ padding: 'clamp(112px, 8vw, 144px) 24px', position: 'relative' }}>
       <div className="container" style={{ maxWidth: '1100px' }}>
         
         {/* Core Profile Card */}
-        <div className="glass-panel" style={{ 
-          padding: '48px', 
-          marginBottom: '56px', 
-          position: 'relative', 
-          overflow: 'hidden',
-          border: '1px solid rgba(0, 240, 255, 0.2)',
-          boxShadow: '0 20px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 240, 255, 0.05)'
+        {/* Core Profile Card (Outer Shell) */}
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.02)',
+          border: '1px solid rgba(255, 255, 255, 0.05)',
+          padding: '8px',
+          borderRadius: '2rem',
+          marginBottom: '56px',
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
         }}>
-          
-          <div className="marano-profile-grid">
+          {/* Inner Core */}
+          <div className="glass-panel" style={{ 
+            padding: '40px', 
+            background: 'var(--bg-secondary)',
+            border: '1px solid rgba(255, 255, 255, 0.04)',
+            boxShadow: 'inset 0 1px 1px rgba(255, 255, 255, 0.12)',
+            borderRadius: 'calc(2rem - 8px)',
+            position: 'relative', 
+            overflow: 'hidden',
+          }}>
             
-            {/* Left Column: Surgeon Bio & Pedigree */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div style={{ 
-                background: 'rgba(0, 240, 255, 0.06)', 
-                color: 'var(--accent-primary)', 
-                border: '1px solid rgba(0, 240, 255, 0.2)', 
-                borderRadius: '9999px', 
-                padding: '6px 16px', 
-                fontSize: '0.75rem', 
-                fontWeight: '700', 
-                textTransform: 'uppercase', 
-                letterSpacing: '1.5px',
-                width: 'fit-content',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
-                <Sparkles size={12} /> Pioneering Refractive Excellence
+            <div className="marano-profile-grid">
+              
+              {/* Left Column: Surgeon Bio & Pedigree */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <span className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.25em] font-semibold bg-white/5 border border-white/10 text-white/70" style={{ display: 'inline-block', width: 'fit-content' }}>
+                  Pioneering Refractive Excellence
+                </span>
+
+                <h2 className="bio-heading">
+                  New Jersey's Premier <br/>
+                  <span className="bio-heading-accent">LASIK Destination</span>
+                </h2>
+
+                <p className="text-secondary" style={{ fontSize: '1.15rem', lineHeight: '1.8', margin: 0, fontWeight: '300' }}>
+                  Marano Eye Care stands as the benchmark for vision correction in the region. 
+                  <strong style={{ fontWeight: '600', color: '#ffffff' }}> Dr. Matthew Marano was one of the first LASIK surgeons in New Jersey</strong>, 
+                  helping introduce the procedure when it first reached the state. With over three decades of 
+                  specialized expertise, he offers a level of precision and experience that is unmatched—ensuring 
+                  your journey to clear vision is in the most capable hands.
+                </p>
+
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '8px 0 0 0', letterSpacing: '0.04em', fontWeight: '600', textTransform: 'uppercase', fontFamily: 'monospace' }}>
+                  Board Certified Ophthalmologist · One of the First LASIK Surgeons in NJ · 15× Top Doctor Honoree
+                </p>
               </div>
 
-              <h2 className="bio-heading">
-                New Jersey's Premier <br/>
-                <span className="bio-heading-accent">LASIK Destination</span>
-              </h2>
-
-              <p className="text-secondary" style={{ fontSize: '1.15rem', lineHeight: '1.8', margin: 0, fontWeight: '300' }}>
-                Marano Eye Care stands as the benchmark for vision correction in the region. 
-                <strong style={{ fontWeight: '600', color: '#ffffff' }}> Dr. Matthew Marano was one of the first LASIK surgeons in New Jersey</strong>, 
-                helping introduce the procedure when it first reached the state. With over three decades of 
-                specialized expertise, he offers a level of precision and experience that is unmatched—ensuring 
-                your journey to clear vision is in the most capable hands.
-              </p>
-
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '8px 0 0 0', letterSpacing: '0.04em', fontWeight: '600', textTransform: 'uppercase', fontFamily: 'monospace' }}>
-                Board Certified Ophthalmologist · One of the First LASIK Surgeons in NJ · 15× Top Doctor Honoree
-              </p>
-            </div>
-
-            {/* Right Column: Statistics Grid */}
-            <div className="marano-stats-column">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <span style={{ fontSize: '3rem', fontWeight: '300', fontFamily: 'var(--font-serif)', color: 'var(--accent-primary)', lineHeight: 1 }}>30+</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '700', fontFamily: 'monospace' }}>Years of Experience</span>
+              {/* Right Column: Statistics Grid */}
+              <div className="marano-stats-column">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <span style={{ fontSize: '3rem', fontWeight: '300', fontFamily: 'var(--font-serif)', color: 'var(--accent-primary)', lineHeight: 1 }}>30+</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '700', fontFamily: 'monospace' }}>Years of Experience</span>
+                </div>
+                <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.05)' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <span style={{ fontSize: '2.3rem', fontWeight: '300', fontFamily: 'var(--font-serif)', color: '#ffffff', lineHeight: 1 }}>NJ Pioneer</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '700', fontFamily: 'monospace' }}>In Laser Eye Surgery</span>
+                </div>
+                <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.05)' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <span style={{ fontSize: '3rem', fontWeight: '300', fontFamily: 'var(--font-serif)', color: 'var(--accent-secondary)', lineHeight: 1 }}>15×</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '700', fontFamily: 'monospace' }}>Top Doctor Award</span>
+                </div>
               </div>
-              <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.05)' }} />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <span style={{ fontSize: '2.3rem', fontWeight: '300', fontFamily: 'var(--font-serif)', color: '#ffffff', lineHeight: 1 }}>NJ Pioneer</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '700', fontFamily: 'monospace' }}>In Laser Eye Surgery</span>
-              </div>
-              <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.05)' }} />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <span style={{ fontSize: '3rem', fontWeight: '300', fontFamily: 'var(--font-serif)', color: 'var(--accent-secondary)', lineHeight: 1 }}>15×</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '700', fontFamily: 'monospace' }}>Top Doctor Award</span>
-              </div>
+
             </div>
 
           </div>
-
         </div>
 
         {/* Pillars & Savings Calculator Section */}
@@ -184,23 +182,23 @@ export default function MaranoSection() {
 
             <div className="glass-panel" style={{
               background: 'rgba(8, 17, 37, 0.85)',
-              border: '1px solid rgba(0, 240, 255, 0.25)',
+              border: '1px solid rgba(197, 168, 128, 0.25)',
               borderRadius: '24px',
-              padding: '32px',
+              padding: '40px 32px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '24px',
+              gap: '32px',
               boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5)'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--accent-primary)', fontSize: '0.9rem', fontWeight: '700', borderBottom: '1px solid rgba(0,240,255,0.2)', paddingBottom: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#c5a880', fontSize: '0.9rem', fontWeight: '700', borderBottom: '1px solid rgba(197,168,128,0.2)', paddingBottom: '12px' }}>
                 <Calculator size={16} /> ADJUST YOUR EYEWEAR COSTS
               </div>
 
               {/* Slider 1: Age */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#ffffff' }}>
                   <span>Current Age</span>
-                  <strong style={{ color: 'var(--accent-primary)' }}>{age} Years Old</strong>
+                  <strong style={{ color: '#c5a880' }}>{age} Years Old</strong>
                 </div>
                 <input 
                   type="range" 
@@ -213,20 +211,20 @@ export default function MaranoSection() {
                     height: '6px',
                     borderRadius: '3px',
                     outline: 'none',
-                    background: 'var(--bg-tertiary)',
+                    background: '#1e293b',
                     WebkitAppearance: 'none',
                     cursor: 'pointer',
-                    accentColor: 'var(--accent-primary)'
+                    accentColor: '#c5a880'
                   }}
                 />
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>Projected eyewear use to age 80 ({activeYears} years left)</span>
               </div>
 
               {/* Slider 2: Annual Contacts Cost */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#ffffff' }}>
                   <span>Annual Contact Lenses & Solutions</span>
-                  <strong style={{ color: 'var(--accent-primary)' }}>${contactsCost}/yr</strong>
+                  <strong style={{ color: '#c5a880' }}>${contactsCost}/yr</strong>
                 </div>
                 <input 
                   type="range" 
@@ -240,19 +238,19 @@ export default function MaranoSection() {
                     height: '6px',
                     borderRadius: '3px',
                     outline: 'none',
-                    background: 'var(--bg-tertiary)',
+                    background: '#1e293b',
                     WebkitAppearance: 'none',
                     cursor: 'pointer',
-                    accentColor: 'var(--accent-primary)'
+                    accentColor: '#c5a880'
                   }}
                 />
               </div>
 
               {/* Slider 3: Annual Glasses Cost */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#ffffff' }}>
                   <span>Annual Glasses, Exams & Upgrades</span>
-                  <strong style={{ color: 'var(--accent-primary)' }}>${glassesCost}/yr</strong>
+                  <strong style={{ color: '#c5a880' }}>${glassesCost}/yr</strong>
                 </div>
                 <input 
                   type="range" 
@@ -266,38 +264,60 @@ export default function MaranoSection() {
                     height: '6px',
                     borderRadius: '3px',
                     outline: 'none',
-                    background: 'var(--bg-tertiary)',
+                    background: '#1e293b',
                     WebkitAppearance: 'none',
                     cursor: 'pointer',
-                    accentColor: 'var(--accent-primary)'
+                    accentColor: '#c5a880'
                   }}
                 />
               </div>
 
-              {/* Dynamic Readout */}
+              {/* Dynamic Readout with Prominent Savings Spotlight */}
               <div style={{
-                background: 'rgba(3, 7, 18, 0.6)',
-                border: '1px solid rgba(0, 240, 255, 0.15)',
-                borderRadius: '16px',
-                padding: '20px',
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '20px',
-                fontFamily: 'monospace',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
                 marginTop: '8px'
               }} className="cost-comparison">
                 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'center' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>LIFETIME COST (NO LASIK)</span>
-                  <span style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--error)' }}>
+                {/* Muted baseline spend */}
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  background: 'rgba(3, 7, 18, 0.4)', 
+                  border: '1px solid rgba(255, 255, 255, 0.05)', 
+                  borderRadius: '12px', 
+                  padding: '12px 18px', 
+                  fontSize: '0.8rem', 
+                  fontFamily: 'monospace', 
+                  color: 'var(--text-secondary)' 
+                }}>
+                  <span>ESTIMATED EYEWEAR SPEND (WITHOUT LASIK)</span>
+                  <span style={{ color: 'var(--error)', fontWeight: '700' }}>
                     ${lifetimeEyewear.toLocaleString()}
                   </span>
                 </div>
                 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'center', borderLeft: '1px solid rgba(255,255,255,0.06)' }} className="cost-comparison-vs">
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>NET LIFETIME SAVINGS</span>
-                  <span style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--success)' }}>
+                {/* Hero Net Savings Card */}
+                <div style={{ 
+                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(3, 7, 18, 0.6) 100%)', 
+                  border: '1px solid rgba(16, 185, 129, 0.3)', 
+                  borderRadius: '16px', 
+                  padding: '24px 20px', 
+                  textAlign: 'center', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: '6px',
+                  boxShadow: '0 8px 30px rgba(16, 185, 129, 0.05)'
+                }} className="cost-comparison-vs">
+                  <span style={{ fontSize: '0.75rem', color: 'var(--success)', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+                    Net Lifetime Savings with LASIK
+                  </span>
+                  <span style={{ fontSize: '2.5rem', fontWeight: '800', color: 'var(--success)', fontFamily: 'monospace', lineHeight: 1.1 }}>
                     ${lifetimeSavings.toLocaleString()}
+                  </span>
+                  <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                    Calculated over lifetime eyewear usage projection
                   </span>
                 </div>
               </div>
@@ -309,7 +329,7 @@ export default function MaranoSection() {
                 fontFamily: 'monospace',
                 color: 'var(--text-secondary)',
                 borderTop: '1px solid rgba(255,255,255,0.05)',
-                paddingTop: '12px',
+                paddingTop: '16px',
                 alignItems: 'center'
               }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><TrendingUp size={14} color="var(--success)" /> BREAKEVEN HORIZON:</span>

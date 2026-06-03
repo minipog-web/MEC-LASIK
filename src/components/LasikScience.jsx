@@ -717,28 +717,13 @@ export default function LasikScience() {
   const IconComponent = currentTab.icon;
 
   return (
-    <section id="lasik-science" style={{ padding: '80px 24px 40px 24px', position: 'relative' }}>
+    <section id="lasik-science" style={{ padding: 'clamp(112px, 8vw, 144px) 24px', position: 'relative' }}>
       <div className="container" style={{ maxWidth: '1100px' }}>
         
         <div className="text-center" style={{ marginBottom: '48px' }}>
-          <div style={{
-            background: 'rgba(0, 240, 255, 0.06)',
-            color: 'var(--accent-primary)',
-            border: '1px solid rgba(0, 240, 255, 0.2)',
-            borderRadius: '9999px',
-            padding: '6px 16px',
-            fontSize: '0.75rem',
-            fontWeight: '700',
-            textTransform: 'uppercase',
-            letterSpacing: '1.5px',
-            width: 'fit-content',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            marginBottom: '16px'
-          }}>
-            <BookOpen size={12} /> Clinical Biophysics & Principles
-          </div>
+          <span className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.25em] font-semibold bg-white/5 border border-white/10 text-white/70" style={{ display: 'inline-block', marginBottom: '16px' }}>
+            Clinical Biophysics & Principles
+          </span>
           <h2 className="bio-heading" style={{ margin: 0 }}>
             The Science of <span className="bio-heading-accent">LASIK Precision</span>
           </h2>

@@ -45,19 +45,32 @@ export default function CandidateQuiz() {
   const [answers, setAnswers] = useState({});
   const [isScanning, setIsScanning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [animationClass, setAnimationClass] = useState('quiz-slide-in');
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
 
   const handleAnswer = (score) => {
     setAnswers(prev => ({ ...prev, [questions[currentQuestion].id]: score }));
-    setIsScanning(true);
     
-    setTimeout(() => {
-      setIsScanning(false);
-      if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < questions.length - 1) {
+      setAnimationClass('quiz-slide-out');
+      setTimeout(() => {
         setCurrentQuestion(currentQuestion + 1);
-      } else {
+        setAnimationClass('quiz-slide-in');
+      }, 300);
+    } else {
+      setIsScanning(true);
+      setTimeout(() => {
+        setIsScanning(false);
         setIsFinished(true);
-      }
-    }, 1000);
+      }, 1500);
+    }
   };
 
   const restartQuiz = () => {
@@ -65,6 +78,7 @@ export default function CandidateQuiz() {
     setAnswers({});
     setIsScanning(false);
     setIsFinished(false);
+    setAnimationClass('quiz-slide-in');
   };
 
   const renderResult = () => {
@@ -170,14 +184,16 @@ export default function CandidateQuiz() {
       </div>
     );
   };
-
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="section" id="quiz" style={{ padding: '100px 0 60px 0' }}>
+    <div className="section" id="quiz" style={{ padding: 'clamp(112px, 8vw, 144px) 0' }}>
       <div className="text-center" style={{ marginBottom: '60px' }}>
+        <span className="rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.25em] font-semibold bg-white/5 border border-white/10 text-white/70" style={{ display: 'inline-block', marginBottom: '16px' }}>
+          Biometric Diagnostics
+        </span>
         <h2 className="bio-heading">
           Candidacy <span className="bio-heading-accent">Self-Test</span>
         </h2>
@@ -190,7 +206,7 @@ export default function CandidateQuiz() {
         {isFinished ? (
           renderResult()
         ) : (
-          <div className="glass-panel quiz-card animate-fade-in" style={{ 
+          <div className={`glass-panel quiz-card ${animationClass}`} style={{ 
             maxWidth: '650px', 
             margin: '0 auto', 
             padding: '48px 40px',
@@ -302,9 +318,10 @@ export default function CandidateQuiz() {
                   type="button"
                   key={idx}
                   onClick={() => handleAnswer(option.score)}
+                  onMouseMove={handleMouseMove}
                   className="quiz-option-btn"
                 >
-                  <span>{option.label}</span>
+                  <span style={{ position: 'relative', zIndex: 2 }}>{option.label}</span>
                 </button>
               ))}
             </div>
