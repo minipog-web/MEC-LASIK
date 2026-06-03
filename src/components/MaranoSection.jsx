@@ -59,7 +59,7 @@ export default function MaranoSection() {
                   Marano Eye Care stands as the benchmark for vision correction in the region. 
                   <strong style={{ fontWeight: '600', color: '#ffffff' }}> Dr. Matthew Marano was one of the first LASIK surgeons in New Jersey</strong>, 
                   helping introduce the procedure when it first reached the state. With over three decades of 
-                  specialized expertise, he offers a level of precision and experience that is unmatched—ensuring 
+                  specialized expertise and more than 4,000 successful laser vision correction procedures, he offers a level of precision and experience that is unmatched—ensuring 
                   your journey to clear vision is in the most capable hands.
                 </p>
 
@@ -76,8 +76,8 @@ export default function MaranoSection() {
                 </div>
                 <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.05)' }} />
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <span style={{ fontSize: '2.3rem', fontWeight: '300', fontFamily: 'var(--font-serif)', color: '#ffffff', lineHeight: 1 }}>NJ Pioneer</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '700', fontFamily: 'monospace' }}>In Laser Eye Surgery</span>
+                  <span style={{ fontSize: '3rem', fontWeight: '300', fontFamily: 'var(--font-serif)', color: '#ffffff', lineHeight: 1 }}>4,000+</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: '700', fontFamily: 'monospace' }}>Successful Procedures</span>
                 </div>
                 <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.05)' }} />
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
